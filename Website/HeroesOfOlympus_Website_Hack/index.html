@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,600">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">  
+    <link type="text/css" rel="stylesheet" href="styles.css">  
+    <title>Heroes Of Olympus</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="gameLogo">
+                <img id="gameLogo" src="img/gameLogo.png" alt="gameLogo">
+            </div>
+            <div id="nav-wrapper">
+                <input type="checkbox" class="toggler">
+                <div class="hamburger"><div></div></div>
+                <div class="menu">
+                    <div>
+                        <div>
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="about.html">Heroes of Olympus</a></li>
+                                <li><a href="#">Team Blog</a></li>
+                                <li><a href="#">Team Spooki</a></li>
+                                <li><a href="#">Download</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="login">
+                <button onclick="/* window.location.href = './php/loginSystem/header.php'; */" id="sign-Up">Sign Up</button>
+                <span id="line">|</span>
+                <button id="sign-In">Sign in</button>
+            </div> 
+        </header>
+        <main class="content">
+                <section id="welcome_panel">
+                    <div class="welcome-content">
+                        <ul class="fly-in-text hidden">
+                            <li>W</li>
+                            <li>E</li>
+                            <li>L</li>
+                            <li>C</li>
+                            <li>O</li>
+                            <li>M</li>
+                            <li>E</li>
+                        </ul>
+                    </div> 
+                </section>          
+        </main>
+        <footer class="footer">
+            <img id="companyLogo" src="./img/companyLogo.png" alt="">
+            <!-- <img id="ageRating" src="./img/newAgeIcon.png" alt=""> -->
+        </footer>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        
+        $(function(){
+            setTimeout(function() {
+                $('.fly-in-text').removeClass('hidden');
+            }, 500);
+
+        })();
+
+    </script>
+</body>
+</html>

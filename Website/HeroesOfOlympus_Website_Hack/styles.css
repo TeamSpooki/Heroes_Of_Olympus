@@ -1,0 +1,325 @@
+:root{
+  --primary-color: rgba(11, 69, 87, 0.103);
+  --overlay-color: rgba(24, 39, 51, 0.85);
+  --menu-speed: 0.75s;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: Lato;
+  font-weight: 300;
+  color: rgb(68, 179, 223);
+  background-color:#001a28;
+}
+
+.container{
+  width: 100%;
+  margin: auto;
+}
+
+.content{
+  position: fixed;
+  top: 18%;
+  left: 0;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+}
+
+#gameLogo{
+  position: fixed;
+  width: 400px;
+  padding: 5px;
+  top: 5px;
+  left: 65px;
+  }
+
+  /**************Sign-in & sign-out button alignment******************/
+.login {
+  position: fixed;
+  left: 85vw;
+  top: 5vh;
+  z-index: 1;
+}
+
+/**************Sign-in & sign-out buttons******************/
+button {
+  color: #fff;
+  text-transform: uppercase;
+  background: #0d3a4757;
+  padding: 10px;
+  border: 2px solid #0a788633;
+  border-radius: 6px;
+  display: inline-block;
+  transition: all 0.3s ease 0s;
+  text-align: center;
+}
+
+button:hover {
+  color: #fff;
+  border-radius: 50px;
+  background: #08425386;
+  border-color: #0cbad13a;
+  transition: all 0.3s ease 0s;
+}
+
+button:focus {
+  outline: none;
+}
+
+#nav-wrapper{
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  z-index: 1;
+}
+
+#nav-wrapper .toggler{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  opacity: 0;
+}
+
+/* Nav menu background position etc. */
+#nav-wrapper .hamburger{
+  position: absolute;
+  display: flex;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  width: 60px;
+  height: 50px;
+  padding: 1rem;
+  background: var(--primary-color);
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+  border-radius: 2px;
+  border: none;
+}
+
+/* Hamburger First Line - Pushed into empty div tag */
+#nav-wrapper .hamburger > div{
+  position: relative;
+  flex: none;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+/* Hamburger First Line - Pushed into empty div tag*/
+#nav-wrapper .hamburger > div {
+  position: relative;
+  flex: none;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+/* Hamburger Lines - Top & Bottom  (Creates one line before and another after the first line - Initially first and second lines)*/
+#nav-wrapper .hamburger > div::before,
+#nav-wrapper .hamburger > div::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: -10px;
+  width: 100%;
+  height: 2px;
+  background: inherit;
+}
+
+/* Moves Line Down - Creates final line after the first two lines above*/
+#nav-wrapper .hamburger > div::after {
+  top: 10px;
+}
+
+/* Toggler Animation */
+#nav-wrapper .toggler:checked + .hamburger > div {
+  transform: rotate(135deg);
+}
+
+/* Hover/shaker effect on Hamburger menu button*/
+.menu-wrap .hamburger:hover{
+    transform: rotate(2deg);
+}
+
+/* Turns Lines Into X */
+#nav-wrapper .toggler:checked + .hamburger > div:before,
+#nav-wrapper .toggler:checked + .hamburger > div:after {
+  top: 0;
+  transform: rotate(90deg);
+}
+
+/* Rotate On Hover When Checked */
+#nav-wrapper .toggler:checked:hover + .hamburger > div {
+  transform: rotate(225deg);
+}
+
+/* Show Menu when the hamburger is checked on/active */
+#nav-wrapper .toggler:checked ~ .menu {
+  visibility: visible;
+}
+
+/* Passing it through the empty div, so when the hamburger nav is clicked on it will scale accordingly */
+#nav-wrapper .toggler:checked ~ .menu > div {
+  transform: scale(1);
+  transition-duration: var(--menu-speed);
+}
+
+/*Set Opacity of menu*/
+#nav-wrapper .toggler:checked ~ .menu > div > div {
+  opacity: 1;
+  transition:  opacity 0.4s ease 0.4s;
+}
+
+/* New state of Menu */
+#nav-wrapper .menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*Set background transition colour to appear when opening Menu*/
+#nav-wrapper .menu > div {
+  background: var(--overlay-color);
+  border-radius: 50%;
+  width: 200vw;
+  height: 200vw;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0);
+  transition: all 0.4s ease;
+}
+
+#nav-wrapper .menu > div > div {
+  text-align: center;
+  max-width: 90vw;
+  max-height: 100vh;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/*Effect of Menu title Contents*/
+#nav-wrapper .menu > div > div > ul > li {
+  list-style: none;
+  color: #fff;
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+
+/*Effect of Menu title links (underline removed etc.)*/
+#nav-wrapper .menu > div > div > ul > li > a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.4s ease;
+} 
+
+#welcome_panel{
+ position: relative;
+ height: 68vh;
+ background-color: #0221295e;
+ border-top: 1px solid rgba(116, 160, 189, 0.068);
+ border-bottom: 1px solid rgba(116, 160, 189, 0.068);
+}
+
+.fly-in-text{
+  list-style: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.fly-in-text li{
+  display: inline-block;
+  margin-right: 50px;
+  font-weight: 300;
+  font-size: 4em;
+  color: #fff;
+  opacity: 1;
+  transition: all 2.5s ease;
+}
+
+.fly-in-text li:last-child{
+  margin-right: 0;
+}
+
+.fly-in-text.hidden li{
+  opacity: 0;
+}
+
+.fly-in-text.hidden li:nth-child(1){transform: translateX(-200px) translateY(-200px);}
+.fly-in-text.hidden li:nth-child(2){transform: translateX(20px) translateY(100px);}
+.fly-in-text.hidden li:nth-child(3){transform: translateX(-150px) translateY(-80px);}
+.fly-in-text.hidden li:nth-child(4){transform: translateX(10px) translateY(-200px);}
+.fly-in-text.hidden li:nth-child(5){transform: translateX(-300px) translateY(200px);}
+.fly-in-text.hidden li:nth-child(6){transform: translateX(20px) translateY(-20px);}
+.fly-in-text.hidden li:nth-child(7){transform: translateX(30px) translateY(200px);}
+
+
+.footer #companyLogo{
+  position: fixed;
+  width: 150px;
+  padding: 5px;
+  transform: translateY(88vh);
+  left: 85vw;
+}
+
+.footer #ageRating{
+  position: fixed;
+  width: 50px;
+  padding: 5px;
+  transform: translateY(88vh);
+  left: 90vw;
+}
+
+@media only screen and (max-width: 960px) {
+  .content {
+    padding: 20px;
+    top: 15%;
+  }
+}
+
+@media (max-width: 960px) {
+  .login {
+    display: none;
+  }
+
+ /* .intro {
+  top: 14%;
+  height: 700px;
+  width: 100%;
+  background-color: #0221295e;
+  border-top: 1px solid rgba(116, 160, 189, 0.068);
+  border-bottom: 1px solid rgba(116, 160, 189, 0.068);
+}  */
+
+ 

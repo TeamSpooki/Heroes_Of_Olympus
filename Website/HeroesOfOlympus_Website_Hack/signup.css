@@ -1,0 +1,372 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body{
+    background-image: url('./img/black-theme-wallpaper.jpg');
+    background-size: cover;
+  }
+  
+  body{
+    font-family: Lato;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  .container{
+  display: inline-block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.3);
+  }
+  
+  #login-wrapper{
+    position: relative;
+    width: 510px;
+    height: 500px;
+    background-color: #F5F5F5;
+    overflow: hidden;
+    border-radius: none;
+  } 
+  
+  #login-header{
+    text-align: center;
+    background-color: #CECECE;
+    border: none;
+    position: relative;
+    padding: 25px;
+    box-flex: inherit;
+    font-size: 22px;
+    font-weight: 900;
+    top: -200px;
+    color: #7A378B;
+    border-bottom: 1px solid rgb(172, 167, 167);
+  }
+  
+  .title-header{
+    position: inherit;
+    left: 10px;
+  }
+  
+  h1{
+    position: relative;
+    font-size: 32px;
+    left: -5px;
+  }
+   h2{
+    position: relative;
+    top: 5px;
+    left: 50px; 
+    font-size: 38px;
+  }
+  
+  #logo{
+  background-image: url('./img/gameLogo.png');
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+  height: 200px;
+  width: 100px;
+  position: relative;
+  transform: translateY(72%);
+  left: 22px;
+  }
+  
+  #main-body{
+  position: relative;
+  top: -16.5%;
+  }
+  
+  .signin-label{
+  position: relative;
+  padding: 22px;
+  top: -123.5px;
+  }
+  
+  #signin{
+  color: #7C427C;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 19px;
+  margin: 0px 0px 8px;
+  }
+  
+  #continue{
+    top: 2px;
+    font-size: 14px;
+    color: #808080;
+  }
+  
+  .alert-box{
+    position: relative;
+    left: 22px;
+    top: -135px;
+    opacity: 0.5;
+    z-index: 1;
+  } 
+  
+  .alert-box:hover{
+    animation: shake 1.2s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+  }
+    
+    @keyframes shake {
+      10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+      }
+      20%, 80% {
+        transform: translate3d(2px, 0, 0);
+      }
+      30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+      }
+      40%, 60% {
+        transform: translate3d(4px, 0, 0);
+      }
+    }
+  
+    /* Warning Icon 
+   #warning{
+    background-image: url('../Login/img/warning.jpg');
+    background-size: contain;
+    background-position: left;
+    background-repeat: no-repeat;
+    height: 50px;
+    width: 30px;
+    position: relative;
+    transform: translateY(10%);
+    left: 22px;
+    display: none;
+   }
+   */
+  
+  /*  .fa-exclamation-circle:hover{
+    color: rgb(0, 0, 255);
+  }  */
+  
+  /* Tooltip container 
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Tooltip text 
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgb(0, 0, 0);
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+   
+    /* Position the tooltip text - see examples below! 
+    position: absolute;
+    z-index: 1;
+    left: 50px;
+  }
+  
+  /* Show 'Warning!' Tooltip on Hover!
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+  */
+  
+  /* Subscriber/User Dialog */
+   #sub{
+    border: 1px solid #d0d0d0; 
+    border-radius: 3px;
+    background-color: rgba(231, 230, 230, 0.733); 
+    padding: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    text-transform: none;
+    cursor: none;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: none;
+    /* color: rgb(175, 14, 14); */
+    margin: 0px 0px 13px;
+    animation: Color 1.2s infinite;
+    display: none;
+  }
+  
+  /* Change colour*/
+  @keyframes Color {
+    0%{color: rgb(255, 0, 0);}
+    25%{color: rgb(241, 89, 1);}
+    50%{color: rgb(168, 6, 6);}
+    75%{color:rgb(170, 2, 2);}
+    100% {color: rgb(255, 0, 0);}
+  }
+  
+  
+  /********Input Fields - Username & Password********/
+  .login-input-fields{
+  position: relative;
+  padding: 50px;
+  top: -155px;
+  left: -5px;
+  }
+  
+  /********Username Input Field********/
+  .username-inp {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    max-width: 280px;
+  }
+  .username-inp .email {
+    position: absolute;
+    top: -2px;
+    left: 0;
+    font-size: 16px;
+    color: #9098a9;
+    font-weight: 500;
+    transform-origin: 0 0;
+    transition: all 0.2s ease;
+  }
+  .username-inp .username-border {
+    position: absolute;
+    bottom: 0;
+    top: 32.5px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: #07f; 
+    transform: scaleX(0);
+    transform-origin: 0 0;
+    transition: all 0.15s ease;
+  }
+  .username-inp input {
+    -webkit-appearance: none;
+    width: 100%;
+    border: none;
+    font-family: inherit;
+    padding: 12px 0;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 2px solid #c8ccd4;
+    background: none;
+    border-radius: 2px;
+    color: #223254; 
+    transition: all 0.15s ease;
+  }
+  .username-inp input:hover {
+    background: rgba(34,50,84,0.03);
+  }
+  .username-inp input:not(:placeholder-shown) + span {
+    color: #5a667f; 
+    transform: translateY(-26px) scale(0.75);
+  }
+  .username-inp input:focus {
+    background: none;
+    outline: none;
+  }
+  .username-inp input:focus + span {
+     color: #07f; 
+    transform: translateY(-26px) scale(0.75);
+  }
+  .username-inp input:focus + span + .username-border {
+    transform: scaleX(1);
+  }
+  
+  /********Password Input Field********/
+  #password-field{
+    position: relative;
+    top: 30px;
+  }
+  
+  .password-inp {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    max-width: 280px;
+    
+  }
+  .password-inp .pass {
+    position: absolute;
+    top: -2px;
+    left: 0;
+    font-size: 16px;
+    color: #9098a9;
+    font-weight: 500;
+    transform-origin: 0 0;
+    transition: all 0.2s ease;
+  }
+  .password-inp .password-border {
+    position: absolute;
+    bottom: 0;
+    top: 32.5px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: #07f;
+    transform: scaleX(0);
+    transform-origin: 0 0;
+    transition: all 0.15s ease;
+  }
+  .password-inp input {
+    -webkit-appearance: none;
+    width: 100%;
+    border: none;
+    font-family: inherit;
+    padding: 12px 0;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 2px solid #c8ccd4;
+    background: none;
+    border-radius: 2px;
+    color: #223254;
+    transition: all 0.15s ease;
+  }
+  .password-inp input:hover {
+    background: rgba(34,50,84,0.03);
+  }
+  .password-inp input:not(:placeholder-shown) + span {
+    color: #5a667f;
+    transform: translateY(-26px) scale(0.75);
+  }
+  .password-inp input:focus {
+    background: none;
+    outline: none;
+  }
+  .password-inp input:focus + span {
+    color: #07f;
+    transform: translateY(-26px) scale(0.75);
+  }
+  .password-inp input:focus + span + .password-border {
+    transform: scaleX(1);
+  }
+  
+  /********Login Page Footer********/
+  #footer{
+    position: absolute;
+    top: 100%;
+    left: 390px;
+  } 
+  
+  /********Button********/
+  button {
+    position: absolute;
+    width: 72px;
+    height: 35px;
+    padding: 7.2px;
+    background-color: #7A378B;
+    border: none; 
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: bolder;
+    text-align: center;
+    letter-spacing: none;
+    color: #ffffff; 
+  }
