@@ -1,5 +1,0 @@
-initscript {
-    allprojects {
-        apply plugin: "eclipse"
-    }
-}
