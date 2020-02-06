@@ -10,8 +10,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.mygdx.game.world.GameMap;
-import com.mygdx.game.world.TiledGameMap;
+import com.mygdx.world.GameMap;
+import com.mygdx.world.TiledGameMap;
 
 public class MainGameScreen implements Screen {
 	public static final int WIDTH = 1280;

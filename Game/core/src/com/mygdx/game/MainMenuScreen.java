@@ -3,8 +3,8 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.world.GameMap;
-import com.mygdx.game.world.TiledGameMap;
+import com.mygdx.world.GameMap;
+import com.mygdx.world.TiledGameMap;
 import com.badlogic.gdx.graphics.GL20;
 
 public class MainMenuScreen implements Screen {

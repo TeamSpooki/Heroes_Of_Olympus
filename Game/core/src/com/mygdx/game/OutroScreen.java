@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.game.world.GameMap;
-import com.mygdx.game.world.TiledGameMap;
+import com.mygdx.world.GameMap;
+import com.mygdx.world.TiledGameMap;
 
 public class OutroScreen implements Screen{
 

@@ -11,8 +11,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mygdx.game.world.GameMap;
-import com.mygdx.game.world.TiledGameMap;
+import com.mygdx.world.GameMap;
+import com.mygdx.world.TiledGameMap;
 
 public class IntroScreen implements Screen{
 	
