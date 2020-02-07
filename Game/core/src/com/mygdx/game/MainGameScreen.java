@@ -79,7 +79,7 @@ public class MainGameScreen implements Screen {
 			board.GetPieceEnemy(enemy.getLocation()).deleteSprite();
 			board.enemies.remove(enemy);
 		}
-		System.out.println("works,"+	touch.x+","+touch.y);
+		//System.out.println("works,"+	touch.x+","+touch.y);
 		if(board.enemies.isEmpty()) {
 			this.dispose();
 			game.setScreen(new OutroScreen(game));
