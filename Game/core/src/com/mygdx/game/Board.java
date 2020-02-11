@@ -19,207 +19,61 @@ public class Board {
 	Enemy titan,enemy1,enemy2,enemy3,enemy4,enemy5,enemy6;
 	Location lastFrom;
 	Location lastTo;
-
+	
 	public Board()
 	{	
 		enemies = new LinkedList<GameUnit>();
 		heroes = new LinkedList<GameUnit>();
 		
-		List<Sprite> sprites= new LinkedList<Sprite>();
-		List<TextureRegion[]> animations= new LinkedList<TextureRegion[]>();
-		TextureRegion[] walkFrames = new TextureRegion[6];
-		TextureRegion[][] t = TextureRegion.split(new Texture(Gdx.files.internal("Achilles.png")), 64, 64);
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites.add(s);
-				animations.add(walkFrames);
-			}
-		}
-		achille = new Hero(sprites.get(12),"Achille",animations);
+		achille = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Achilles.png")), 64, 64),"Achille");
 		achille.setPosition(64, 128);
 		heroes.add(achille);
-		sprites.clear();
-		animations.clear();
 		
-		t = TextureRegion.split(new Texture(Gdx.files.internal("Helen.png")), 64, 64);
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites.add(s);
-				animations.add(walkFrames);
-			}
-		}
-		helen = new Hero(sprites.get(12),"Helen",animations);
+		helen = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Helen.png")), 64, 64),"Helen");
 		helen.setPosition(128, 256);
 		heroes.add(helen);
-		sprites.clear();
-		animations.clear();
 		
-		t = TextureRegion.split(new Texture(Gdx.files.internal("Hercules.png")), 64, 64);
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites.add(s);
-				animations.add(walkFrames);
-			}
-		}
-		hercules = new Hero(sprites.get(12),"Hercules",animations);
+		hercules = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Hercules.png")), 64, 64),"Hercules");
 		hercules.setPosition(0, 320);
 		heroes.add(hercules);
-		sprites.clear();
-		animations.clear();
 		
-		t = TextureRegion.split(new Texture(Gdx.files.internal("Hypolyta.png")), 64, 64);
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites.add(s);
-				animations.add(walkFrames);
-			}
-		}
-		hypolyta = new Hero(sprites.get(12),"Hypolyta",animations);
+		hypolyta = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Hypolyta.png")), 64, 64),"Hypolyta");
 		hypolyta.setPosition(128, 448);
 		heroes.add(hypolyta);
-		sprites.clear();
-		animations.clear();
 		
-		t = TextureRegion.split(new Texture(Gdx.files.internal("Thesius.png")), 64, 64);
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites.add(s);
-				animations.add(walkFrames);
-			}
-		}
-		thesius = new Hero(sprites.get(12),"Thesius",animations);
+		thesius = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Thesius.png")), 64, 64),"Thesius");
 		thesius.setPosition(192,576);
 		heroes.add(thesius);
-		sprites.clear();
-		animations.clear();
 		
-		t = TextureRegion.split(new Texture(Gdx.files.internal("Minotaur.png")), 64, 64);
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites.add(s);
-				animations.add(walkFrames);
-			}
-		}
-		titan = new Enemy(sprites.get(26),"Titan",animations);
+		titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Minotaur.png")), 64, 64),"Titan");
 		titan.setPosition(MainGameScreen.WIDTH-64, MainGameScreen.HEIGHT/2);
 		enemies.add(titan);	
-		sprites.clear();
-		animations.clear();
 		
-		t = TextureRegion.split(new Texture(Gdx.files.internal("SkeletonBow.png")), 64, 64);
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites.add(s);
-				animations.add(walkFrames);
-			}
-		}
-		enemy1 = new Enemy(sprites.get(12),"Enemy1",animations);
+		enemy1 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonBow.png")), 64, 64),"Enemy1");
 		enemy1.setPosition(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2-128);
 		enemies.add(enemy1);
-		sprites.clear();
-		animations.clear();
 		
-		
-		t = TextureRegion.split(new Texture(Gdx.files.internal("SkeletonBow.png")), 64, 64);
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites.add(s);
-				animations.add(walkFrames);
-			}
-		}
-		enemy2 = new Enemy(sprites.get(12),"Enemy2",animations);
+		enemy2 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonBow.png")), 64, 64),"Enemy2");
 		enemy2.setPosition(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2);
 		enemies.add(enemy2);
-		sprites.clear();
-		animations.clear();
 		
-		t = TextureRegion.split(new Texture(Gdx.files.internal("SkeletonBow.png")), 64, 64);
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites.add(s);
-				animations.add(walkFrames);
-			}
-		}
-		enemy3 = new Enemy(sprites.get(12),"Enemy3",animations);
+		enemy3 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonBow.png")), 64, 64),"Enemy3");
 		enemy3.setPosition(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2+128);
 		enemies.add(enemy3);
-		sprites.clear();
-		animations.clear();
 		
-		t = TextureRegion.split(new Texture(Gdx.files.internal("SkeletonSpear.png")), 64, 64);
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites.add(s);
-				animations.add(walkFrames);
-			}
-		}
-		enemy4 = new Enemy(sprites.get(12),"Enemy4",animations);
+		enemy4 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonSpear.png")), 64, 64),"Enemy4");
 		enemy4.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-192);
 		enemies.add(enemy4);
-		sprites.clear();
-		animations.clear();
 		
-		t = TextureRegion.split(new Texture(Gdx.files.internal("SkeletonSpear.png")), 64, 64);
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites.add(s);
-				animations.add(walkFrames);
-			}
-		}
-		enemy5 = new Enemy(sprites.get(12),"Enemy5",animations);
+		enemy5 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonSpear.png")), 64, 64),"Enemy5");
 		enemy5.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-64);
 		enemies.add(enemy5);
-		sprites.clear();
-		animations.clear();
 		
-		t = TextureRegion.split(new Texture(Gdx.files.internal("SkeletonSpear.png")), 64, 64);
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites.add(s);
-				animations.add(walkFrames);
-			}
-		}
-		enemy6 = new Enemy(sprites.get(12),"Enemy6",animations);
+		
+		enemy6 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonSpear.png")), 64, 64),"Enemy6");
 		enemy6.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2+64);
 		enemies.add(enemy6);
-		sprites.clear();
-		animations.clear();
+		
 		
 	}
 	
@@ -324,10 +178,7 @@ public class Board {
 	{
 		return new Location(x/64,7-y/64);
 	}
-	/*public IntRect GetRectangle(Location point)
-	{	
-		return new IntRect(point.getX()*64,(point.getY())*64,64,64);
-	}*/
+	
 	public boolean IsInBounds(Location location)
 	{
 		return location.getX()<8&&location.getX()>=0&&location.getY()<8&&location.getY()>=0;

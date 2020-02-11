@@ -48,10 +48,10 @@ public class IntroScreen implements Screen{
         button.setSize(80, 80);
         button.setPosition(HeroesOfOlympus.WIDTH-button.getWidth(),HeroesOfOlympus.HEIGHT-button.getHeight());
 		gameMap = new TiledGameMap();
-		floatingText = new FloatingText(text, TimeUnit.SECONDS.toMillis(15));
+		floatingText = new FloatingText(text, TimeUnit.SECONDS.toMillis(30));
 		floatingText.setColor(Color.WHITE);
-		floatingText.setPosition(HeroesOfOlympus.WIDTH/20, HeroesOfOlympus.HEIGHT/6);
-		floatingText.setDeltaY(50);
+		floatingText.setPosition(HeroesOfOlympus.WIDTH/20, HeroesOfOlympus.HEIGHT/4);
+		floatingText.setDeltaY(20);
 		stage = new Stage();
 		stage.addActor(floatingText);
 		stage.addActor(button);
