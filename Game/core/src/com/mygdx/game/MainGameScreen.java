@@ -79,7 +79,7 @@ public class MainGameScreen implements Screen {
 			board.GetPieceEnemy(enemy.getLocation()).deleteSprite();
 			board.enemies.remove(enemy);
 		}
-		//System.out.println("works,"+	touch.x+","+touch.y);
+		
 		if(board.enemies.isEmpty()) {
 			this.dispose();
 			game.setScreen(new OutroScreen(game));
@@ -162,6 +162,22 @@ public class MainGameScreen implements Screen {
 							board.resetMovement();
 							board.moveEnemies();
 						}
+						//get location
+						//add valid moves to list valid moves in board
+						//when board.draw is called, check if there are valid moves and highlight the surrounding boxes
+						//remove all moves after move is complete
+						//validmoves.clear()
+						//use pixmap to colour the surrounding boxes.
+						/*
+						 Sprite overlayBoxSprite;
+						 overlayBoxSprite = new Sprite(new Texture("url of image"))
+						 overlayBoxSprite.setPosition(board.GetPieceHero(currentHero.getLocation()).getX(), board.GetPieceHero(currentHero.getLocation()).getY());
+						Color color=Color.YELLOW;(optional)
+						overlayBoxSprite.setColor(color);(optional)
+						overlayBoxSprite.draw(batch);
+						if(validmoves.isempty)
+						overlayBoxSprite.dispose();
+						 */
 						if(object.equals(1)) {
 							if(!board.GetPieceHero(currentHero.getLocation()).isMoved()&&movements<5) {
 								board.GetPieceHero(currentHero.getLocation()).moveUp();
@@ -170,6 +186,7 @@ public class MainGameScreen implements Screen {
 								game.batch.draw(currentFrame, board.GetPieceHero(currentHero.getLocation()).getX(), board.GetPieceHero(currentHero.getLocation()).getY());
 								game.batch.end();
 								*/
+								
 								board.GetPieceHero(currentHero.getLocation()).setMoved(true);
 								movements++;
 							}
@@ -184,6 +201,10 @@ public class MainGameScreen implements Screen {
 					    }else if(object.equals(3) ){
 					    	if(!board.GetPieceHero(currentHero.getLocation()).isMoved()&&movements<5) {
 					    		board.GetPieceHero(currentHero.getLocation()).moveLeft();
+					    		/*game.batch.begin();	
+								game.batch.draw(board.GetPieceHero(currentHero.getLocation()).animateToLeft().getKeyFrame(elapsedTime, true),board.GetPieceHero(currentHero.getLocation()).getX(),board.GetPieceHero(currentHero.getLocation()).getY());
+								game.batch.end();
+								*/
 					    		board.GetPieceHero(currentHero.getLocation()).setMoved(true);
 								movements++;
 							}
