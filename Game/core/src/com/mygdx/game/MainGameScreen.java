@@ -181,11 +181,11 @@ public class MainGameScreen implements Screen {
 						if(object.equals(1)) {
 							if(!board.GetPieceHero(currentHero.getLocation()).isMoved()&&movements<5) {
 								board.GetPieceHero(currentHero.getLocation()).moveUp();
-								/*game.batch.begin();
+								game.batch.begin();
 								TextureRegion currentFrame = board.GetPieceHero(currentHero.getLocation()).animation.getKeyFrame(elapsedTime,true);		
 								game.batch.draw(currentFrame, board.GetPieceHero(currentHero.getLocation()).getX(), board.GetPieceHero(currentHero.getLocation()).getY());
 								game.batch.end();
-								*/
+								
 								
 								board.GetPieceHero(currentHero.getLocation()).setMoved(true);
 								movements++;
