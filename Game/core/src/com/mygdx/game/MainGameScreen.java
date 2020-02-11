@@ -169,14 +169,15 @@ public class MainGameScreen implements Screen {
 						//validmoves.clear()
 						//use pixmap to colour the surrounding boxes.
 						/*
-						 Sprite overlayBoxSprite;
+						 Sprite overlayBoxSpriteUp,down,left,right;
+						 
 						 overlayBoxSprite = new Sprite(new Texture("url of image"))
-						 overlayBoxSprite.setPosition(board.GetPieceHero(currentHero.getLocation()).getX(), board.GetPieceHero(currentHero.getLocation()).getY());
+						 overlayBoxSprite.setPosition(board.GetPieceHero(currentHero.getLocation()).getX()-64, board.GetPieceHero(currentHero.getLocation()).getY());
 						Color color=Color.YELLOW;(optional)
 						overlayBoxSprite.setColor(color);(optional)
 						overlayBoxSprite.draw(batch);
 						if(validmoves.isempty)
-						overlayBoxSprite.dispose();
+						overlayBoxSpriteUp.dispose();
 						 */
 						if(object.equals(1)) {
 							if(!board.GetPieceHero(currentHero.getLocation()).isMoved()&&movements<5) {
