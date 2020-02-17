@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,7 +25,7 @@ public class MainGameScreen implements Screen {
 	GameUnit current,enemy;
 	HeroesOfOlympus game;
 	GameMap gameMap;
-	float elapsedTime= 0f;
+	public static float elapsedTime= 0f;
 	int movements;
 	public MainGameScreen (HeroesOfOlympus game) {
 		this.game = game;
@@ -52,7 +52,7 @@ public class MainGameScreen implements Screen {
 
 
 	public void render (float delta) {
-		elapsedTime+=Gdx.graphics.getDeltaTime();
+		elapsedTime+=Gdx.graphics.getDeltaTime()/20;
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		gameMap.render(camera);
@@ -181,14 +181,9 @@ public class MainGameScreen implements Screen {
 						 */
 						if(object.equals(1)) {
 							if(!board.GetPieceHero(currentHero.getLocation()).isMoved()&&movements<5) {
-								board.GetPieceHero(currentHero.getLocation()).moveUp();
-								game.batch.begin();
-								TextureRegion currentFrame = board.GetPieceHero(currentHero.getLocation()).animation.getKeyFrame(elapsedTime,true);		
-								game.batch.draw(currentFrame, board.GetPieceHero(currentHero.getLocation()).getX(), board.GetPieceHero(currentHero.getLocation()).getY());
-								game.batch.end();
-								
-								
 								board.GetPieceHero(currentHero.getLocation()).setMoved(true);
+								board.GetPieceHero(currentHero.getLocation()).moveUp();
+								
 								movements++;
 							}
 						}
@@ -202,10 +197,6 @@ public class MainGameScreen implements Screen {
 					    }else if(object.equals(3) ){
 					    	if(!board.GetPieceHero(currentHero.getLocation()).isMoved()&&movements<5) {
 					    		board.GetPieceHero(currentHero.getLocation()).moveLeft();
-					    		/*game.batch.begin();	
-								game.batch.draw(board.GetPieceHero(currentHero.getLocation()).animateToLeft().getKeyFrame(elapsedTime, true),board.GetPieceHero(currentHero.getLocation()).getX(),board.GetPieceHero(currentHero.getLocation()).getY());
-								game.batch.end();
-								*/
 					    		board.GetPieceHero(currentHero.getLocation()).setMoved(true);
 								movements++;
 							}

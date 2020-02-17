@@ -3,8 +3,6 @@ package com.mygdx.game;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,29 +13,30 @@ public abstract class GameUnit {
 	int damage=0;
 	int range=0;
 	Sprite sprite;
+	//TextureRegion[][] animations;
 	Location location;
 	String name;
 	boolean isDrawn;
 	boolean moved;
 	TextureRegion[] keyframe = new TextureRegion[4];
-	List<Sprite[]> animations;
+	List<TextureRegion[]> animations;
 	
 	Animation<TextureRegion> animation;
 	public GameUnit(TextureRegion[][] t,String name) {
-		Sprite[] sprites= new Sprite[6];
-		animations= new LinkedList<Sprite[]>();
-		//TextureRegion[] walkFrames = new TextureRegion[6];
+		
+		//this.animations = animations;
+		animations= new LinkedList<TextureRegion[]>();
+		TextureRegion[] walkFrames = new TextureRegion[48];
 		for(int i = 0;i<t.length;i++) {
 			for(int j = 0;j<6;j++) {
-				//walkFrames[j]=t[i][j];
-				Sprite s = new Sprite(t[i][j]);
-				s.flip(false, true);
-				sprites[j]=s;
+				walkFrames[j]=t[i][j];
+				walkFrames[j].flip(false, true);
 			}
-			animations.add(sprites);
+			animations.add(walkFrames);
 		}
-
-		this.sprite=animations.get(3)[0];
+		//animation = new Animation<TextureRegion>(1f/30f,animations.get(4));
+		sprite = new Sprite(animations.get(2)[0]);
+		//sprite.flip(false, true);
 		this.name=name;
 		location = new Location(0,0);
 		setPosition(0, 0);
@@ -46,7 +45,29 @@ public abstract class GameUnit {
 	}
 	abstract void attack();
 	void setPosition(float x, float y) {
-		sprite.setPosition(x, y);
+		/*if(moved) {
+			if(y==0) {
+				float i = x+getX();
+				while(getX()!=i) {
+					if(getX()<i) {
+						sprite.translate(getX()+1, y);
+					}else {
+						sprite.translate(getX()-1, y);
+					}
+				}
+			}
+			if(x==0) {
+				float i = y+getY();
+				while(getY()!=i) {
+					if(getY()<i) {
+						sprite.translate(x, getY()+1);
+					}else {
+						sprite.translate(x, getY()-1);
+					}
+				}
+			}
+		}*/
+		sprite.translate(x, y);
 		location.setLocation(x, y);
 	}
 	boolean isMoved() {
@@ -59,16 +80,26 @@ public abstract class GameUnit {
 		return location;
 	}
 	float getX(){
-		return location.getX();
+		return sprite.getX();
 	}
 	String getName(){
 		return name;
 	}
 	float getY(){
-		return location.getY();
+		return sprite.getY();
 	}
 	void draw(SpriteBatch batch) {
-		sprite.draw(batch);
+		//sprite.draw(batch);
+		if(moved) {
+			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime,true);
+			//currentFrame.flip(false, true);
+			
+			batch.draw(currentFrame, getX(), getY());
+			moved=false;
+		}
+		else {
+			sprite.draw(batch);
+		}
 		isDrawn=true;
 	}
 	void deleteSprite() {
@@ -90,24 +121,32 @@ public abstract class GameUnit {
 		return health;
 	}
 	void moveLeft() {
-		this.setPosition(sprite.getX()-64, sprite.getY()+0);
-		
+		//this.setPosition(sprite.getX()-64, sprite.getY()+0);
+		//sprite.translate(-64, 0);
+		setPosition(-64,0);
 	}
 	void moveRight() {
-		for(int i=0;i<=64;i+=12) {
-			this.setPosition(sprite.getX()+i, sprite.getY()+0);
-		}
-		
+		//sprite.translate(64, 0);
+		setPosition(64,0);
+		//this.setPosition(sprite.getX(), sprite.getY());
 	}
 	void moveUp() {
-		this.setPosition(sprite.getX()+0, sprite.getY()-64);
 		animation = new Animation<TextureRegion>(1f/30f,animations.get(0));
+		//this.setPosition(sprite.getX()+0, sprite.getY()-64);
+		//sprite.translate(0,-64);
+		
+			setPosition(0,-64);
+		
+		
+		
 	}
 	void moveDown() {
-		this.setPosition(sprite.getX()+0, sprite.getY()+64);
+		//this.setPosition(sprite.getX()+0, sprite.getY()+64 );
+		//sprite.translate(0, 64);
+		setPosition(0,64);
 	}
-	//public Animation<TextureRegion> animateToLeft() {
-	//	return new Animation<TextureRegion>(0.7f, animations.get(1).toArray());
-	//}
+	public Animation<TextureRegion> animateToLeft() {
+		return new Animation<TextureRegion>(0.7f, animations.get(1));
+	}
 
 }
