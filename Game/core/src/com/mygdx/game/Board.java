@@ -6,8 +6,6 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -16,6 +14,7 @@ public class Board {
 	List<GameUnit> enemies;
 	
 	Hero achille,helen,hercules,hypolyta,thesius;
+	Texture achilleTexture,helenTexture,herculesTexture,hypolytaTexture,thesiusTexture;
 	Enemy titan,enemy1,enemy2,enemy3,enemy4,enemy5,enemy6;
 	Location lastFrom;
 	Location lastTo;
@@ -25,9 +24,11 @@ public class Board {
 		enemies = new LinkedList<GameUnit>();
 		heroes = new LinkedList<GameUnit>();
 		
-		achille = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Achilles.png")), 64, 64),"Achille");
+		achilleTexture = new Texture(Gdx.files.internal("Achilles.png"));
+		achille = new Hero(TextureRegion.split(achilleTexture,achilleTexture.getWidth()/6 ,achilleTexture.getHeight()/ 9),"Achille");
 		achille.setPosition(64, 128);
 		heroes.add(achille);
+		
 		
 		helen = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Helen.png")), 64, 64),"Helen");
 		helen.setPosition(128, 256);
@@ -138,6 +139,8 @@ public class Board {
 			if(u.location.equals(from)) {
 				u.sprite.setX(to.getX());
 				u.sprite.setY(to.getY());
+				
+				
 			}
 		}
 	}
