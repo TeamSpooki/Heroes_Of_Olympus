@@ -12,9 +12,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Board {
 	List<GameUnit> heroes;
 	List<GameUnit> enemies;
+	List<Location> validMoves;
+	
 	
 	Hero achille,helen,hercules,hypolyta,thesius;
-	Texture achilleTexture,helenTexture,herculesTexture,hypolytaTexture,thesiusTexture;
+	Texture achilleTexture,helenTexture,herculesTexture,hypolytaTexture,thesiusTexture,position;
 	Enemy titan,enemy1,enemy2,enemy3,enemy4,enemy5,enemy6;
 	Location lastFrom;
 	Location lastTo;
@@ -23,28 +25,35 @@ public class Board {
 	{	
 		enemies = new LinkedList<GameUnit>();
 		heroes = new LinkedList<GameUnit>();
+		validMoves = new LinkedList<Location>();
+		
+		position = new Texture(Gdx.files.internal("yellowSelect.png"));
 		
 		achilleTexture = new Texture(Gdx.files.internal("Achilles.png"));
 		achille = new Hero(TextureRegion.split(achilleTexture,achilleTexture.getWidth()/6 ,achilleTexture.getHeight()/ 9),"Achille");
 		achille.setPosition(64, 128);
 		heroes.add(achille);
 		
-		
-		helen = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Helen.png")), 64, 64),"Helen");
+		helenTexture = new Texture(Gdx.files.internal("Helen.png"));
+		helen = new Hero(TextureRegion.split(helenTexture,helenTexture.getWidth()/6,helenTexture.getHeight()/9),"Helen");
 		helen.setPosition(128, 256);
 		heroes.add(helen);
 		
-		hercules = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Hercules.png")), 64, 64),"Hercules");
+		herculesTexture = new Texture(Gdx.files.internal("Hercules.png"));
+		hercules = new Hero(TextureRegion.split(herculesTexture,herculesTexture.getWidth()/6,herculesTexture.getHeight()/9),"Hercules");
 		hercules.setPosition(0, 320);
 		heroes.add(hercules);
 		
-		hypolyta = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Hypolyta.png")), 64, 64),"Hypolyta");
+		hypolytaTexture= new Texture(Gdx.files.internal("Hypolyta.png"));
+		hypolyta = new Hero(TextureRegion.split(hypolytaTexture,hypolytaTexture.getWidth()/6,hypolytaTexture.getHeight()/9),"Hypolyta");
 		hypolyta.setPosition(128, 448);
 		heroes.add(hypolyta);
 		
-		thesius = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Thesius.png")), 64, 64),"Thesius");
+		thesiusTexture = new Texture(Gdx.files.internal("Thesius.png"));
+		thesius = new Hero(TextureRegion.split(thesiusTexture,thesiusTexture.getWidth()/6,thesiusTexture.getHeight()/9),"Thesius");
 		thesius.setPosition(192,576);
 		heroes.add(thesius);
+		
 		
 		titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Minotaur.png")), 64, 64),"Titan");
 		titan.setPosition(MainGameScreen.WIDTH-64, MainGameScreen.HEIGHT/2);
@@ -89,6 +98,13 @@ public class Board {
 		{
 				e.draw(batch);
 		}
+		if(!validMoves.isEmpty()) {
+			for(Location l:validMoves)
+			{
+				batch.draw(position, l.getX(), l.getY());
+			}
+			
+		}
 	}
 	public GameUnit GetPieceHero(Location location)
 	{
@@ -130,6 +146,16 @@ public class Board {
 		}
 		return null;
 	}
+	public Location findNearestLocation(float x, float y)
+	{
+		for(Location l:validMoves)
+		{
+			if(x>=l.getX()&&x<=l.getX()+64&&y>=l.getY()&&y<=l.getY()+64) {
+				return l;
+			}
+		}
+		return null;
+	}
 	public void MovePiece(Location from,Location to)
 	{
 		lastFrom=from;
@@ -137,10 +163,7 @@ public class Board {
 		for(GameUnit u:heroes)
 		{
 			if(u.location.equals(from)) {
-				u.sprite.setX(to.getX());
-				u.sprite.setY(to.getY());
-				
-				
+				u.setPosition(to.getX(), to.getY());
 			}
 		}
 	}

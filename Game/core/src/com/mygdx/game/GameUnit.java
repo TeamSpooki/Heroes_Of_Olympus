@@ -4,9 +4,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Timer;
 
 public abstract class GameUnit {
 	int health=0;
@@ -24,9 +26,9 @@ public abstract class GameUnit {
 	Animation<TextureRegion> animation;
 	public GameUnit(TextureRegion[][] t,String name) {
 		
-		//this.animations = animations;
+		//this.animations = t;
 		animations= new LinkedList<TextureRegion[]>();
-		TextureRegion[] walkFrames = new TextureRegion[48];
+		TextureRegion[] walkFrames = new TextureRegion[6];
 		for(int i = 0;i<t.length;i++) {
 			for(int j = 0;j<6;j++) {
 				walkFrames[j]=t[i][j];
@@ -34,7 +36,7 @@ public abstract class GameUnit {
 			}
 			animations.add(walkFrames);
 		}
-		//animation = new Animation<TextureRegion>(1f/30f,animations.get(4));
+		//animation = new Animation<TextureRegion>(1f/30f,animations.get(2));
 		sprite = new Sprite(animations.get(2)[0]);
 		//sprite.flip(false, true);
 		this.name=name;
@@ -68,6 +70,7 @@ public abstract class GameUnit {
 			}
 		}*/
 		sprite.translate(x, y);
+		
 		location.setLocation(x, y);
 	}
 	boolean isMoved() {
@@ -91,15 +94,20 @@ public abstract class GameUnit {
 	void draw(SpriteBatch batch) {
 		//sprite.draw(batch);
 		if(moved) {
+			//animation.setPlayMode(PlayMode.LOOP);
+			
 			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime,true);
 			//currentFrame.flip(false, true);
+			sprite.setRegion(currentFrame);
+			sprite.draw(batch);
+			//batch.draw(currentFrame, getX(), getY());
 			
-			batch.draw(currentFrame, getX(), getY());
 			moved=false;
 		}
 		else {
 			sprite.draw(batch);
 		}
+		
 		isDrawn=true;
 	}
 	void deleteSprite() {
@@ -123,6 +131,7 @@ public abstract class GameUnit {
 	void moveLeft() {
 		//this.setPosition(sprite.getX()-64, sprite.getY()+0);
 		//sprite.translate(-64, 0);
+		animation = new Animation<TextureRegion>(0.7f, animations.get(1));
 		setPosition(-64,0);
 	}
 	void moveRight() {
@@ -131,12 +140,11 @@ public abstract class GameUnit {
 		//this.setPosition(sprite.getX(), sprite.getY());
 	}
 	void moveUp() {
-		animation = new Animation<TextureRegion>(1f/30f,animations.get(0));
+		
 		//this.setPosition(sprite.getX()+0, sprite.getY()-64);
 		//sprite.translate(0,-64);
 		
-			setPosition(0,-64);
-		
+		setPosition(0,-64);
 		
 		
 	}
@@ -145,8 +153,8 @@ public abstract class GameUnit {
 		//sprite.translate(0, 64);
 		setPosition(0,64);
 	}
-	public Animation<TextureRegion> animateToLeft() {
-		return new Animation<TextureRegion>(0.7f, animations.get(1));
+	void animateUp() {
+		animation = new Animation<TextureRegion>(1f/30f,animations.get(0));
+		//draw(HeroesOfOlympus.batch);
 	}
-
 }
