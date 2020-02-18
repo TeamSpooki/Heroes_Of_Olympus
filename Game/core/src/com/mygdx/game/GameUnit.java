@@ -92,8 +92,8 @@ public abstract class GameUnit {
 		return sprite.getY();
 	}
 	void draw(SpriteBatch batch) {
-		//sprite.draw(batch);
-		if(moved) {
+		sprite.draw(batch);
+		/*if(moved) {
 			//animation.setPlayMode(PlayMode.LOOP);
 			
 			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime,true);
@@ -107,7 +107,7 @@ public abstract class GameUnit {
 		else {
 			sprite.draw(batch);
 		}
-		
+		*/
 		isDrawn=true;
 	}
 	void deleteSprite() {

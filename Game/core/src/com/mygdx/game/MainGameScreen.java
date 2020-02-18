@@ -27,6 +27,7 @@ public class MainGameScreen implements Screen {
 	HeroesOfOlympus game;
 	GameMap gameMap;
 	public static float elapsedTime= 0f;
+	boolean move = false;
 	int movements;
 	public MainGameScreen (HeroesOfOlympus game) {
 		this.game = game;
@@ -73,6 +74,15 @@ public class MainGameScreen implements Screen {
 				current=board.findNearestHero(touch.x,touch.y);
 				options.setHero(current);
 				options.show(stage);
+				
+			}
+			if(move) {
+				//board.MovePiece(current.getLocation(), board.findNearestLocation(touch.x,touch.y));
+				
+				board.GetPieceHero(current.getLocation()).setPosition(board.findNearestLocation(touch.x,touch.y).getX(), board.findNearestLocation(touch.x,touch.y).getY());
+				board.GetPieceHero(current.getLocation()).setMoved(true);
+				//board.validMoves.clear();
+				movements++;
 			}
 		}
 		if(board.findNearestEnemy(touch.x,touch.y) instanceof Enemy) {
@@ -164,6 +174,7 @@ public class MainGameScreen implements Screen {
 							board.resetMovement();
 							board.moveEnemies();
 						}
+						
 						Location up =currentHero.getLocation().aboveLocation();
 						Location down =currentHero.getLocation().belowLocation();
 						Location left =currentHero.getLocation().leftLocation();
@@ -172,7 +183,7 @@ public class MainGameScreen implements Screen {
 						board.validMoves.add(down);
 						board.validMoves.add(left);
 						board.validMoves.add(right);
-						boolean moved = false;
+						move=true;
 						/*while(!moved) {
 							if(Gdx.input.isTouched()){
 								touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
