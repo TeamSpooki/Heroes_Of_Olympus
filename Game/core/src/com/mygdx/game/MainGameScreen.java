@@ -4,12 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.world.GameMap;
 import com.mygdx.world.TiledGameMap;
 
@@ -25,7 +26,8 @@ public class MainGameScreen implements Screen {
 	GameUnit current,enemy;
 	HeroesOfOlympus game;
 	GameMap gameMap;
-	float elapsedTime= 0f;
+	public static float elapsedTime= 0f;
+	boolean move = false;
 	int movements;
 	public MainGameScreen (HeroesOfOlympus game) {
 		this.game = game;
@@ -52,7 +54,7 @@ public class MainGameScreen implements Screen {
 
 
 	public void render (float delta) {
-		elapsedTime+=Gdx.graphics.getDeltaTime();
+		elapsedTime+=Gdx.graphics.getDeltaTime()*100;
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		gameMap.render(camera);
@@ -60,6 +62,7 @@ public class MainGameScreen implements Screen {
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
 		board.Draw(game.batch);
+		
 		game.batch.end();
 		stage.act();
 		stage.draw();
@@ -71,6 +74,15 @@ public class MainGameScreen implements Screen {
 				current=board.findNearestHero(touch.x,touch.y);
 				options.setHero(current);
 				options.show(stage);
+				
+			}
+			if(move) {
+				//board.MovePiece(current.getLocation(), board.findNearestLocation(touch.x,touch.y));
+				
+				board.GetPieceHero(current.getLocation()).setPosition(board.findNearestLocation(touch.x,touch.y).getX(), board.findNearestLocation(touch.x,touch.y).getY());
+				board.GetPieceHero(current.getLocation()).setMoved(true);
+				//board.validMoves.clear();
+				movements++;
 			}
 		}
 		if(board.findNearestEnemy(touch.x,touch.y) instanceof Enemy) {
@@ -154,13 +166,34 @@ public class MainGameScreen implements Screen {
 			}
 			else if (object.equals(2))
 		    {
-				new Dialog("Move",this.getSkin()) {
-					protected void result(Object object)
-		            {
+				//new Dialog("Move",this.getSkin()) {
+					//protected void result(Object object)
+		           // {
 						if(movements==5) {
 							movements=0;
 							board.resetMovement();
 							board.moveEnemies();
+						}
+						
+						Location up =currentHero.getLocation().aboveLocation();
+						Location down =currentHero.getLocation().belowLocation();
+						Location left =currentHero.getLocation().leftLocation();
+						Location right =currentHero.getLocation().rightLocation();
+						board.validMoves.add(up);
+						board.validMoves.add(down);
+						board.validMoves.add(left);
+						board.validMoves.add(right);
+						move=true;
+						/*while(!moved) {
+							if(Gdx.input.isTouched()){
+								touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+								camera.unproject(touch);
+								board.MovePiece(currentHero.getLocation(), board.findNearestLocation(touch.x,touch.y));
+								board.GetPieceHero(currentHero.getLocation()).setMoved(true);
+								board.validMoves.clear();
+								movements++;
+								moved=true;
+							}
 						}
 						//get location
 						//add valid moves to list valid moves in board
@@ -169,25 +202,27 @@ public class MainGameScreen implements Screen {
 						//validmoves.clear()
 						//use pixmap to colour the surrounding boxes.
 						/*
-						 Sprite overlayBoxSprite;
+						 Sprite overlayBoxSpriteUp,down,left,right;
+						 
 						 overlayBoxSprite = new Sprite(new Texture("url of image"))
-						 overlayBoxSprite.setPosition(board.GetPieceHero(currentHero.getLocation()).getX(), board.GetPieceHero(currentHero.getLocation()).getY());
+						 overlayBoxSprite.setPosition(board.GetPieceHero(currentHero.getLocation()).getX()-64, board.GetPieceHero(currentHero.getLocation()).getY());
 						Color color=Color.YELLOW;(optional)
 						overlayBoxSprite.setColor(color);(optional)
 						overlayBoxSprite.draw(batch);
 						if(validmoves.isempty)
-						overlayBoxSprite.dispose();
-						 */
+						overlayBoxSpriteUp.dispose();
+						
 						if(object.equals(1)) {
 							if(!board.GetPieceHero(currentHero.getLocation()).isMoved()&&movements<5) {
-								board.GetPieceHero(currentHero.getLocation()).moveUp();
-								game.batch.begin();
-								TextureRegion currentFrame = board.GetPieceHero(currentHero.getLocation()).animation.getKeyFrame(elapsedTime,true);		
-								game.batch.draw(currentFrame, board.GetPieceHero(currentHero.getLocation()).getX(), board.GetPieceHero(currentHero.getLocation()).getY());
-								game.batch.end();
-								
-								
 								board.GetPieceHero(currentHero.getLocation()).setMoved(true);
+								
+								
+								board.GetPieceHero(currentHero.getLocation()).animateUp();
+								Timer t =new Timer();
+								t.delay(10);
+								t.stop();
+								board.GetPieceHero(currentHero.getLocation()).moveUp();
+								
 								movements++;
 							}
 						}
@@ -201,10 +236,6 @@ public class MainGameScreen implements Screen {
 					    }else if(object.equals(3) ){
 					    	if(!board.GetPieceHero(currentHero.getLocation()).isMoved()&&movements<5) {
 					    		board.GetPieceHero(currentHero.getLocation()).moveLeft();
-					    		/*game.batch.begin();	
-								game.batch.draw(board.GetPieceHero(currentHero.getLocation()).animateToLeft().getKeyFrame(elapsedTime, true),board.GetPieceHero(currentHero.getLocation()).getX(),board.GetPieceHero(currentHero.getLocation()).getY());
-								game.batch.end();
-								*/
 					    		board.GetPieceHero(currentHero.getLocation()).setMoved(true);
 								movements++;
 							}
@@ -215,13 +246,11 @@ public class MainGameScreen implements Screen {
 								movements++;
 							}
 					    }
-						
-		            }
-				}.button("up", 1)
-				.button("down", 2)
-				.button("left",3)
-				.button("right", 4)
-				.show(stage);
+						*/
+		            //}
+		            
+				//}
+				
 		    }
 			else {
 				

@@ -4,6 +4,7 @@ public class Location {
 	float x;
 	float y;
 
+	
 	public boolean equals(Object obj) {
 		
 		if(!( obj instanceof Location))
@@ -40,6 +41,18 @@ public class Location {
 	public void setLocation(float x,float y) {
 		setX(x);
 		setY(y);
+	}
+	public Location aboveLocation() {
+		return new Location(getX(),getY()-64);
+	}
+	public Location belowLocation() {
+		return new Location(getX(),getY()+64);
+	}
+	public Location leftLocation() {
+		return new Location(getX()-64,getY());
+	}
+	public Location rightLocation() {
+		return new Location(getX()+64,getY());
 	}
 	//need to check
 	public Location Transpose(float x, float y) {
