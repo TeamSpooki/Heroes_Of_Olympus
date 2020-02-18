@@ -70,19 +70,25 @@ public class MainGameScreen implements Screen {
 			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touch);
 			
-			if(board.findNearestHero(touch.x,touch.y) instanceof Hero) {
+			if(board.findNearestHero(touch.x,touch.y) instanceof Hero && !move) {
 				current=board.findNearestHero(touch.x,touch.y);
 				options.setHero(current);
 				options.show(stage);
 				
 			}
 			if(move) {
-				//board.MovePiece(current.getLocation(), board.findNearestLocation(touch.x,touch.y));
-				
-				board.GetPieceHero(current.getLocation()).setPosition(board.findNearestLocation(touch.x,touch.y).getX(), board.findNearestLocation(touch.x,touch.y).getY());
-				board.GetPieceHero(current.getLocation()).setMoved(true);
-				//board.validMoves.clear();
-				movements++;
+				if(movements==5) {
+					movements=0;
+					board.resetMovement();
+					board.moveEnemies();
+				}
+				if(!board.GetPieceHero(current.getLocation()).isMoved()&&movements<5) {
+					board.MovePiece(current.getLocation(), board.findNearestLocation(touch.x,touch.y));
+					board.GetPieceHero(current.getLocation()).setMoved(true);
+					board.validMoves.clear();
+					movements++;
+					move=false;
+				}
 			}
 		}
 		if(board.findNearestEnemy(touch.x,touch.y) instanceof Enemy) {
@@ -169,11 +175,7 @@ public class MainGameScreen implements Screen {
 				//new Dialog("Move",this.getSkin()) {
 					//protected void result(Object object)
 		           // {
-						if(movements==5) {
-							movements=0;
-							board.resetMovement();
-							board.moveEnemies();
-						}
+						
 						
 						Location up =currentHero.getLocation().aboveLocation();
 						Location down =currentHero.getLocation().belowLocation();

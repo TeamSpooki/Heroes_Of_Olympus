@@ -18,8 +18,7 @@ public class Board {
 	Hero achille,helen,hercules,hypolyta,thesius;
 	Texture achilleTexture,helenTexture,herculesTexture,hypolytaTexture,thesiusTexture,position;
 	Enemy titan,enemy1,enemy2,enemy3,enemy4,enemy5,enemy6;
-	Location lastFrom;
-	Location lastTo;
+
 	
 	public Board()
 	{	
@@ -158,8 +157,7 @@ public class Board {
 	}
 	public void MovePiece(Location from,Location to)
 	{
-		lastFrom=from;
-		lastTo=to;
+		
 		for(GameUnit u:heroes)
 		{
 			if(u.location.equals(from)) {

@@ -69,7 +69,7 @@ public abstract class GameUnit {
 				}
 			}
 		}*/
-		sprite.translate(x, y);
+		sprite.setPosition(x, y);
 		
 		location.setLocation(x, y);
 	}
