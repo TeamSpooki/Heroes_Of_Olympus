@@ -30,17 +30,8 @@ public class IntroScreen implements Screen{
 	
 	IntroScreen(HeroesOfOlympus game) {
 		this.game = game;
-		text = "The story begins with our five mighty heroes:\r\n"
-				+ " Hercules, Achilles, Theseus, Helen and Hippolyta, \r\n\""
-				+ "cheering and parading out of a jungle after a victorious battle against the Chimaera. \r\n" + 
-				"Until our heroes are ambushed! A horde of skeletons pounce out of the treeline and \r\n"
-				+ "swings their swords at full force! \r\n"
-				+ "No match for our heroes, one by one the skeletons fall and with the final skeleton \r\n"
-				+ "clashing swords with Hercules, our heroes once again stand proud in victory.\r\n" + 
-				"However, the fight is not over yet, knowing that no skeleton would ever travel \r\n"
-				+ "so close to Mount Olympus, our heroes brace themselves for what is next to come.\r\n" + 
-				"Across the path to Mount Olympus, more skeletons gather, \r\n"
-				+ "and so our heroes prepare themselves as the battle is only just beginning.\r\n";
+		text = "Test";
+		
 		nextButton = new Texture("Next button.png");
 		myTextureRegion = new TextureRegion(nextButton);
         myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
