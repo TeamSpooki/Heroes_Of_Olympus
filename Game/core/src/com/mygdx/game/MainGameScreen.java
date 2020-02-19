@@ -4,13 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Timer;
 import com.mygdx.world.GameMap;
 import com.mygdx.world.TiledGameMap;
 
@@ -32,7 +29,6 @@ public class MainGameScreen implements Screen {
 	public MainGameScreen (HeroesOfOlympus game) {
 		this.game = game;
 		gameMap = new TiledGameMap();
-		
 		stage = new Stage();
 		skin = new Skin(Gdx.files.internal("uiskin.json"));
 		camera = new OrthographicCamera();
@@ -69,7 +65,6 @@ public class MainGameScreen implements Screen {
 		if(Gdx.input.isTouched()) {
 			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touch);
-			
 			if(board.findNearestHero(touch.x,touch.y) instanceof Hero) {
 				oldCurrent=current;
 				current=board.findNearestHero(touch.x,touch.y);
@@ -77,10 +72,10 @@ public class MainGameScreen implements Screen {
 					options.setHero(current);
 					options.show(stage);
 				}
-				
-			
 			}
 			if(move) {
+				
+				//movement
 				if(movements==5) {
 					movements=0;
 					board.resetMovement();
@@ -145,6 +140,7 @@ public class MainGameScreen implements Screen {
 			if(object.equals(1)) {
 			}
 			else if (object.equals(2)){
+				//movement
 				Location up =currentHero.getLocation().aboveLocation();
 				Location down =currentHero.getLocation().belowLocation();
 				Location left =currentHero.getLocation().leftLocation();
