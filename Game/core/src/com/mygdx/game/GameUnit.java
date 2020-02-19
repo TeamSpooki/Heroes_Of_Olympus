@@ -129,29 +129,29 @@ public abstract class GameUnit {
 		return health;
 	}
 	void moveLeft() {
-		//this.setPosition(sprite.getX()-64, sprite.getY()+0);
+		setPosition(sprite.getX()-64, sprite.getY()+0);
 		//sprite.translate(-64, 0);
 		animation = new Animation<TextureRegion>(0.7f, animations.get(1));
-		setPosition(-64,0);
+		//setPosition(-64,0);
 	}
 	void moveRight() {
 		//sprite.translate(64, 0);
-		setPosition(64,0);
-		//this.setPosition(sprite.getX(), sprite.getY());
+		//setPosition(64,0);
+		setPosition(sprite.getX(), sprite.getY());
 	}
 	void moveUp() {
 		
-		//this.setPosition(sprite.getX()+0, sprite.getY()-64);
+		setPosition(sprite.getX()+0, sprite.getY()-64);
 		//sprite.translate(0,-64);
 		
-		setPosition(0,-64);
+		//setPosition(0,-64);
 		
 		
 	}
 	void moveDown() {
-		//this.setPosition(sprite.getX()+0, sprite.getY()+64 );
+		setPosition(sprite.getX()+0, sprite.getY()+64 );
 		//sprite.translate(0, 64);
-		setPosition(0,64);
+		//setPosition(0,64);
 	}
 	void animateUp() {
 		animation = new Animation<TextureRegion>(1f/30f,animations.get(0));
