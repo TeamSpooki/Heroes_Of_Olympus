@@ -174,8 +174,10 @@ public class Board {
 	public void moveEnemies() {
 		Random rand = new Random();
 		int n=0;
-		for(GameUnit e:enemies)
-		{ 
+		n= rand.nextInt(5);
+		GameUnit e = enemies.get(n);
+		//for(GameUnit e:enemies)
+		//{ 
 			if(!e.name.equals("Titan")) {
 				n = rand.nextInt(5)+1;
 				switch(n) {
@@ -196,7 +198,7 @@ public class Board {
 				}
 			}
 			
-		}
+		//}
 	}
 	public Location GetPoint(int x,int y)
 	{

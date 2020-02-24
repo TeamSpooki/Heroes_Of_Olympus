@@ -4,13 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Timer;
 import com.mygdx.world.GameMap;
 import com.mygdx.world.TiledGameMap;
 
@@ -23,7 +20,7 @@ public class MainGameScreen implements Screen {
 	Skin skin;
 	OptionDialog options;
 	Stage stage;
-	GameUnit current,enemy;
+	GameUnit current,oldCurrent,enemy;
 	HeroesOfOlympus game;
 	GameMap gameMap;
 	public static float elapsedTime= 0f;
@@ -32,7 +29,6 @@ public class MainGameScreen implements Screen {
 	public MainGameScreen (HeroesOfOlympus game) {
 		this.game = game;
 		gameMap = new TiledGameMap();
-		
 		stage = new Stage();
 		skin = new Skin(Gdx.files.internal("uiskin.json"));
 		camera = new OrthographicCamera();
@@ -69,31 +65,35 @@ public class MainGameScreen implements Screen {
 		if(Gdx.input.isTouched()) {
 			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touch);
-			
-			if(board.findNearestHero(touch.x,touch.y) instanceof Hero && !move) {
+			if(board.findNearestHero(touch.x,touch.y) instanceof Hero) {
+				oldCurrent=current;
 				current=board.findNearestHero(touch.x,touch.y);
-				options.setHero(current);
-				options.show(stage);
-				
+				if(oldCurrent!=current) {
+					options.setHero(current);
+					options.show(stage);
+				}
 			}
 			if(move) {
+				
+				//movement
 				if(movements==5) {
 					movements=0;
 					board.resetMovement();
-					board.moveEnemies();
+					
 				}
 				if(!board.GetPieceHero(current.getLocation()).isMoved()&&movements<5) {
 					board.MovePiece(current.getLocation(), board.findNearestLocation(touch.x,touch.y));
 					board.GetPieceHero(current.getLocation()).setMoved(true);
+					board.moveEnemies();
 					board.validMoves.clear();
 					movements++;
 					move=false;
 				}
+
 			}
 		}
 		if(board.findNearestEnemy(touch.x,touch.y) instanceof Enemy) {
 			enemy=board.findNearestEnemy(touch.x,touch.y);
-			System.out.println("works"+enemy.name);
 			board.GetPieceEnemy(enemy.getLocation()).deleteSprite();
 			board.enemies.remove(enemy);
 		}
@@ -107,40 +107,21 @@ public class MainGameScreen implements Screen {
 		
 		
 	}
-	@Override
+	
 	public void dispose () {
 		game.batch.dispose();
 		stage.dispose();
 	}
 
-	public Object getBatch() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Object getBatch() { return null;}
+	
+	public void hide() {}
 
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void resize(int width, int height) {}
 
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void pause() {}
 
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void resume() {}
 	
 	public class OptionDialog extends Dialog {
 		GameUnit currentHero;
@@ -157,106 +138,20 @@ public class MainGameScreen implements Screen {
 		
 		protected void result (Object object) {
 			if(object.equals(1)) {
-				
-				//if(Gdx.input.) {
-					System.out.println("works");
-					//touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-					//camera.unproject(touch);
-					//currentEnemy=(Enemy)board.findNearestEnemy(touch.x,touch.y);
-					//while(enemy==null) {
-						
-					//}
-					
-					attack();
-				//}
 			}
-			else if (object.equals(2))
-		    {
-				//new Dialog("Move",this.getSkin()) {
-					//protected void result(Object object)
-		           // {
-						
-						
-						Location up =currentHero.getLocation().aboveLocation();
-						Location down =currentHero.getLocation().belowLocation();
-						Location left =currentHero.getLocation().leftLocation();
-						Location right =currentHero.getLocation().rightLocation();
-						board.validMoves.add(up);
-						board.validMoves.add(down);
-						board.validMoves.add(left);
-						board.validMoves.add(right);
-						move=true;
-						/*while(!moved) {
-							if(Gdx.input.isTouched()){
-								touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-								camera.unproject(touch);
-								board.MovePiece(currentHero.getLocation(), board.findNearestLocation(touch.x,touch.y));
-								board.GetPieceHero(currentHero.getLocation()).setMoved(true);
-								board.validMoves.clear();
-								movements++;
-								moved=true;
-							}
-						}
-						//get location
-						//add valid moves to list valid moves in board
-						//when board.draw is called, check if there are valid moves and highlight the surrounding boxes
-						//remove all moves after move is complete
-						//validmoves.clear()
-						//use pixmap to colour the surrounding boxes.
-						/*
-						 Sprite overlayBoxSpriteUp,down,left,right;
-						 
-						 overlayBoxSprite = new Sprite(new Texture("url of image"))
-						 overlayBoxSprite.setPosition(board.GetPieceHero(currentHero.getLocation()).getX()-64, board.GetPieceHero(currentHero.getLocation()).getY());
-						Color color=Color.YELLOW;(optional)
-						overlayBoxSprite.setColor(color);(optional)
-						overlayBoxSprite.draw(batch);
-						if(validmoves.isempty)
-						overlayBoxSpriteUp.dispose();
-						
-						if(object.equals(1)) {
-							if(!board.GetPieceHero(currentHero.getLocation()).isMoved()&&movements<5) {
-								board.GetPieceHero(currentHero.getLocation()).setMoved(true);
-								
-								
-								board.GetPieceHero(currentHero.getLocation()).animateUp();
-								Timer t =new Timer();
-								t.delay(10);
-								t.stop();
-								board.GetPieceHero(currentHero.getLocation()).moveUp();
-								
-								movements++;
-							}
-						}
-						else if (object.equals(2))
-					    {
-							if(!board.GetPieceHero(currentHero.getLocation()).isMoved()&&movements<5) {
-								board.GetPieceHero(currentHero.getLocation()).moveDown();
-								board.GetPieceHero(currentHero.getLocation()).setMoved(true);
-								movements++;
-							}
-					    }else if(object.equals(3) ){
-					    	if(!board.GetPieceHero(currentHero.getLocation()).isMoved()&&movements<5) {
-					    		board.GetPieceHero(currentHero.getLocation()).moveLeft();
-					    		board.GetPieceHero(currentHero.getLocation()).setMoved(true);
-								movements++;
-							}
-					    }else {
-					    	if(!board.GetPieceHero(currentHero.getLocation()).isMoved()&&movements<5) {
-					    		board.GetPieceHero(currentHero.getLocation()).moveRight();
-					    		board.GetPieceHero(currentHero.getLocation()).setMoved(true);
-								movements++;
-							}
-					    }
-						*/
-		            //}
-		            
-				//}
-				
-		    }
-			else {
-				
+			else if (object.equals(2)){
+				//movement
+				Location up =currentHero.getLocation().aboveLocation();
+				Location down =currentHero.getLocation().belowLocation();
+				Location left =currentHero.getLocation().leftLocation();
+				Location right =currentHero.getLocation().rightLocation();
+				board.validMoves.add(up);
+				board.validMoves.add(down);
+				board.validMoves.add(left);
+				board.validMoves.add(right);
+				move=true;
 			}
+			else {}
 		}
 	}
 }
