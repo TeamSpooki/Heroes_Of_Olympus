@@ -20,7 +20,8 @@ public abstract class GameUnit {
 	boolean moved;
 	TextureRegion[] keyframe = new TextureRegion[4];
 	List<TextureRegion[]> animations;
-	
+	// set attacking to false
+	boolean attacking=false;
 	Animation<TextureRegion> animation;
 	public GameUnit(TextureRegion[][] t,String name) {
 		
@@ -43,7 +44,20 @@ public abstract class GameUnit {
 		isDrawn=false;
 		moved=false;
 	}
-	abstract void attack();
+	// return method for attacking
+	public boolean isAttacking()
+	{
+		return attacking;
+	}
+	//Method to end/finish attack when attacking set to false
+	public void endAttack()
+	{
+		attacking=false;
+	}
+	//Method to start/attack when attacking set to true
+	public void attack() {
+		 attacking = true;
+	}
 	void setPosition(float x, float y) {
 		/*if(moved) {
 			if(y==0) {

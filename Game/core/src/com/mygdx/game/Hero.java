@@ -9,7 +9,7 @@ public class Hero extends GameUnit{
 		super(t, name);
 	}
 
-	void attack() {}
+	
 	void setMoves(int moves) {
 		this.numMoves=moves;
 	}

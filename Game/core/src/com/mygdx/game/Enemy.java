@@ -9,6 +9,6 @@ public class Enemy extends GameUnit{
 		
 	}
 
-	void attack() {}
+	
 
 }

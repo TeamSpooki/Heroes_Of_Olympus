@@ -17,7 +17,8 @@ public class Board {
 	
 	Hero achille,helen,hercules,hypolyta,thesius;
 	Texture achilleTexture,helenTexture,herculesTexture,hypolytaTexture,thesiusTexture,position;
-	Enemy titan,enemy1,enemy2,enemy3,enemy4,enemy5,enemy6;
+	//Enemy[] opps = new Enemy[6]; 
+	//Enemy titan,enemy1,enemy2,enemy3,enemy4,enemy5,enemy6;
 
 	
 	public Board()
@@ -54,39 +55,45 @@ public class Board {
 		heroes.add(thesius);
 		
 		
-		titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Minotaur.png")), 64, 64),"Titan");
+		Enemy titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Minotaur.png")), 64, 64),"Titan");
 		titan.setPosition(MainGameScreen.WIDTH-64, MainGameScreen.HEIGHT/2);
 		enemies.add(titan);	
 		
-		enemy1 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonBow.png")), 64, 64),"Enemy1");
-		enemy1.setPosition(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2-128);
-		enemies.add(enemy1);
 		
-		enemy2 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonBow.png")), 64, 64),"Enemy2");
-		enemy2.setPosition(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2);
-		enemies.add(enemy2);
-		
-		enemy3 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonBow.png")), 64, 64),"Enemy3");
-		enemy3.setPosition(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2+128);
-		enemies.add(enemy3);
-		
-		enemy4 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonSpear.png")), 64, 64),"Enemy4");
-		enemy4.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-192);
-		enemies.add(enemy4);
-		
-		enemy5 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonSpear.png")), 64, 64),"Enemy5");
-		enemy5.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-64);
-		enemies.add(enemy5);
-		
-		
-		enemy6 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonSpear.png")), 64, 64),"Enemy6");
-		enemy6.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2+64);
-		enemies.add(enemy6);
-		
-		
+		//Display all 6 enemies 
+		for (int i = 0; i < 6; i++) {
+			
+			//Set the position of the enemy and add each of them to the map
+			Enemy e = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("SkeletonBow.png")), 64, 64),"Enemy"+i+1);
+			e.setPosition(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2 - (384- (i * 128)));
+			enemies.add(e);
+		}
 	}
 	
+	//Method carry out attacks
+	public void carryAttacks()
+	{
+		// Go through the heroes
+		for(GameUnit u:heroes)
+		{
+			//Go through the enemies
+			for(GameUnit e:enemies)
+			{		// hero attacking is set to true
+					if(u.isAttacking())
+					{	
+						// if the 'Y' position for both hero and enemy are the same
+						if(isAlignedY(e, u))
+						{
+							// set the damage to enemy 
+							e.setDamage(100);
+							// end hero attack
+							u.endAttack();
+						}
+					}
+			}
+		}
 	
+	}
 	public void Draw( SpriteBatch batch)
 	{	
 		for(GameUnit u:heroes)
@@ -115,7 +122,7 @@ public class Board {
 		}
 		return null;
 	}
-	public GameUnit GetPieceEnemy(Location location)
+		public GameUnit GetPieceEnemy(Location location)
 	{
 		for(GameUnit e:enemies)
 		{
@@ -171,6 +178,7 @@ public class Board {
 			u.setMoved(false);
 		}
 	}
+	
 	public void moveEnemies() {
 		Random rand = new Random();
 		int n=0;
@@ -200,6 +208,13 @@ public class Board {
 			
 		//}
 	}
+	
+	//Check the range between the hero and enemy
+	public boolean isAlignedY(GameUnit a, GameUnit b)
+	{
+		return (a.getY() - b.getY()) < 64 && (a.getY() - b.getY()) > -64 ;
+	}
+	
 	public Location GetPoint(int x,int y)
 	{
 		return new Location(x/64,7-y/64);

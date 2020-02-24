@@ -12,6 +12,7 @@ import com.mygdx.world.GameMap;
 import com.mygdx.world.TiledGameMap;
 
 public class MainGameScreen implements Screen {
+	
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 850;
 	Board board;
@@ -26,6 +27,9 @@ public class MainGameScreen implements Screen {
 	public static float elapsedTime= 0f;
 	boolean move = false;
 	int movements;
+	//attacking set to false
+	boolean attacking=false;
+	
 	public MainGameScreen (HeroesOfOlympus game) {
 		this.game = game;
 		gameMap = new TiledGameMap();
@@ -45,9 +49,7 @@ public class MainGameScreen implements Screen {
 		
 	}
 	
-	public void show() {
-	}
-
+	public void show() {}
 
 	public void render (float delta) {
 		elapsedTime+=Gdx.graphics.getDeltaTime()*100;
@@ -62,12 +64,15 @@ public class MainGameScreen implements Screen {
 		game.batch.end();
 		stage.act();
 		stage.draw();
+		
 		if(Gdx.input.isTouched()) {
 			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touch);
+			
 			if(board.findNearestHero(touch.x,touch.y) instanceof Hero) {
 				oldCurrent=current;
 				current=board.findNearestHero(touch.x,touch.y);
+				
 				if(oldCurrent!=current) {
 					options.setHero(current);
 					options.show(stage);
@@ -81,6 +86,7 @@ public class MainGameScreen implements Screen {
 					board.resetMovement();
 					
 				}
+				
 				if(!board.GetPieceHero(current.getLocation()).isMoved()&&movements<5) {
 					board.MovePiece(current.getLocation(), board.findNearestLocation(touch.x,touch.y));
 					board.GetPieceHero(current.getLocation()).setMoved(true);
@@ -92,6 +98,7 @@ public class MainGameScreen implements Screen {
 
 			}
 		}
+		
 		if(board.findNearestEnemy(touch.x,touch.y) instanceof Enemy) {
 			enemy=board.findNearestEnemy(touch.x,touch.y);
 			board.GetPieceEnemy(enemy.getLocation()).deleteSprite();
@@ -102,11 +109,9 @@ public class MainGameScreen implements Screen {
 			this.dispose();
 			game.setScreen(new OutroScreen(game));
 		}
+		board.carryAttacks();
 	}
-	public void attack() {
-		
-		
-	}
+
 	
 	public void dispose () {
 		game.batch.dispose();
@@ -124,20 +129,24 @@ public class MainGameScreen implements Screen {
 	public void resume() {}
 	
 	public class OptionDialog extends Dialog {
+		// current hero
 		GameUnit currentHero;
 		
 		public OptionDialog(String title, Skin skin) {
 			super(title, skin);
-			currentHero =null;
+			//set the current hero to null
+			currentHero = null;
 			
 			// TODO Auto-generated constructor stub
 		}
+		//set the current hero
 		protected void setHero(GameUnit current) {
-			this.currentHero=current;
+			this.currentHero = current;
 		}
-		
 		protected void result (Object object) {
 			if(object.equals(1)) {
+				//if attack is selected - current hero selected will perform their attack
+				currentHero.attack();
 			}
 			else if (object.equals(2)){
 				//movement
