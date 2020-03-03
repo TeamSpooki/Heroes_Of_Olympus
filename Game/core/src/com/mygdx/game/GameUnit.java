@@ -1,172 +1,193 @@
 package com.mygdx.game;
 
-import java.util.LinkedList;
-import java.util.List;
-
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public abstract class GameUnit {
-	int health=0;
-	int damage=0;
-	int range=0;
+	int health = 100;
+	int damage = 0;
+	int movementRange = 0;
+	int attackRange = 0;
 	Sprite sprite;
-	//TextureRegion[][] animations;
 	Location location;
 	String name;
 	boolean isDrawn;
 	boolean moved;
-	TextureRegion[] keyframe = new TextureRegion[4];
-	List<TextureRegion[]> animations;
-	// set attacking to false
-	boolean attacking=false;
+	TextureRegion[] stay, walk, attack, die;
 	Animation<TextureRegion> animation;
-	public GameUnit(TextureRegion[][] t,String name) {
-		
-		//this.animations = t;
-		animations= new LinkedList<TextureRegion[]>();
-		TextureRegion[] walkFrames = new TextureRegion[6];
-		for(int i = 0;i<t.length;i++) {
-			for(int j = 0;j<6;j++) {
-				walkFrames[j]=t[i][j];
-				walkFrames[j].flip(false, true);
-			}
-			animations.add(walkFrames);
+	Animate a;
+
+	Texture healthImage;
+	TextureRegion healthRegion;
+	boolean attacking = false;
+	int showHealthCounter=0;
+
+	public GameUnit(TextureRegion[][] t, String name) {
+		a = Animate.STAY;
+		stay = t[0];
+		walk = t[1];
+		attack = t[2];
+		die = t[3];
+
+		for (int i = 0; i < 6; i++) {
+			stay[i].flip(false, true);
+			walk[i].flip(false, true);
+			attack[i].flip(false, true);
+			die[i].flip(false, true);
 		}
-		//animation = new Animation<TextureRegion>(1f/30f,animations.get(2));
-		sprite = new Sprite(animations.get(2)[0]);
-		//sprite.flip(false, true);
-		this.name=name;
-		location = new Location(0,0);
+
+		sprite = new Sprite();
+		this.name = name;
+		location = new Location(0, 0);
 		setPosition(0, 0);
-		isDrawn=false;
-		moved=false;
+		isDrawn = false;
+		moved = false;
+
+		healthImage = new Texture("hearts.png");
+		healthRegion = new TextureRegion(healthImage,  40,0,40,64);
+		healthRegion.flip(false,true);
 	}
-	// return method for attacking
-	public boolean isAttacking()
-	{
-		return attacking;
-	}
-	//Method to end/finish attack when attacking set to false
-	public void endAttack()
-	{
-		attacking=false;
-	}
-	//Method to start/attack when attacking set to true
+
 	public void attack() {
-		 attacking = true;
+		this.attacking = true;
 	}
+
+	public boolean isAttacking() {
+		return this.attacking;
+	}
+
+	public boolean isAlignedY(GameUnit g, int value) {
+		return (this.getY() - g.getY()) < value && (this.getY() - g.getY()) > -value;
+	}
+
+	public boolean isWithinRange(GameUnit g, int value) {
+		return isAlignedX(g, value) && isAlignedY(g, value);
+	}
+
+	public float getDistanceX(GameUnit g) {
+		return this.getX() - g.getX();
+	}
+
+	public float getDistanceY(GameUnit g) {
+		return this.getY() - g.getY();
+	}
+
+	public float distance(GameUnit g) {
+		// Calculating distance
+		return (float)Math.sqrt(Math.pow(this.getX() - g.getX(), 2) + Math.pow(this.getY() - g.getY(), 2) * 1.0);
+	}
+
+	public boolean isAlignedX(GameUnit g, int value) {
+
+		return (this.getX() - g.getX()) < value && (this.getX() - g.getX()) > -value;
+	}
+
+	public void endAttack() {
+		this.attacking = false;
+	}
+
 	void setPosition(float x, float y) {
-		/*if(moved) {
-			if(y==0) {
-				float i = x+getX();
-				while(getX()!=i) {
-					if(getX()<i) {
-						sprite.translate(getX()+1, y);
-					}else {
-						sprite.translate(getX()-1, y);
-					}
-				}
-			}
-			if(x==0) {
-				float i = y+getY();
-				while(getY()!=i) {
-					if(getY()<i) {
-						sprite.translate(x, getY()+1);
-					}else {
-						sprite.translate(x, getY()-1);
-					}
-				}
-			}
-		}*/
 		sprite.setPosition(x, y);
-		
 		location.setLocation(x, y);
 	}
+
 	boolean isMoved() {
 		return moved;
 	}
+
 	void setMoved(boolean move) {
-		moved=move;
+		moved = move;
 	}
+
 	Location getLocation() {
 		return location;
 	}
-	float getX(){
+
+	float getX() {
 		return sprite.getX();
 	}
-	String getName(){
+
+	String getName() {
 		return name;
 	}
-	float getY(){
+
+	float getY() {
 		return sprite.getY();
 	}
+	
 	void draw(SpriteBatch batch) {
-		sprite.draw(batch);
-		/*if(moved) {
-			//animation.setPlayMode(PlayMode.LOOP);
-			
-			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime,true);
-			//currentFrame.flip(false, true);
-			sprite.setRegion(currentFrame);
-			sprite.draw(batch);
-			//batch.draw(currentFrame, getX(), getY());
-			
-			moved=false;
+		if (a.equals(a.STAY)) {
+			animation = new Animation<TextureRegion>(0.0007f, stay);
+			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime, true);
+			batch.draw(currentFrame, getX(), getY());
+
+			// sprite.draw(batch);
+		} else if (a.equals(a.WALK)) {
+			animation = new Animation<TextureRegion>(0.0007f, walk);
+			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime, true);
+			batch.draw(currentFrame, getX(), getY());
+		} else if (a.equals(a.ATTACK)) {
+			animation = new Animation<TextureRegion>(0.0007f, attack);
+			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime, true);
+			batch.draw(currentFrame, getX(), getY());
+		} else {
+			animation = new Animation<TextureRegion>(0.0007f, die);
+			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime, true);
+			batch.draw(currentFrame, getX(), getY());
 		}
-		else {
-			sprite.draw(batch);
+		
+		if (showHealthCounter>0) {
+			showHealthCounter--;
+			batch.draw(healthRegion, this.getX()+10, this.getY()-20);
 		}
-		*/
-		isDrawn=true;
+
 	}
+
 	void deleteSprite() {
-		this.sprite=null;
+		this.sprite = null;
 	}
+
 	boolean getIsDrawn() {
 		return isDrawn;
 	}
+
 	void setDamage(int damage) {
-		this.damage=damage;
+		this.damage = damage;
 	}
+
 	void setHealth(int health) {
-		this.health=health;
+		this.health = health;
+		showHealthCounter=100;
 	}
+
 	int getDamage() {
 		return damage;
 	}
+
 	int getHealth() {
 		return health;
 	}
+
 	void moveLeft() {
-		setPosition(sprite.getX()-64, sprite.getY()+0);
-		//sprite.translate(-64, 0);
-		animation = new Animation<TextureRegion>(0.7f, animations.get(1));
-		//setPosition(-64,0);
+		setPosition(sprite.getX() - 64, sprite.getY() + 0);
 	}
+
 	void moveRight() {
-		//sprite.translate(64, 0);
-		//setPosition(64,0);
 		setPosition(sprite.getX(), sprite.getY());
 	}
+
 	void moveUp() {
-		
-		setPosition(sprite.getX()+0, sprite.getY()-64);
-		//sprite.translate(0,-64);
-		
-		//setPosition(0,-64);
-		
-		
+		setPosition(sprite.getX() + 0, sprite.getY() - 64);
 	}
+
 	void moveDown() {
-		setPosition(sprite.getX()+0, sprite.getY()+64 );
-		//sprite.translate(0, 64);
-		//setPosition(0,64);
+		setPosition(sprite.getX() + 0, sprite.getY() + 64);
 	}
-	void animateUp() {
-		animation = new Animation<TextureRegion>(1f/30f,animations.get(0));
-		//draw(HeroesOfOlympus.batch);
-	}
+}
+
+enum Animate {
+	STAY, WALK, ATTACK, DIE;
 }
