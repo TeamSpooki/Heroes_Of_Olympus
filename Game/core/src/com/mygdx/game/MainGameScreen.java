@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -53,7 +52,6 @@ public class MainGameScreen implements Screen {
 
 	public void show() {}
 
-
 	public void render (float delta) {
 		elapsedTime+=Gdx.graphics.getDeltaTime();
 		Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -83,11 +81,12 @@ public class MainGameScreen implements Screen {
 					enemy=board.findNearestEnemy(touch.x,touch.y);
 					board.GetPieceHero(current.getLocation()).a=board.GetPieceHero(current.getLocation()).a.ATTACK;
 					timer.schedule(new TimerTask() {
-
 						public void run() {
-							board.GetPieceEnemy(enemy.getLocation()).deleteSprite();
-							board.enemies.remove(enemy);
+							board.GetPieceEnemy(enemy.getLocation()).healthBar=board.GetPieceEnemy(enemy.getLocation()).healthBar-board.GetPieceHero(current.getLocation()).damage;
+							//board.board.put(enemy.getLocation(),null);
+							//board.board.remove(enemy.getLocation(),board.GetPieceEnemy(enemy.getLocation()));
 							board.validAttacks.clear();
+							board.moveEnemies();
 							board.GetPieceHero(current.getLocation()).a=board.GetPieceHero(current.getLocation()).a.STAY;
 						}
 					}, 1000);
@@ -108,12 +107,20 @@ public class MainGameScreen implements Screen {
 					timer.schedule(new TimerTask() {
 
 						public void run() {
-							board.MovePiece(current.getLocation(), board.findNearestLocation(touch.x,touch.y));
-							board.moveEnemies();
-							board.validMoves.clear();
-							board.GetPieceHero(current.getLocation()).setMoved(false);
-							board.GetPieceHero(current.getLocation()).a=board.GetPieceHero(current.getLocation()).a.STAY;
-							movements++;
+							if(board.findNearestLocation(touch.x,touch.y)!=null) {
+								board.MovePiece(current.getLocation(), board.findNearestLocation(touch.x,touch.y));
+								board.moveEnemies();
+								board.validMoves.clear();
+								board.GetPieceHero(current.getLocation()).setMoved(false);
+								board.GetPieceHero(current.getLocation()).a=board.GetPieceHero(current.getLocation()).a.STAY;
+								movements++;
+								
+							}else {
+								board.validMoves.clear();
+								board.GetPieceHero(current.getLocation()).setMoved(false);
+								board.GetPieceHero(current.getLocation()).a=board.GetPieceHero(current.getLocation()).a.STAY;
+								current=null;
+							}
 						}
 					}, 1000);
 					move=false;
@@ -127,10 +134,7 @@ public class MainGameScreen implements Screen {
 			game.setScreen(new OutroScreen(game));
 		}
 	}
-	public void attack() {
-
-
-	}
+	public void attack() {}
 
 	public void dispose () {
 		game.batch.dispose();
@@ -169,45 +173,8 @@ public class MainGameScreen implements Screen {
 						if(e.location.getX()<boundX&&e.location.getY()<boundY) {
 							board.validAttacks.add(e.location);
 						}
-						
 					}
 				}
-				
-				/*
-				Location up =currentHero.getLocation().aboveLocation();
-				Location down =currentHero.getLocation().belowLocation();
-				Location left =currentHero.getLocation().leftLocation();
-				Location right =currentHero.getLocation().rightLocation();
-				board.possibleAttacks.add(up);
-				board.possibleAttacks.add(down);
-				board.possibleAttacks.add(left);
-				board.possibleAttacks.add(right);
-				for(int i = 1; i < board.GetPieceHero(currentHero.getLocation()).attackRange;i++) {
-					for(Location l :board.possibleAttacks ) {
-						if(board.GetPieceEnemy(l)==null) {
-							board.possibleAttacks.remove(l);
-						}else {
-							board.possibleAttacks.add(l.aboveLocation());
-							board.possibleAttacks.add(l.belowLocation());
-							board.possibleAttacks.add(l.leftLocation());
-							board.possibleAttacks.add(l.rightLocation());
-							board.validAttacks.add(l);
-						}
-					}
-					for(Location l :board.possibleAttacks ) {
-						
-					}
-						//if(!board.possibleAttacks.contains(l)) {
-							//board.possibleAttacks.add(l.aboveLocation());
-							//board.possibleAttacks.add(l.belowLocation());
-							//board.possibleAttacks.add(l.leftLocation());
-							//board.possibleAttacks.add(l.rightLocation());
-						//}
-						
-					//}
-				}
-				board.possibleAttacks.clear();
-				*/
 				if(!board.validAttacks.isEmpty()) {
 					attack=true;
 				}
@@ -226,21 +193,12 @@ public class MainGameScreen implements Screen {
 				for(int i = 1; i < board.GetPieceHero(currentHero.getLocation()).movementRange;i++) {
 					int j= board.validMoves.size()-1; 
 					while(j>=0) {
-					  //if(!board.validMoves.contains(board.validMoves.get(j).aboveLocation())) {
-						  board.validMoves.add(board.validMoves.get(j).aboveLocation()); 
-					  //}
-					  //if(!board.validMoves.contains(board.validMoves.get(j).belowLocation())) {
-					  board.validMoves.add(board.validMoves.get(j).belowLocation()); 
-					  //}
-					  //if(!board.validMoves.contains(board.validMoves.get(j).leftLocation())) {
-					  board.validMoves.add(board.validMoves.get(j).leftLocation()); 
-					  //}
-					 // if(!board.validMoves.contains(board.validMoves.get(j).rightLocation())) {
-					  board.validMoves.add(board.validMoves.get(j).rightLocation()); 
-					  //} 
-					j--; 
-					 }
-					 
+						board.validMoves.add(board.validMoves.get(j).aboveLocation()); 
+						board.validMoves.add(board.validMoves.get(j).belowLocation()); 
+						board.validMoves.add(board.validMoves.get(j).leftLocation()); 
+						board.validMoves.add(board.validMoves.get(j).rightLocation()); 
+						j--; 
+					 } 
 				}
 				move=true;
 			}
