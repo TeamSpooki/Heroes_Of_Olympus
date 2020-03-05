@@ -13,6 +13,7 @@ public class TiledGameMap extends GameMap {
 	public TiledGameMap() {
 		tiledMap = new TmxMapLoader().load("Level1.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		
 	}
 
 	@Override

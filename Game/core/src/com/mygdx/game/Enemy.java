@@ -6,7 +6,7 @@ public class Enemy extends GameUnit{
 
 	public Enemy(TextureRegion[][] t,String name) {
 		super(t, name);
-		
+		this.moved=true;
 	}
 
 	void attack() {}

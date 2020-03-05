@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JFrame;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -14,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.world.GameMap;
 import com.mygdx.world.TiledGameMap;
 
-public class IntroScreen implements Screen{
+public class IntroScreen extends JFrame implements Screen {
 	
 	HeroesOfOlympus game;
 	GameMap gameMap;
