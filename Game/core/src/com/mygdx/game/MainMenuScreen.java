@@ -43,7 +43,7 @@ public class MainMenuScreen implements Screen {
 		playButtonActive = new Texture("PlayHighlighted.png");
 		playButtonInactive = new Texture("Play.png");
 		teamLogo = new Texture("logo.png");
-		gameMap = new TiledGameMap();
+		//gameMap = new TiledGameMap();
 	}
 	
 	@Override

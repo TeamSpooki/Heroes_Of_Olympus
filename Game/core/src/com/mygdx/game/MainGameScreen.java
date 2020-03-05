@@ -16,8 +16,7 @@ import com.mygdx.world.TiledGameMap;
 
 public class MainGameScreen implements Screen {
 	public static final int WIDTH = 1280;
-	public static final int HEIGHT = 850;
-
+	public static final int HEIGHT = 1080;
 	public OrthographicCamera camera;
 	Vector3 touch;
 	Skin skin;
@@ -32,16 +31,18 @@ public class MainGameScreen implements Screen {
 	boolean attack = false;
 	int movements;
 	public MainGameScreen (HeroesOfOlympus game, Level level) {
-		this.game = game;
 
+		this.game = game;
 		stage = new Stage();
 		skin = new Skin(Gdx.files.internal("uiskin.json"));
 		camera = new OrthographicCamera();
-		camera.setToOrtho(true, WIDTH, HEIGHT);
+		camera.setToOrtho(true,WIDTH ,HEIGHT );
 		camera.update();
 		game.level = level;
-		if(game.level instanceof Level1){
-			gameMap = new TiledGameMap();
+		if(level instanceof Level1){
+			gameMap = new TiledGameMap("Level1/Level1.tmx");
+		}else if(level instanceof Level2){
+			gameMap = new TiledGameMap("Level2/Level2.tmx");
 		}
 		touch=new Vector3();
 		movements=0;
@@ -64,13 +65,14 @@ public class MainGameScreen implements Screen {
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
 		game.level.Draw(game.batch);
-
 		game.batch.end();
 		stage.act();
 		stage.draw();
+
 		if(Gdx.input.isTouched()) {
 			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touch);
+
 			if(game.level.findNearestHero(touch.x,touch.y) instanceof Hero) {
 				oldCurrent=current;
 				current= game.level.findNearestHero(touch.x,touch.y);
@@ -129,21 +131,18 @@ public class MainGameScreen implements Screen {
 			}
 			
 		}
-		
+
 		if(game.level.enemiesDead()) {
 			game.level.removeAll();
-			//this.dispose();
+
 			game.setScreen(new OutroScreen(game));
 		}
 	}
-	public void attack() {}
 
 	public void dispose () {
 		game.dispose();
-		//stage.dispose();
+		stage.dispose();
 	}
-
-	public Object getBatch() { return null;}
 
 	public void hide() {}
 

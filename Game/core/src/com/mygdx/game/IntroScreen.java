@@ -49,7 +49,7 @@ public class IntroScreen extends JFrame implements Screen {
         button = new ImageButton(myTexRegionDrawable);
         button.setSize(80, 80);
         button.setPosition(HeroesOfOlympus.WIDTH-button.getWidth(),HeroesOfOlympus.HEIGHT-button.getHeight());
-		gameMap = new TiledGameMap();
+		//gameMap = new TiledGameMap();
 		floatingText = new FloatingText(text, TimeUnit.SECONDS.toMillis(30));
 		floatingText.setColor(Color.WHITE);
 		floatingText.setPosition(HeroesOfOlympus.WIDTH/20, HeroesOfOlympus.HEIGHT/4);
