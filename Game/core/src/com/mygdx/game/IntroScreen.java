@@ -73,7 +73,7 @@ public class IntroScreen extends JFrame implements Screen {
 		
 		if (Gdx.input.isTouched()) {
 			this.dispose();
-			game.setScreen(new MainGameScreen(game));
+			game.setScreen(new MainGameScreen(game, new Level1()));
 		}
 		if (!floatingText.isAnimated()) {
 		    floatingText.animate();

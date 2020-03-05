@@ -55,10 +55,10 @@ public class OutroScreen implements Screen{
 		Gdx.gl.glClearColor(0,0,0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.begin();
-		
+
 		if (Gdx.input.isTouched()) {
 			this.dispose();
-			Gdx.app.exit();
+			game.setScreen(new MainGameScreen(game,new Level2()));
 		}
 		if (!floatingText.isAnimated()) {
 		    floatingText.animate();
