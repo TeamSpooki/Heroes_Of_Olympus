@@ -48,7 +48,6 @@ public abstract class GameUnit {
 		location = new Location(0,0);
 		setPosition(0, 0);
 		isDrawn=false;
-		moved=false;
 	}
 	abstract void attack();
 	void setPosition(float x, float y) {
@@ -91,6 +90,8 @@ public abstract class GameUnit {
 				currentFrame=healthSprites.get(20);
 			}else {
 				currentFrame=healthSprites.get(0);
+				a=a.DIE;
+				setMoved(false);
 			}
 			
 			batch.draw(currentFrame, getX(), getY());
@@ -104,7 +105,7 @@ public abstract class GameUnit {
 			batch.draw(currentFrame, getX(), getY());
 		}else {
 			animation = new Animation<TextureRegion>(0.0007f,die);
-			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime,true);
+			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime,false);
 			batch.draw(currentFrame, getX(), getY());
 		}
 	}

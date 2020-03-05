@@ -10,6 +10,7 @@ public class Hero extends GameUnit{
 		this.movementRange=movementRange;
 		this.attackRange=attackRange;
 		this.damage= damage;
+		this.moved=false;
 	}
 
 	void attack() {}

@@ -111,21 +111,11 @@ public class Board {
 	{	
 		for(GameUnit u:heroes)
 		{
-			if(u.healthBar>0) {
-				u.draw(batch);
-			}else {
-				heroes.remove(u);
-			}
-				
+				u.draw(batch);		
 		}
 		for(GameUnit e:enemies)
 		{
-			if(e.healthBar>0) {
 				e.draw(batch);
-			}
-			else {
-				enemies.remove(e);
-			}
 		}
 		if(!validMoves.isEmpty()) {
 			for(Location l:validMoves)
@@ -214,7 +204,7 @@ public class Board {
 		n= rand.nextInt(5);
 		for(GameUnit e:enemies)
 		{ 
-			if(!e.name.equals("Titan")) {
+			if(e.moved) {
 				n = rand.nextInt(5)+1;
 				switch(n) {
 				case 1:
