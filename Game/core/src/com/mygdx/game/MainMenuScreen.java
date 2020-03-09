@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import java.io.FileNotFoundException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -43,7 +45,7 @@ public class MainMenuScreen implements Screen {
 		playButtonActive = new Texture("PlayHighlighted.png");
 		playButtonInactive = new Texture("Play.png");
 		teamLogo = new Texture("logo.png");
-		gameMap = new TiledGameMap();
+		//gameMap = new TiledGameMap();
 	}
 	
 	@Override
@@ -76,7 +78,12 @@ public class MainMenuScreen implements Screen {
 			game.batch.draw(playButtonActive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
 			if (Gdx.input.isTouched()) {
 				this.dispose();
-				game.setScreen(new IntroScreen(game));
+				try {
+					game.setScreen(new IntroScreen(game));
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		} else {
 			game.batch.draw(playButtonInactive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);

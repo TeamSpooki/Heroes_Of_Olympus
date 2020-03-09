@@ -35,7 +35,7 @@ public class OutroScreen implements Screen{
 				+ " all there is left to be seen is destruction and ruin,\r\n"
 				+ " and standing among the wreckage, \r\n"
 				+ "our heroes face their greatest challenge yet.\r\n";
-		gameMap = new TiledGameMap();
+		//gameMap = new TiledGameMap();
 		floatingText = new FloatingText(text, TimeUnit.SECONDS.toMillis(15));
 		floatingText.setColor(Color.WHITE);
 		floatingText.setPosition(HeroesOfOlympus.WIDTH/4, HeroesOfOlympus.HEIGHT/4);
@@ -55,10 +55,10 @@ public class OutroScreen implements Screen{
 		Gdx.gl.glClearColor(0,0,0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.begin();
-		
+
 		if (Gdx.input.isTouched()) {
 			this.dispose();
-			Gdx.app.exit();
+			game.setScreen(new MainGameScreen(game,new Level2()));
 		}
 		if (!floatingText.isAnimated()) {
 		    floatingText.animate();

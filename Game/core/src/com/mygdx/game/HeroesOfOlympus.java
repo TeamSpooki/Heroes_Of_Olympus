@@ -7,6 +7,7 @@ public class HeroesOfOlympus extends Game {
 	public static final int WIDTH = 1080;
 	public static final int HEIGHT = 850;
 	public SpriteBatch batch;
+	Level level;
 	@Override
 	public void create () {
 		batch = new SpriteBatch();

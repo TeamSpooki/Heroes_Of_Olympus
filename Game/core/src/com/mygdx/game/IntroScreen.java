@@ -1,11 +1,13 @@
 package com.mygdx.game;
 
+import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,8 +15,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.video.VideoPlayerCreator;
+import com.badlogic.gdx.video.*;
 import com.mygdx.world.GameMap;
-import com.mygdx.world.TiledGameMap;
 
 public class IntroScreen extends JFrame implements Screen {
 	
@@ -29,8 +32,11 @@ public class IntroScreen extends JFrame implements Screen {
 	float x;
 	float y;
 	String text;
+	VideoPlayer video;
+	VideoPlayerCreator creator; 
+	boolean finished = false;
 	
-	IntroScreen(HeroesOfOlympus game) {
+	IntroScreen(HeroesOfOlympus game) throws FileNotFoundException {
 		this.game = game;
 		text = "The story begins with our five mighty heroes:\r\n"
 				+ " Hercules, Achilles, Theseus, Helen and Hippolyta, \r\n\""
@@ -49,7 +55,7 @@ public class IntroScreen extends JFrame implements Screen {
         button = new ImageButton(myTexRegionDrawable);
         button.setSize(80, 80);
         button.setPosition(HeroesOfOlympus.WIDTH-button.getWidth(),HeroesOfOlympus.HEIGHT-button.getHeight());
-		gameMap = new TiledGameMap();
+		//gameMap = new TiledGameMap();
 		floatingText = new FloatingText(text, TimeUnit.SECONDS.toMillis(30));
 		floatingText.setColor(Color.WHITE);
 		floatingText.setPosition(HeroesOfOlympus.WIDTH/20, HeroesOfOlympus.HEIGHT/4);
@@ -57,6 +63,25 @@ public class IntroScreen extends JFrame implements Screen {
 		stage = new Stage();
 		stage.addActor(floatingText);
 		stage.addActor(button);
+		//Initialise creator
+		creator = new VideoPlayerCreator();
+		//Initialise video
+		video = new VideoPlayer();
+		//video = creator.createVideoPlayer();
+		//Create file handle to locate internal file
+		FileHandle fileHandle = Gdx.files.internal("scene1-act1.ogv");
+		//Check if file exists
+		System.out.println("Exists?: " + fileHandle.exists());
+		//CompletionListener listener = new VideoPlayer.CompletionListener();
+		//play the specified file
+		video.play(fileHandle);
+		//Set when the video is finished player to true on completion listener
+		video.setOnCompletionListener(new VideoPlayer.CompletionListener() {
+			@Override
+			public void onCompletionListener(FileHandle file) {
+				finished = true;
+			}
+		});
 	}
 
 	@Override
@@ -73,7 +98,7 @@ public class IntroScreen extends JFrame implements Screen {
 		
 		if (Gdx.input.isTouched()) {
 			this.dispose();
-			game.setScreen(new MainGameScreen(game));
+			game.setScreen(new MainGameScreen(game, new Level1()));
 		}
 		if (!floatingText.isAnimated()) {
 		    floatingText.animate();

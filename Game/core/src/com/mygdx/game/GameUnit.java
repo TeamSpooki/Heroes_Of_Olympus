@@ -13,6 +13,7 @@ public abstract class GameUnit {
 	int damage=0;
 	int movementRange=0;
 	int attackRange=0;
+	boolean dead=false;
 	Sprite sprite;
 	Location location;
 	String name;
@@ -92,6 +93,7 @@ public abstract class GameUnit {
 				currentFrame=healthSprites.get(0);
 				a=a.DIE;
 				setMoved(false);
+				dead=true;
 			}
 			
 			batch.draw(currentFrame, getX(), getY());
