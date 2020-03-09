@@ -19,15 +19,12 @@ import com.mygdx.world.TiledGameMap;
 public class IntroScreen extends JFrame implements Screen {
 	
 	HeroesOfOlympus game;
-	GameMap gameMap;
 	Texture nextButton;
 	TextureRegion myTextureRegion;
 	TextureRegionDrawable myTexRegionDrawable;
 	ImageButton button;
 	FloatingText floatingText;
 	Stage stage;
-	float x;
-	float y;
 	String text;
 	
 	IntroScreen(HeroesOfOlympus game) {
@@ -49,7 +46,6 @@ public class IntroScreen extends JFrame implements Screen {
         button = new ImageButton(myTexRegionDrawable);
         button.setSize(80, 80);
         button.setPosition(HeroesOfOlympus.WIDTH-button.getWidth(),HeroesOfOlympus.HEIGHT-button.getHeight());
-		//gameMap = new TiledGameMap();
 		floatingText = new FloatingText(text, TimeUnit.SECONDS.toMillis(30));
 		floatingText.setColor(Color.WHITE);
 		floatingText.setPosition(HeroesOfOlympus.WIDTH/20, HeroesOfOlympus.HEIGHT/4);

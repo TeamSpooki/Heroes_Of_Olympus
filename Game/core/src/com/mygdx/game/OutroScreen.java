@@ -14,12 +14,8 @@ import com.mygdx.world.TiledGameMap;
 public class OutroScreen implements Screen{
 
 	HeroesOfOlympus game;
-	GameMap gameMap;
-	Texture nextButton;
 	FloatingText floatingText;
 	Stage stage;
-	float x;
-	float y;
 	String text;
 	
 	OutroScreen(HeroesOfOlympus game) {
@@ -35,7 +31,7 @@ public class OutroScreen implements Screen{
 				+ " all there is left to be seen is destruction and ruin,\r\n"
 				+ " and standing among the wreckage, \r\n"
 				+ "our heroes face their greatest challenge yet.\r\n";
-		//gameMap = new TiledGameMap();
+
 		floatingText = new FloatingText(text, TimeUnit.SECONDS.toMillis(15));
 		floatingText.setColor(Color.WHITE);
 		floatingText.setPosition(HeroesOfOlympus.WIDTH/4, HeroesOfOlympus.HEIGHT/4);

@@ -21,11 +21,12 @@ public interface Level {
     public GameUnit GetPieceHero(Location location);
     public GameUnit GetPieceEnemy(Location location);
     public GameUnit findNearestHero(float x, float y);
-    public GameUnit findNearestEnemy(float x, float y);
+    public GameUnit findNearestHeroTouch(float x, float y);
+    public GameUnit findNearestEnemyTouch(float x, float y);
     public Location findNearestLocation(float x, float y);
     public void movePiece(Location from,Location to);
     public void resetMovement();
-    public void moveEnemies();
+    public void act();
     public boolean enemiesDead();
     public void removeAll();
 }

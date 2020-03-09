@@ -18,20 +18,19 @@ public class MainGameScreen implements Screen {
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 1080;
 	public OrthographicCamera camera;
-	Vector3 touch;
-	Skin skin;
-	OptionDialog options;
-	Stage stage;
-	GameUnit current,oldCurrent,enemy;
-	HeroesOfOlympus game;
-	Timer timer;
-	GameMap gameMap;
+	private Vector3 touch;
+	private Skin skin;
+	private OptionDialog options;
+	private Stage stage;
+	private GameUnit current,oldCurrent,enemy;
+	private HeroesOfOlympus game;
+	private Timer timer;
+	private GameMap gameMap;
 	public static float elapsedTime= 0f;
-	boolean move = false;
-	boolean attack = false;
-	int movements;
+	private boolean move = false;
+	private boolean attack = false;
+	private int movements;
 	public MainGameScreen (HeroesOfOlympus game, Level level) {
-
 		this.game = game;
 		stage = new Stage();
 		skin = new Skin(Gdx.files.internal("uiskin.json"));
@@ -68,12 +67,10 @@ public class MainGameScreen implements Screen {
 		game.batch.end();
 		stage.act();
 		stage.draw();
-
 		if(Gdx.input.isTouched()) {
 			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touch);
-
-			if(game.level.findNearestHero(touch.x,touch.y) instanceof Hero) {
+			if(game.level.findNearestHeroTouch(touch.x,touch.y) instanceof Hero) {
 				oldCurrent=current;
 				current= game.level.findNearestHero(touch.x,touch.y);
 				if(oldCurrent!=current) {
@@ -82,46 +79,42 @@ public class MainGameScreen implements Screen {
 				}
 			}
 			if(attack) {
-				if(game.level.findNearestEnemy(touch.x,touch.y) instanceof Enemy) {
-					enemy= game.level.findNearestEnemy(touch.x,touch.y);
-					game.level.GetPieceHero(current.getLocation()).a= game.level.GetPieceHero(current.getLocation()).a.ATTACK;
+				if(game.level.findNearestEnemyTouch(touch.x,touch.y) instanceof Enemy) {
+					enemy= game.level.findNearestEnemyTouch(touch.x,touch.y);
+					game.level.GetPieceHero(current.getLocation()).setAnimation(Animate.ATTACK);
 					timer.schedule(new TimerTask() {
 						public void run() {
-							game.level.GetPieceEnemy(enemy.getLocation()).healthBar= game.level.GetPieceEnemy(enemy.getLocation()).healthBar- game.level.GetPieceHero(current.getLocation()).damage;
+							game.level.GetPieceEnemy(enemy.getLocation()).setHealth(game.level.GetPieceEnemy(enemy.getLocation()).getHealth()-game.level.GetPieceHero(current.getLocation()).getDamage());
 							game.level.validAttacks.clear();
-							game.level.moveEnemies();
-							game.level.GetPieceHero(current.getLocation()).a= game.level.GetPieceHero(current.getLocation()).a.STAY;
+							game.level.act();
+							game.level.GetPieceHero(current.getLocation()).setAnimation(Animate.STAY);
 						}
 					}, 1000);
 					attack=false;
-					
 				}
 			}
 			if(move){
-
 				if(movements==5) {
 					movements=0;
 					game.level.resetMovement();
-
 				}
 				if(!game.level.GetPieceHero(current.getLocation()).isMoved()&&movements<5) {
 					game.level.GetPieceHero(current.getLocation()).setMoved(true);
-					game.level.GetPieceHero(current.getLocation()).a= game.level.GetPieceHero(current.getLocation()).a.WALK;
+					game.level.GetPieceHero(current.getLocation()).setAnimation(Animate.WALK);
 					timer.schedule(new TimerTask() {
 
 						public void run() {
 							if(game.level.findNearestLocation(touch.x,touch.y)!=null) {
 								game.level.movePiece(current.getLocation(), game.level.findNearestLocation(touch.x,touch.y));
-								game.level.moveEnemies();
+								game.level.act();
 								game.level.validMoves.clear();
 								game.level.GetPieceHero(current.getLocation()).setMoved(false);
-								game.level.GetPieceHero(current.getLocation()).a= game.level.GetPieceHero(current.getLocation()).a.STAY;
+								game.level.GetPieceHero(current.getLocation()).setAnimation(Animate.STAY);
 								movements++;
-								
 							}else {
 								game.level.validMoves.clear();
 								game.level.GetPieceHero(current.getLocation()).setMoved(false);
-								game.level.GetPieceHero(current.getLocation()).a= game.level.GetPieceHero(current.getLocation()).a.STAY;
+								game.level.GetPieceHero(current.getLocation()).setAnimation(Animate.STAY);
 								current=null;
 							}
 						}
@@ -129,12 +122,9 @@ public class MainGameScreen implements Screen {
 					move=false;
 				}
 			}
-			
 		}
-
 		if(game.level.enemiesDead()) {
 			game.level.removeAll();
-
 			game.setScreen(new OutroScreen(game));
 		}
 	}
@@ -169,9 +159,7 @@ public class MainGameScreen implements Screen {
 				//attack
 				for(GameUnit e : game.level.board.values() ) {
 					if (e instanceof Enemy){
-						float boundX = game.level.GetPieceHero(currentHero.getLocation()).attackRange*64+ game.level.GetPieceHero(currentHero.getLocation()).getX();
-						float boundY = game.level.GetPieceHero(currentHero.getLocation()).attackRange*64+ game.level.GetPieceHero(currentHero.getLocation()).getY();
-						if(e.location.getX()<boundX&&e.location.getY()<boundY) {
+						if(game.level.GetPieceHero(currentHero.getLocation()).isInBounds(e.getX(),e.getY(),game.level.GetPieceHero(currentHero.getLocation()).attackRange)){
 							game.level.validAttacks.add(e.location);
 						}
 					}
@@ -191,7 +179,7 @@ public class MainGameScreen implements Screen {
 				game.level.validMoves.add(down);
 				game.level.validMoves.add(left);
 				game.level.validMoves.add(right);
-				for(int i = 1; i < game.level.GetPieceHero(currentHero.getLocation()).movementRange; i++) {
+				for(int i = 1; i < game.level.GetPieceHero(currentHero.getLocation()).getMovementRange(); i++) {
 					int j= game.level.validMoves.size()-1;
 					while(j>=0) {
 						game.level.validMoves.add(game.level.validMoves.get(j).aboveLocation());
@@ -204,7 +192,7 @@ public class MainGameScreen implements Screen {
 				move=true;
 			}
 			else {
-				game.level.GetPieceHero(currentHero.getLocation()).a= game.level.GetPieceHero(currentHero.getLocation()).a.STAY;
+				game.level.GetPieceHero(current.getLocation()).setAnimation(Animate.STAY);
 			}
 		}
 	}

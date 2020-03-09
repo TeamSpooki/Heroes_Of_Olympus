@@ -49,7 +49,7 @@ abstract class AbstractLevel implements Level{
         }
         return null;
     }
-    public GameUnit findNearestHero(float x, float y){
+    public GameUnit findNearestHeroTouch(float x, float y){
         for(GameUnit u:heroes)
         {
             if(x>=u.getX()&&x<=u.getX()+64&&y>=u.getY()&&y<=u.getY()+64) {
@@ -58,7 +58,28 @@ abstract class AbstractLevel implements Level{
         }
         return null;
     }
-    public GameUnit findNearestEnemy(float x, float y){
+    public GameUnit findNearestHero(float x, float y){
+        GameUnit hero=null;
+        double distance= 0;
+        double checkDistance=0;
+        for(GameUnit u:heroes)
+        {
+            if(!u.dead){
+                if(hero==null){
+                    hero=u;
+                    distance = Math.sqrt((hero.getX()-x)*(hero.getX()-x)+(hero.getY()-y)*(hero.getY()-y));
+                }else{
+                    checkDistance = Math.sqrt((u.getX()-x)*(u.getX()-x)+(u.getY()-y)*(u.getY()-y));
+                    if(checkDistance<distance){
+                        distance=checkDistance;
+                        hero=u;
+                    }
+                }
+            }
+        }
+        return hero;
+    }
+    public GameUnit findNearestEnemyTouch(float x, float y){
         for(GameUnit e:enemies)
         {
             if(x>=e.getX()&&x<=e.getX()+64&&y>=e.getY()&&y<=e.getY()+64) {
@@ -83,6 +104,12 @@ abstract class AbstractLevel implements Level{
                 u.setPosition(to.getX(), to.getY());
             }
         }
+        for(GameUnit e:enemies)
+        {
+            if(e.location.equals(from)) {
+                e.setPosition(to.getX(), to.getY());
+            }
+        }
     }
     public void resetMovement(){
         for(GameUnit u:heroes)
@@ -90,32 +117,29 @@ abstract class AbstractLevel implements Level{
             u.setMoved(false);
         }
     }
-    public void moveEnemies(){
-        Random rand = new Random();
-        int n=0;
-        n= rand.nextInt(5);
+    public void act(){
+        GameUnit nearestHero = null;
+        Location movement = null;
         for(GameUnit e:enemies)
         {
-            if(e.moved) {
-                n = rand.nextInt(5)+1;
-                switch(n) {
-                    case 1:
-                        e.moveUp();
-                        break;
-                    case 2:
-                        e.moveDown();
-                        break;
-                    case 3:
-                        e.moveRight();
-                        break;
-                    case 4:
-                        e.moveLeft();
-                        break;
-                    default:
-                        break;
-                }
+            nearestHero = findNearestHero(e.getX(),e.getY());
+            if(e.isInBounds(nearestHero.getX(),nearestHero.getY(),e.attackRange)){
+                GetPieceHero(nearestHero.location).setHealth(GetPieceHero(nearestHero.location).getHealth()-e.getDamage());
             }
-
+            if(e.moved) {
+                movement = e.getLocation();
+                if(nearestHero.getX()<=e.getX()){
+                    movement = movement.leftLocation();
+                }else if (nearestHero.getX()>=e.getX()){
+                        movement = movement.rightLocation();
+                }
+                if(nearestHero.getY()<=e.getY()){
+                    movement=movement.aboveLocation();
+                }else if(nearestHero.getY()>=e.getY()){
+                    movement = movement.belowLocation();
+                }
+                movePiece(e.getLocation(),movement);
+            }
         }
     }
 

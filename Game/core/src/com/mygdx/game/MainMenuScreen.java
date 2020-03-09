@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.GL20;
 public class MainMenuScreen implements Screen {
 	private static final int WIDTH = HeroesOfOlympus.WIDTH;
 	private static final int HEIGHT = HeroesOfOlympus.HEIGHT;
-	public static final float SPEED = 120;
 	private static final int EXIT_BUTTON_WIDTH = 200;
 	private static final int EXIT_BUTTON_HEIGHT = 100;
 	private static final int PLAY_BUTTON_WIDTH = 200;
@@ -20,9 +19,7 @@ public class MainMenuScreen implements Screen {
 	private static final int TEAM_LOGO_HEIGHT = HeroesOfOlympus.HEIGHT / 5;
 	private static final int EXIT_BUTTON_Y = HeroesOfOlympus.HEIGHT / 4;
 	private static final int PLAY_BUTTON_Y = HeroesOfOlympus.HEIGHT / 2;;
-	
-	
-	
+
 	Texture exitButtonActive;
 	Texture exitButtonInactive;
 	Texture gameLogo;
@@ -31,7 +28,6 @@ public class MainMenuScreen implements Screen {
 	Texture teamLogo;
 	
 	HeroesOfOlympus game;
-	GameMap gameMap;
 	float x;
 	float y;
 	
@@ -43,7 +39,7 @@ public class MainMenuScreen implements Screen {
 		playButtonActive = new Texture("PlayHighlighted.png");
 		playButtonInactive = new Texture("Play.png");
 		teamLogo = new Texture("logo.png");
-		//gameMap = new TiledGameMap();
+
 	}
 	
 	@Override
