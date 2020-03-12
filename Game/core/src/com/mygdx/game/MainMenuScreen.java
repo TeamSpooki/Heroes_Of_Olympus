@@ -22,9 +22,7 @@ public class MainMenuScreen implements Screen {
 	private static final int TEAM_LOGO_HEIGHT = HeroesOfOlympus.HEIGHT / 5;
 	private static final int EXIT_BUTTON_Y = HeroesOfOlympus.HEIGHT / 4;
 	private static final int PLAY_BUTTON_Y = HeroesOfOlympus.HEIGHT / 2;;
-	
-	
-	
+
 	Texture exitButtonActive;
 	Texture exitButtonInactive;
 	Texture gameLogo;
