@@ -63,7 +63,8 @@ public class MainMenuScreen implements Screen {
 				&& HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y) {
 			game.batch.draw(exitButtonActive, x, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
 			if (Gdx.input.isTouched()) {
-				Gdx.app.exit();
+				game.setScreen(new HelpMenuScreen(game));
+				//Gdx.app.exit();
 			}
 		} else {
 			game.batch.draw(exitButtonInactive, x, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
