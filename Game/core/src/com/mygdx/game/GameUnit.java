@@ -9,123 +9,136 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public abstract class GameUnit {
-	int healthBar=100;
-	int damage=0;
-	int movementRange=0;
-	int attackRange=0;
+	protected int health=100;
+	protected int damage=0;
+	protected int movementRange=0;
+	protected int attackRange=0;
+	boolean dead=false;
 	Sprite sprite;
 	Location location;
 	String name;
 	boolean isDrawn;
 	boolean moved;
-	TextureRegion[] stay,walk,attack,die,health;
+	TextureRegion[] stayAnimation,walkAnimation,attackAnimation,dieAnimation,healthAnimation;
 	Animation<TextureRegion> animation;
-	Animate a ;
+	protected Animate animate;
 	Map<Integer,TextureRegion> healthSprites;
-	public GameUnit(TextureRegion[][] t,String name) {
-		a = Animate.STAY;
-		stay = t[0];
-		walk = t[1];
-		attack = t[2];
-		die = t[3];
-		health=t[4];
-		for(int i = 0; i < 6; i++) {
-			stay[i].flip(false, true);
-			walk[i].flip(false, true);
-			attack[i].flip(false, true);
-			die[i].flip(false, true);
-			health[i].flip(false, true);
-		}
+	public GameUnit(TextureRegion[][] t,String name,int movementRange, int attackRange, int damage) {
+		animate = Animate.STAY;
+		this.movementRange=movementRange;
+		this.attackRange=attackRange;
+		this.damage= damage;
+		setAnimation(t);
 		healthSprites = new HashMap<Integer,TextureRegion>();
-		healthSprites.put(100, health[0]);
-		healthSprites.put(80, health[1]);
-		healthSprites.put(60, health[2]);
-		healthSprites.put(40, health[3]);
-		healthSprites.put(20, health[4]);
-		healthSprites.put(0, health[5]);
+		setHealthBar();
 		sprite = new Sprite();
 		this.name=name;
 		location = new Location(0,0);
 		setPosition(0, 0);
 		isDrawn=false;
 	}
-	abstract void attack();
-	void setPosition(float x, float y) {
+	private void setHealthBar(){
+		healthSprites.put(100, healthAnimation[0]);
+		healthSprites.put(80, healthAnimation[1]);
+		healthSprites.put(60, healthAnimation[2]);
+		healthSprites.put(40, healthAnimation[3]);
+		healthSprites.put(20, healthAnimation[4]);
+		healthSprites.put(0, healthAnimation[5]);
+	}
+	private void setAnimation(TextureRegion[][] t){
+		stayAnimation = t[0];
+		walkAnimation = t[1];
+		attackAnimation = t[2];
+		dieAnimation = t[3];
+		healthAnimation=t[4];
+		for(int i = 0; i < 6; i++) {
+			stayAnimation[i].flip(false, true);
+			walkAnimation[i].flip(false, true);
+			attackAnimation[i].flip(false, true);
+			dieAnimation[i].flip(false, true);
+			healthAnimation[i].flip(false, true);
+		}
+	}
+	protected void setAnimation(Animate animation){
+		animate = animation;
+	}
+	public void setPosition(float x, float y) {
 		sprite.setPosition(x, y);
 		location.setLocation(x, y);
 	}
-	boolean isMoved() {
+	protected void setHealth(int health){
+		this.health= health;
+	}
+	protected boolean isMoved() {
 		return moved;
 	}
-	void setMoved(boolean move) {
+	protected void setMoved(boolean move) {
 		moved=move;
 	}
 	Location getLocation() {
 		return location;
 	}
-	float getX(){
+	protected float getX(){
 		return sprite.getX();
 	}
-	String getName(){
+	protected String getName(){
 		return name;
 	}
-	float getY(){
+	protected float getY(){
 		return sprite.getY();
 	}
-	void draw(SpriteBatch batch) {
-		if(a.equals(a.STAY)) {
-			//animation = new Animation<TextureRegion>(0.0007f,stay);
-			//TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime,true);
-			//batch.draw(currentFrame, getX(), getY());
+	protected void draw(SpriteBatch batch) {
+		if(animate.equals(animate.STAY)) {
 			TextureRegion currentFrame;
-			if(healthBar==100) {
+			if(health==100) {
 				currentFrame=healthSprites.get(100);
-			}else if(healthBar<=100&&healthBar>80) {
+			}else if(health<=100&&health>80) {
 				currentFrame=healthSprites.get(80);
-			}else if(healthBar<=80&&healthBar>60) {
+			}else if(health<=80&&health>60) {
 				currentFrame=healthSprites.get(60);
-			}else if(healthBar<=60&&healthBar>40) {
+			}else if(health<=60&&health>40) {
 				currentFrame=healthSprites.get(40);
-			}else if(healthBar<=40&&healthBar>20) {
+			}else if(health<=40&&health>20) {
 				currentFrame=healthSprites.get(20);
 			}else {
 				currentFrame=healthSprites.get(0);
-				a=a.DIE;
+				setAnimation(animate.DIE);
 				setMoved(false);
+				dead=true;
 			}
-			
 			batch.draw(currentFrame, getX(), getY());
-		}else if(a.equals(a.WALK)) {
-			animation = new Animation<TextureRegion>(0.0007f,walk);
+		}else if(animate.equals(animate.WALK)) {
+			animation = new Animation<>(0.0007f, walkAnimation);
 			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime,true);
 			batch.draw(currentFrame, getX(), getY());
-		}else if(a.equals(a.ATTACK)) {
-			animation = new Animation<TextureRegion>(0.0007f,attack);
+		}else if(animate.equals(animate.ATTACK)) {
+			animation = new Animation<>(0.0007f, attackAnimation);
 			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime,true);
 			batch.draw(currentFrame, getX(), getY());
 		}else {
-			animation = new Animation<TextureRegion>(0.0007f,die);
+			animation = new Animation<>(0.0007f, dieAnimation);
 			TextureRegion currentFrame = animation.getKeyFrame(MainGameScreen.elapsedTime,false);
 			batch.draw(currentFrame, getX(), getY());
 		}
 	}
-	void deleteSprite() {
-		this.sprite=null;
-	}
-	boolean getIsDrawn() {
-		return isDrawn;
-	}
-	void setDamage(int damage) {
-		this.damage=damage;
-	}
-	void setHealth(int health) {
-		this.healthBar=health;
-	}
-	int getDamage() {
+	protected int getDamage() {
 		return damage;
 	}
-	int getHealth() {
-		return healthBar;
+	protected int getHealth() {
+		return health;
+	}
+	protected int getMovementRange() {
+		return movementRange;
+	}
+	protected boolean isInBounds(float x, float y, int range){
+		float leftBound = this.getX()-range*64;
+		float rightBound= this.getX()+range*64;
+		float upBound=this.getY()-range*64;
+		float downBound=this.getY()+range*64;
+		if(x>=leftBound&&x<=rightBound&&y>=upBound&&y<= downBound) {
+			return true;
+		}
+		return false;
 	}
 	void moveLeft() {
 		setPosition(sprite.getX()-64, sprite.getY()+0);
