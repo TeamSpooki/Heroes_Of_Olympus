@@ -1,9 +1,8 @@
 package com.mygdx.game;
 
 public class Location {
-	float x;
-	float y;
-
+	private float x;
+	private float y;
 	
 	public boolean equals(Object obj) {
 		
@@ -53,9 +52,5 @@ public class Location {
 	}
 	public Location rightLocation() {
 		return new Location(getX()+64,getY());
-	}
-	//need to check
-	public Location Transpose(float x, float y) {
-		return new Location(this.x+x,this.y+y);
 	}
 }

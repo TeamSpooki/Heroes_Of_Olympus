@@ -1,5 +1,6 @@
 package com.mygdx.screen;
 
+import java.io.FileNotFoundException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -132,7 +133,11 @@ public class MainGameScreen implements Screen {
 		}
 		if(game.level.enemiesDead()) {
 			game.level.removeAll();
-			game.setScreen(new OutroScreen(game));
+			try {
+				game.setScreen(new OutroScreen(game));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

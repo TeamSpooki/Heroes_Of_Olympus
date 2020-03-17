@@ -7,35 +7,38 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.screen.MainGameScreen;
 
 public abstract class GameUnit {
-	protected int health=100;
-	protected int damage=0;
-	protected int movementRange=0;
-	protected int attackRange=0;
-	boolean dead=false;
-	Sprite sprite;
-	Location location;
-	String name;
-	boolean isDrawn;
-	boolean moved;
-	TextureRegion[] stayAnimation,walkAnimation,attackAnimation,dieAnimation,healthAnimation;
-	Animation<TextureRegion> animation;
+	protected int health;
+	protected int damage;
+	protected int movementRange;
+	protected int attackRange;
+	protected boolean dead;
+	protected Sprite sprite;
+	protected Location location;
+	protected String name;
+	protected boolean isDrawn;
+	protected boolean moved;
+	protected TextureRegion[] stayAnimation,walkAnimation,attackAnimation,dieAnimation,healthAnimation;
+	protected Animation<TextureRegion> animation;
 	protected Animate animate;
-	Map<Integer,TextureRegion> healthSprites;
+	protected Map<Integer,TextureRegion> healthSprites;
 	public GameUnit(TextureRegion[][] t,String name,int movementRange, int attackRange, int damage) {
-		animate = Animate.STAY;
+		this.animate = Animate.STAY;
+		this.health=100;
+		this.dead=false;
 		this.movementRange=movementRange;
 		this.attackRange=attackRange;
 		this.damage= damage;
 		setAnimation(t);
-		healthSprites = new HashMap<Integer,TextureRegion>();
+		healthSprites = new HashMap<>();
 		setHealthBar();
-		sprite = new Sprite();
+		this.sprite = new Sprite();
 		this.name=name;
-		location = new Location(0,0);
+		this.location = new Location(0,0);
 		setPosition(0, 0);
-		isDrawn=false;
+		this.isDrawn=false;
 	}
 	private void setHealthBar(){
 		healthSprites.put(100, healthAnimation[0]);
@@ -59,35 +62,32 @@ public abstract class GameUnit {
 			healthAnimation[i].flip(false, true);
 		}
 	}
-	protected void setAnimation(Animate animation){
+	public void setAnimation(Animate animation){
 		animate = animation;
 	}
 	public void setPosition(float x, float y) {
 		sprite.setPosition(x, y);
 		location.setLocation(x, y);
 	}
-	protected void setHealth(int health){
+	public void setHealth(int health){
 		this.health= health;
 	}
-	protected boolean isMoved() {
+	public boolean isMoved() {
 		return moved;
 	}
-	protected void setMoved(boolean move) {
+	public void setMoved(boolean move) {
 		moved=move;
 	}
-	Location getLocation() {
+	public Location getLocation() {
 		return location;
 	}
-	protected float getX(){
+	public float getX(){
 		return sprite.getX();
 	}
-	protected String getName(){
-		return name;
-	}
-	protected float getY(){
+	public float getY(){
 		return sprite.getY();
 	}
-	protected void draw(SpriteBatch batch) {
+	public void draw(SpriteBatch batch) {
 		if(animate.equals(animate.STAY)) {
 			TextureRegion currentFrame;
 			if(health==100) {
@@ -121,16 +121,22 @@ public abstract class GameUnit {
 			batch.draw(currentFrame, getX(), getY());
 		}
 	}
-	protected int getDamage() {
+	public int getDamage() {
 		return damage;
 	}
-	protected int getHealth() {
+	public int getHealth() {
 		return health;
 	}
-	protected int getMovementRange() {
+	public int getMovementRange() {
 		return movementRange;
 	}
-	protected boolean isInBounds(float x, float y, int range){
+	public int getAttackRange() {
+		return attackRange;
+	}
+	public boolean isDead() {
+		return dead;
+	}
+	public boolean isInBounds(float x, float y, int range){
 		float leftBound = this.getX()-range*64;
 		float rightBound= this.getX()+range*64;
 		float upBound=this.getY()-range*64;
@@ -140,20 +146,5 @@ public abstract class GameUnit {
 		}
 		return false;
 	}
-	void moveLeft() {
-		setPosition(sprite.getX()-64, sprite.getY()+0);
-	}
-	void moveRight() {
-		setPosition(sprite.getX(), sprite.getY());
-	}
-	void moveUp() {
-		setPosition(sprite.getX()+0, sprite.getY()-64);
-	}
-	void moveDown() {
-		setPosition(sprite.getX()+0, sprite.getY()+64 );
-	}
-}
-enum Animate{
-	STAY,WALK,ATTACK,DIE;
 }
 
