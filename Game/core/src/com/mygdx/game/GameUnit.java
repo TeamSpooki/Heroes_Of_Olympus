@@ -23,6 +23,7 @@ public abstract class GameUnit {
 	Animation<TextureRegion> animation;
 	Animate a ;
 	Map<Integer,TextureRegion> healthSprites;
+	
 	public GameUnit(TextureRegion[][] t,String name) {
 		a = Animate.STAY;
 		stay = t[0];
@@ -50,29 +51,38 @@ public abstract class GameUnit {
 		setPosition(0, 0);
 		isDrawn=false;
 	}
+	
 	abstract void attack();
+	
 	void setPosition(float x, float y) {
 		sprite.setPosition(x, y);
 		location.setLocation(x, y);
 	}
+	
 	boolean isMoved() {
 		return moved;
 	}
+	
 	void setMoved(boolean move) {
 		moved=move;
 	}
+	
 	Location getLocation() {
 		return location;
 	}
+	
 	float getX(){
 		return sprite.getX();
 	}
+	
 	String getName(){
 		return name;
 	}
+	
 	float getY(){
 		return sprite.getY();
 	}
+	
 	void draw(SpriteBatch batch) {
 		if(a.equals(a.STAY)) {
 			//animation = new Animation<TextureRegion>(0.0007f,stay);
@@ -111,37 +121,48 @@ public abstract class GameUnit {
 			batch.draw(currentFrame, getX(), getY());
 		}
 	}
+	
 	void deleteSprite() {
 		this.sprite=null;
 	}
+	
 	boolean getIsDrawn() {
 		return isDrawn;
 	}
+	
 	void setDamage(int damage) {
 		this.damage=damage;
 	}
+	
 	void setHealth(int health) {
 		this.healthBar=health;
 	}
+	
 	int getDamage() {
 		return damage;
 	}
+	
 	int getHealth() {
 		return healthBar;
 	}
+	
 	void moveLeft() {
 		setPosition(sprite.getX()-64, sprite.getY()+0);
 	}
+	
 	void moveRight() {
 		setPosition(sprite.getX(), sprite.getY());
 	}
+	
 	void moveUp() {
 		setPosition(sprite.getX()+0, sprite.getY()-64);
 	}
+	
 	void moveDown() {
 		setPosition(sprite.getX()+0, sprite.getY()+64 );
 	}
 }
+
 enum Animate{
 	STAY,WALK,ATTACK,DIE;
 }
