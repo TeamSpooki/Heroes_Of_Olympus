@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.GL20;
 import com.mygdx.game.HeroesOfOlympus;
 
+import java.io.FileNotFoundException;
+
 public class MainMenuScreen implements Screen {
 	private static final int WIDTH = HeroesOfOlympus.WIDTH;
 	private static final int HEIGHT = HeroesOfOlympus.HEIGHT;
@@ -71,7 +73,11 @@ public class MainMenuScreen implements Screen {
 			game.batch.draw(playButtonActive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
 			if (Gdx.input.isTouched()) {
 				this.dispose();
-				game.setScreen(new IntroScreen(game));
+				try {
+					game.setScreen(new IntroScreen(game));
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
 		} else {
 			game.batch.draw(playButtonInactive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);

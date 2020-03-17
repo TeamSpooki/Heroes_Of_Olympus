@@ -52,7 +52,8 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         api "de.tomgrill.gdxdialogs:gdx-dialogs-desktop:1.2.5"
         api "de.tomgrill.gdxfacebook:gdx-facebook-desktop:1.4.1"
-        
+
+        compile "es.e-ucm.com.badlogicgames.gdx:gdx-video-desktop:0.0.1-SNAPSHOT"
     }
 }
 
@@ -105,6 +106,8 @@ project(":core") {
         api "de.tomgrill.gdxdialogs:gdx-dialogs-core:1.2.5"
         api "de.tomgrill.gdxfacebook:gdx-facebook-core:1.4.1"
         api "com.github.czyzby:gdx-kiwi:1.9.1.9.6"
+
+        compile "es.e-ucm.com.badlogicgames.gdx:gdx-video:0.0.1-SNAPSHOT"
         
     }
 }
