@@ -74,7 +74,7 @@ public class MainMenuScreen implements Screen {
 			if (Gdx.input.isTouched()) {
 				this.dispose();
 				try {
-					game.setScreen(new IntroScreen(game));
+					game.setScreen(new Story(game,"scene1.mp4"));
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}

@@ -13,14 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.video.VideoPlayer;
 import com.badlogic.gdx.video.VideoPlayerCreator;
-import com.mygdx.screen.MainGameScreen;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;
-import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("ALL")
-public class IntroScreen extends JFrame implements Screen {
+public class IntroScreen implements Screen {
 
 	HeroesOfOlympus game;
 
@@ -40,30 +38,9 @@ public class IntroScreen extends JFrame implements Screen {
 
 	IntroScreen(HeroesOfOlympus game) throws FileNotFoundException {
 		this.game = game;
-		text = "The story begins with our five mighty heroes:\r\n"
-				+ " Hercules, Achilles, Theseus, Helen and Hippolyta, \r\n\""
-				+ "cheering and parading out of a jungle after a victorious battle against the Chimaera. \r\n" +
-				"Until our heroes are ambushed! A horde of skeletons pounce out of the treeline and \r\n"
-				+ "swings their swords at full force! \r\n"
-				+ "No match for our heroes, one by one the skeletons fall and with the final skeleton \r\n"
-				+ "clashing swords with Hercules, our heroes once again stand proud in victory.\r\n" +
-				"However, the fight is not over yet, knowing that no skeleton would ever travel \r\n"
-				+ "so close to Mount Olympus, our heroes brace themselves for what is next to come.\r\n" +
-				"Across the path to Mount Olympus, more skeletons gather, \r\n"
-				+ "and so our heroes prepare themselves as the battle is only just beginning.\r\n";
-		nextButton = new Texture("Next button.png");
-		myTextureRegion = new TextureRegion(nextButton);
-		myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-		button = new ImageButton(myTexRegionDrawable);
-		button.setSize(80, 80);
-		button.setPosition(HeroesOfOlympus.WIDTH - button.getWidth(), HeroesOfOlympus.HEIGHT - button.getHeight());
-		//gameMap = new TiledGameMap();
 
-		stage = new Stage();
-
-		stage.addActor(button);
 		//Initialise creator
-//        creator = new VideoPlayerCreator();
+        creator = new VideoPlayerCreator();
 		//Initialise video
 		video = VideoPlayerCreator.createVideoPlayer();
 
@@ -73,13 +50,13 @@ public class IntroScreen extends JFrame implements Screen {
 				videoLoaded = true;
 			}
 		});
-		//video = creator.createVideoPlayer();
+		video = creator.createVideoPlayer();
 		//Create file handle to locate internal file
 		videoFile = Gdx.files.internal("scene1.mp4");
 		//Check if file exists
 		System.out.println("Exists?: " + videoFile.exists());
 		//play the specified file
-		video.play(videoFile);
+		//video.play(videoFile);
 
 		int videoWidth = video.getVideoWidth();
 		int videoHeight = video.getVideoHeight();
@@ -109,19 +86,11 @@ public class IntroScreen extends JFrame implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-//        game.batch.begin();
-
 		if (Gdx.input.isTouched()) {
 			this.dispose();
 			game.setScreen(new MainGameScreen(game, new Level1()));
 			if (video.isPlaying()) video.stop();
 		}
-//        if (!floatingText.isAnimated()) {
-//            floatingText.animate();
-//        }
-//        stage.act();
-//        stage.draw();
-//        game.batch.end();
 
 		if (videoLoaded) {
 			if (!video.render()) {
