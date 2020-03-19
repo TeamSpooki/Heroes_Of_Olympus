@@ -40,37 +40,50 @@ public class Level2 extends AbstractLevel{
         mapCollisions.add(new Location(192,576));
         heroes.add(thesius);
 
-        titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/MinotaurHealthBar.png")), 64, 64),"Titan",1,15,100);
-        titan.setPosition(MainGameScreen.WIDTH-64, MainGameScreen.HEIGHT/2);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH-64, MainGameScreen.HEIGHT/2));
-        enemies.add(titan);
-
-        enemy1 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfBowHealthBar.png")), 64, 64),"Enemy1",1,15,100);
-        enemy1.setPosition(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2-128);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2-128));
-        enemies.add(enemy1);
-
-        enemy2 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfBowHealthBar.png")), 64, 64),"Enemy2",1,15,100);
-        enemy2.setPosition(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2));
-        enemies.add(enemy2);
-
-        enemy3 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfBowHealthBar.png")), 64, 64),"Enemy3",1,15,100);
-        enemy3.setPosition(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2+128);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2+128));
-        enemies.add(enemy3);
-
-        enemy4 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfDaggerHealthBar.png")), 64, 64),"Enemy4",1,15,100);
-        enemy4.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-192);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-192));
-        enemies.add(enemy4);
-
-        enemy5 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfDaggerHealthBar.png")), 64, 64),"Enemy5",1,15,100);
-        enemy5.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-64);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-64));
-        enemies.add(enemy5);
-
-        enemy6 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfDaggerHealthBar.png")), 64, 64),"Enemy6",1,15,100);
+		/*
+		 * titan = new Enemy(TextureRegion.split(new
+		 * Texture(Gdx.files.internal("Level2/MinotaurHealthBar.png")), 64,
+		 * 64),"Titan",1,15,100); titan.setPosition(MainGameScreen.WIDTH-64,
+		 * MainGameScreen.HEIGHT/2); mapCollisions.add(new
+		 * Location(MainGameScreen.WIDTH-64, MainGameScreen.HEIGHT/2));
+		 * enemies.add(titan);
+		 * 
+		 * enemy1 = new Enemy(TextureRegion.split(new
+		 * Texture(Gdx.files.internal("Level2/ElfBowHealthBar.png")), 64,
+		 * 64),"Enemy1",1,15,100); enemy1.setPosition(MainGameScreen.WIDTH-192,
+		 * MainGameScreen.HEIGHT/2-128); mapCollisions.add(new
+		 * Location(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2-128));
+		 * enemies.add(enemy1);
+		 * 
+		 * enemy2 = new Enemy(TextureRegion.split(new
+		 * Texture(Gdx.files.internal("Level2/ElfBowHealthBar.png")), 64,
+		 * 64),"Enemy2",1,15,100); enemy2.setPosition(MainGameScreen.WIDTH-192,
+		 * MainGameScreen.HEIGHT/2); mapCollisions.add(new
+		 * Location(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2));
+		 * enemies.add(enemy2);
+		 * 
+		 * enemy3 = new Enemy(TextureRegion.split(new
+		 * Texture(Gdx.files.internal("Level2/ElfBowHealthBar.png")), 64,
+		 * 64),"Enemy3",1,15,100); enemy3.setPosition(MainGameScreen.WIDTH-192,
+		 * MainGameScreen.HEIGHT/2+128); mapCollisions.add(new
+		 * Location(MainGameScreen.WIDTH-192, MainGameScreen.HEIGHT/2+128));
+		 * enemies.add(enemy3);
+		 * 
+		 * enemy4 = new Enemy(TextureRegion.split(new
+		 * Texture(Gdx.files.internal("Level2/ElfDaggerHealthBar.png")), 64,
+		 * 64),"Enemy4",1,15,100); enemy4.setPosition(MainGameScreen.WIDTH-320,
+		 * MainGameScreen.HEIGHT/2-192); mapCollisions.add(new
+		 * Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-192));
+		 * enemies.add(enemy4);
+		 * 
+		 * enemy5 = new Enemy(TextureRegion.split(new
+		 * Texture(Gdx.files.internal("Level2/ElfDaggerHealthBar.png")), 64,
+		 * 64),"Enemy5",1,15,100); enemy5.setPosition(MainGameScreen.WIDTH-320,
+		 * MainGameScreen.HEIGHT/2-64); mapCollisions.add(new
+		 * Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-64));
+		 * enemies.add(enemy5);
+		 */
+        enemy6 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfDaggerHealthBar.png")), 64, 64),"Enemy6",1,15,10);
         enemy6.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2+64);
         mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2+64));
         enemies.add(enemy6);

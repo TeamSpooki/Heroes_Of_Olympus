@@ -35,11 +35,11 @@ public class Level1 extends AbstractLevel{
 		mapCollisions.add(new Location(384, 640));
 		heroes.add(hypolyta);
 		
-		thesius = new Hero(TextureRegion.split( new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")),64,64),"Thesius",1,15,10);
+		thesius = new Hero(TextureRegion.split( new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")),64,64),"Thesius",1,15,100);
 		thesius.setPosition(64, 512);
 		mapCollisions.add(new Location(64, 512));
 		heroes.add(thesius);
-		
+		/*
 		titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level1/CyclopsHealthBar.png")), 64, 64),"Titan",1,15,10);
 		titan.setPosition(MainGameScreen.WIDTH-64, MainGameScreen.HEIGHT/2);
 		mapCollisions.add(new Location(MainGameScreen.WIDTH-64, MainGameScreen.HEIGHT/2));
@@ -69,7 +69,7 @@ public class Level1 extends AbstractLevel{
 		enemy5.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-64);
 		mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-64));
 		enemies.add(enemy5);
-		
+		*/
 		enemy6 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level1/SkeletonSpearHealthBar.png")), 64, 64),"Enemy6",1,15,10);
 		enemy6.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2+64);
 		mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2+64));
