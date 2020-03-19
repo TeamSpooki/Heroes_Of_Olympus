@@ -35,7 +35,7 @@ public class Level1 extends AbstractLevel{
 		mapCollisions.add(new Location(384, 640));
 		heroes.add(hypolyta);
 		
-		thesius = new Hero(TextureRegion.split( new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")),64,64),"Thesius",1,15,10);
+		thesius = new Hero(TextureRegion.split( new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")),64,64),"Thesius",1,15,100);
 		thesius.setPosition(64, 512);
 		mapCollisions.add(new Location(64, 512));
 		heroes.add(thesius);

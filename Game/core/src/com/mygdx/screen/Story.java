@@ -15,15 +15,12 @@ public class Story implements Screen {
 
     HeroesOfOlympus game;
     VideoPlayer video;
-    VideoPlayerCreator creator;
     boolean finished = false, videoLoaded = false;
     FileHandle videoFile;
 
     public Story(HeroesOfOlympus game, String path) throws FileNotFoundException {
         this.game = game;
 
-        //Initialise creator
-        creator = new VideoPlayerCreator();
         //Initialise video
         video = VideoPlayerCreator.createVideoPlayer();
 
@@ -33,7 +30,6 @@ public class Story implements Screen {
                 videoLoaded = true;
             }
         });
-        video = creator.createVideoPlayer();
         //Create file handle to locate internal file
         videoFile = Gdx.files.internal(path);
         //Check if file exists
@@ -72,7 +68,7 @@ public class Story implements Screen {
             } else if(game.level instanceof Level3){
                 game.setScreen(new MainGameScreen(game, new Level4()));
             } else if(game.level instanceof Level5){
-                game.dispose();
+                Gdx.app.exit();
             } else {
                 game.setScreen(new MainGameScreen(game, new Level1()));
             }
@@ -91,7 +87,7 @@ public class Story implements Screen {
                 } else if(game.level instanceof Level3){
                     game.setScreen(new MainGameScreen(game, new Level4()));
                 } else if(game.level instanceof Level5){
-                    game.dispose();
+                    Gdx.app.exit();
                 } else {
                     game.setScreen(new MainGameScreen(game, new Level1()));
                 }

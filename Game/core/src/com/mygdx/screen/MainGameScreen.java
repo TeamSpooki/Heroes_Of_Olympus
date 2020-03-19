@@ -46,16 +46,16 @@ public class MainGameScreen implements Screen {
 			TiledMapTileLayer layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("Water");
 			level.addLayer(layer);
 		}else if(level instanceof Level2){
-			gameMap = new TiledGameMap("Level2/Level2.tmx");
+			gameMap = new TiledGameMap("Level2/level2.tmx");
 		}
 		else if(level instanceof Level3){
-			gameMap = new TiledGameMap("Level2/Level2.tmx");
+			gameMap = new TiledGameMap("Level3/level3.tmx");
 		}
 		else if(level instanceof Level4){
-			gameMap = new TiledGameMap("Level2/Level2.tmx");
+			gameMap = new TiledGameMap("Level4/level4.tmx");
 		}
 		else{
-			gameMap = new TiledGameMap("Level2/Level2.tmx");
+			gameMap = new TiledGameMap("Level5/level5.tmx");
 		}
 		touch=new Vector3();
 		movements=0;
@@ -77,7 +77,7 @@ public class MainGameScreen implements Screen {
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
-		game.level.Draw(game.batch);
+		game.level.draw(game.batch);
 		game.batch.end();
 		stage.act();
 		stage.draw();
@@ -141,18 +141,18 @@ public class MainGameScreen implements Screen {
 			game.level.removeAll();
 			try {
 				if(game.level instanceof Level1){
-					game.setScreen(new Story(game,"scene2.mp4"));
+					game.setScreen(new Story(game,"scene2.ogv"));
 				}else if(game.level instanceof Level2){
-					game.setScreen(new Story(game,"scene3.mp4"));
+					game.setScreen(new Story(game,"scene3.ogv"));
 				}
 				else if(game.level instanceof Level3){
-					game.setScreen(new Story(game,"scene4.mp4"));
+					game.setScreen(new Story(game,"scene4.ogv"));
 				}
 				else if(game.level instanceof Level4){
-					game.setScreen(new Story(game,"scene5.mp4"));
+					game.setScreen(new Story(game,"scene5.ogv"));
 				}
 				else{
-					game.setScreen(new Story(game,"scene6.mp4"));
+					game.setScreen(new Story(game,"scene6.ogv"));
 				}
 
 			} catch (FileNotFoundException e) {

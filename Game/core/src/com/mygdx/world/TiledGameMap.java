@@ -19,7 +19,6 @@ public class TiledGameMap{
 	public void render(OrthographicCamera camera) {
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
-
 	}
 
 	public TiledMap getTiledMap() {
