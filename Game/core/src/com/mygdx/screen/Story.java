@@ -67,9 +67,11 @@ public class Story implements Screen {
                 game.setScreen(new MainGameScreen(game, new Level3()));
             } else if(game.level instanceof Level3){
                 game.setScreen(new MainGameScreen(game, new Level4()));
+            } else if(game.level instanceof Level4){
+                game.setScreen(new MainGameScreen(game, new Level5()));
             } else if(game.level instanceof Level5){
                 Gdx.app.exit();
-            } else {
+            }else {
                 game.setScreen(new MainGameScreen(game, new Level1()));
             }
             if (video.isPlaying()) video.stop();
@@ -86,6 +88,8 @@ public class Story implements Screen {
                     game.setScreen(new MainGameScreen(game, new Level3()));
                 } else if(game.level instanceof Level3){
                     game.setScreen(new MainGameScreen(game, new Level4()));
+                } else if(game.level instanceof Level4){
+                    game.setScreen(new MainGameScreen(game, new Level5()));
                 } else if(game.level instanceof Level5){
                     Gdx.app.exit();
                 } else {

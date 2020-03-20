@@ -13,7 +13,7 @@ public class Level4 extends AbstractLevel {
     Enemy titan,enemy1,enemy2,enemy3,enemy4,enemy5,enemy6;
 
     public Level4() {
-
+//64,128,192,256,320,384,448,512,576,640,704,768,832,896,960,1024,1088,1152,1216,1280
         achille = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/AchillesHealthBar.png")), 64, 64), "Achille", 1, 1, 15);
         achille.setPosition(64, 128);
         mapCollisions.add(new Location(64, 128));
@@ -34,44 +34,44 @@ public class Level4 extends AbstractLevel {
         mapCollisions.add(new Location(128, 448));
         heroes.add(hypolyta);
 
-        thesius = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")), 64, 64), "Thesius", 1, 15, 100);
+        thesius = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")), 64, 64), "Thesius", 1, 20, 100);
         thesius.setPosition(192, 576);
         mapCollisions.add(new Location(192, 576));
         heroes.add(thesius);
-/*
-        titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/MinotaurHealthBar.png")), 64, 64), "Titan", 1, 15, 100);
+
+        titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level4/KnightCaptain.png")), 64, 64), "Titan", 1, 15, 40);
         titan.setPosition(MainGameScreen.WIDTH - 64, MainGameScreen.HEIGHT / 2);
         mapCollisions.add(new Location(MainGameScreen.WIDTH - 64, MainGameScreen.HEIGHT / 2));
         enemies.add(titan);
 
-        enemy1 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfBowHealthBar.png")), 64, 64), "Enemy1", 1, 15, 100);
-        enemy1.setPosition(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2 - 128);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2 - 128));
+        enemy1 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level4/KnightArcher.png")), 64, 64), "Enemy1", 1, 5, 20);
+        enemy1.setPosition(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2 - 64);
+        mapCollisions.add(new Location(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2 - 64));
         enemies.add(enemy1);
-
+/*
         enemy2 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfBowHealthBar.png")), 64, 64), "Enemy2", 1, 15, 100);
         enemy2.setPosition(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2);
         mapCollisions.add(new Location(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2));
         enemies.add(enemy2);
-
-        enemy3 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfBowHealthBar.png")), 64, 64), "Enemy3", 1, 15, 100);
+*/
+        enemy3 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level4/KnightArcher.png")), 64, 64), "Enemy3", 1, 5, 20);
         enemy3.setPosition(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2 + 128);
         mapCollisions.add(new Location(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2 + 128));
         enemies.add(enemy3);
 
-        enemy4 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfDaggerHealthBar.png")), 64, 64), "Enemy4", 1, 15, 100);
-        enemy4.setPosition(MainGameScreen.WIDTH - 320, MainGameScreen.HEIGHT / 2 - 192);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH - 320, MainGameScreen.HEIGHT / 2 - 192));
+        enemy4 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level4/KnightSpear.png")), 64, 64), "Enemy4", 1, 2, 10);
+        enemy4.setPosition(MainGameScreen.WIDTH - 448, MainGameScreen.HEIGHT / 2 - 192);
+        mapCollisions.add(new Location(MainGameScreen.WIDTH - 448, MainGameScreen.HEIGHT / 2 - 192));
         enemies.add(enemy4);
 
-        enemy5 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfDaggerHealthBar.png")), 64, 64), "Enemy5", 1, 15, 100);
-        enemy5.setPosition(MainGameScreen.WIDTH - 320, MainGameScreen.HEIGHT / 2 - 64);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH - 320, MainGameScreen.HEIGHT / 2 - 64));
+        enemy5 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level4/KnightSpear.png")), 64, 64), "Enemy5", 1, 2, 10);
+        enemy5.setPosition(MainGameScreen.WIDTH - 448, MainGameScreen.HEIGHT / 2 - 64);
+        mapCollisions.add(new Location(MainGameScreen.WIDTH - 448, MainGameScreen.HEIGHT / 2 - 64));
         enemies.add(enemy5);
-*/
-        enemy6 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfDaggerHealthBar.png")), 64, 64), "Enemy6", 1, 15, 100);
-        enemy6.setPosition(MainGameScreen.WIDTH - 320, MainGameScreen.HEIGHT / 2 + 64);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH - 320, MainGameScreen.HEIGHT / 2 + 64));
+
+        enemy6 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level4/KnightSpear.png")), 64, 64), "Enemy6", 1, 2, 10);
+        enemy6.setPosition(MainGameScreen.WIDTH - 448, MainGameScreen.HEIGHT / 2 + 64);
+        mapCollisions.add(new Location(MainGameScreen.WIDTH - 448, MainGameScreen.HEIGHT / 2 + 64));
         enemies.add(enemy6);
     }
 }

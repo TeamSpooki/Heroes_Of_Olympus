@@ -29,6 +29,7 @@ public class MainGameScreen implements Screen {
 	private HeroesOfOlympus game;
 	private Timer timer;
 	private TiledGameMap gameMap;
+	private TiledMapTileLayer layer;
 	public static float elapsedTime= 0f;
 	private boolean move = false;
 	private boolean attack = false;
@@ -43,18 +44,32 @@ public class MainGameScreen implements Screen {
 		game.level = level;
 		if(level instanceof Level1){
 			gameMap = new TiledGameMap("Level1/level1.tmx");
-			TiledMapTileLayer layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("Water");
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("waterCollide");
+			level.addLayer(layer);
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("bushCollide");
 			level.addLayer(layer);
 		}else if(level instanceof Level2){
 			gameMap = new TiledGameMap("Level2/level2.tmx");
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("wallCollide");
+			level.addLayer(layer);
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("pillarCollide");
+			level.addLayer(layer);
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("gateCollide");
+			level.addLayer(layer);
 		}
 		else if(level instanceof Level3){
 			gameMap = new TiledGameMap("Level3/level3.tmx");
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("coffinCollide");
+			level.addLayer(layer);
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("pillarCollide");
+			level.addLayer(layer);
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("fountainCollide");
+			level.addLayer(layer);
 		}
 		else if(level instanceof Level4){
 			gameMap = new TiledGameMap("Level4/level4.tmx");
 		}
-		else{
+		else if(level instanceof Level5){
 			gameMap = new TiledGameMap("Level5/level5.tmx");
 		}
 		touch=new Vector3();
@@ -141,18 +156,18 @@ public class MainGameScreen implements Screen {
 			game.level.removeAll();
 			try {
 				if(game.level instanceof Level1){
-					game.setScreen(new Story(game,"scene2.ogv"));
+					game.setScreen(new Story(game,"scene2.mp4"));
 				}else if(game.level instanceof Level2){
-					game.setScreen(new Story(game,"scene3.ogv"));
+					game.setScreen(new Story(game,"scene3.mp4"));
 				}
 				else if(game.level instanceof Level3){
-					game.setScreen(new Story(game,"scene4.ogv"));
+					game.setScreen(new Story(game,"scene4.mp4"));
 				}
 				else if(game.level instanceof Level4){
-					game.setScreen(new Story(game,"scene5.ogv"));
+					game.setScreen(new Story(game,"scene5.mp4"));
 				}
 				else{
-					game.setScreen(new Story(game,"scene6.ogv"));
+					game.setScreen(new Story(game,"scene6.mp4"));
 				}
 
 			} catch (FileNotFoundException e) {
@@ -197,7 +212,6 @@ public class MainGameScreen implements Screen {
 				if(!game.level.validAttacks.isEmpty()) {
 					attack=true;
 				}
-				
 			}
 			else if (object.equals(2)){
 				//movement
