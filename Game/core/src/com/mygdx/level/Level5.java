@@ -9,11 +9,11 @@ import com.mygdx.game.Location;
 import com.mygdx.screen.MainGameScreen;
 
 public class Level5 extends AbstractLevel {
-    Hero achille,helen,hercules,hypolyta,thesius;
-    Enemy titan,enemy1,enemy2,enemy3,enemy4,enemy5,enemy6;
+    private Hero achille,helen,hercules,hypolyta,thesius;
+    private Enemy titan,enemy1,enemy2,enemy3,enemy4,enemy5,enemy6;
 
     public Level5() {
-//64,128,192,256,320,384,448,512,576,640,704,768,832,896,960,1024,1088,1152,1216,1280
+        //64,128,192,256,320,384,448,512,576,640,704,768,832,896,960,1024,1088,1152,1216,1280
         achille = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/AchillesHealthBar.png")), 64, 64), "Achille", 1, 1, 15);
         achille.setPosition(64, 832);
         mapCollisions.add(new Location(64, 832));

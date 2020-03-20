@@ -32,7 +32,7 @@ public class Location {
 
 	/**
 	 * Returns x coordinate
-	 * @return float
+	 * @return x
 	 */
 	public float getX() {
 		return x;
@@ -48,7 +48,7 @@ public class Location {
 
 	/**
 	 * Return y coordinate
-	 * @return float
+	 * @return y
 	 */
 	public float getY() {
 		return y;

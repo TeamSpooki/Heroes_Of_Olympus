@@ -15,7 +15,6 @@ import java.util.TimerTask;
 abstract class AbstractLevel implements Level{
 
     public void draw(SpriteBatch batch){
-
         for(GameUnit hero:heroes)
         {
             hero.draw(batch);
@@ -35,10 +34,9 @@ abstract class AbstractLevel implements Level{
             {
                 batch.draw(attack, loc.getX(), loc.getY());
             }
-
         }
     }
-    public GameUnit getPieceHero(Location location){
+    public GameUnit getPieceHero(Location location) throws NullPointerException{
         for(GameUnit hero:heroes)
         {
             if(hero.getLocation().equals(location)) {
@@ -47,7 +45,7 @@ abstract class AbstractLevel implements Level{
         }
         return null;
     }
-    public GameUnit getPieceEnemy(Location location){
+    public GameUnit getPieceEnemy(Location location) throws NullPointerException{
         for(GameUnit enemy:enemies)
         {
             if(enemy.getLocation().equals(location)) {
@@ -56,7 +54,7 @@ abstract class AbstractLevel implements Level{
         }
         return null;
     }
-    public GameUnit findNearestHeroTouch(float x, float y){
+    public GameUnit findNearestHeroTouch(float x, float y) throws NullPointerException{
         for(GameUnit hero:heroes)
         {
             if(x>=hero.getX()&&x<=hero.getX()+64&&y>=hero.getY()&&y<=hero.getY()+64) {
@@ -65,7 +63,7 @@ abstract class AbstractLevel implements Level{
         }
         return null;
     }
-    public GameUnit findNearestHero(float x, float y){
+    public GameUnit findNearestHero(float x, float y) throws NullPointerException{
         GameUnit nearestHero=null;
         double distance= 0;
         double checkDistance;
@@ -86,7 +84,7 @@ abstract class AbstractLevel implements Level{
         }
         return nearestHero;
     }
-    public GameUnit findNearestEnemyTouch(float x, float y){
+    public GameUnit findNearestEnemyTouch(float x, float y) throws NullPointerException{
         for(GameUnit enemy:enemies)
         {
             if(x>=enemy.getX()&&x<=enemy.getX()+64&&y>=enemy.getY()&&y<=enemy.getY()+64) {
@@ -95,7 +93,7 @@ abstract class AbstractLevel implements Level{
         }
         return null;
     }
-    public Location findNearestLocation(float x, float y){
+    public Location findNearestLocation(float x, float y) throws NullPointerException{
         for(Location loc:validMoves)
         {
             if(x>=loc.getX()&&x<=loc.getX()+64&&y>=loc.getY()&&y<=loc.getY()+64) {
@@ -137,35 +135,47 @@ abstract class AbstractLevel implements Level{
         Random rand = new Random();
         final GameUnit enemy= enemies.get(rand.nextInt(enemies.size()));
         final GameUnit nearestHero = findNearestHero(enemy.getX(),enemy.getY());
-        if(enemy.isInBounds(nearestHero.getX(),nearestHero.getY(),enemy.getAttackRange())){
-            enemy.setAnimation(Animate.ATTACK);
-            timer.schedule(new TimerTask() {
-                  public void run() {
-                      getPieceHero(nearestHero.getLocation()).setHealth(getPieceHero(nearestHero.getLocation()).getHealth()-enemy.getDamage());
-                      enemy.setAnimation(Animate.STAY);
+        if(!enemy.isDead()){
+            if(enemy.isInBounds(nearestHero.getX(),nearestHero.getY(),enemy.getAttackRange())){
+                enemy.setAnimation(Animate.ATTACK);
+                timer.schedule(new TimerTask() {
+                    public void run() {
+                        getPieceHero(nearestHero.getLocation()).setHealth(getPieceHero(nearestHero.getLocation()).getHealth()-enemy.getDamage());
+                        enemy.setAnimation(Animate.STAY);
                     }}, 1000);
-        }
-        if (enemy.isMoved()) {
-            movement = enemy.getLocation();
-            if (nearestHero.getX() <= enemy.getX()) {
-                movement = movement.leftLocation();
-            } else if (nearestHero.getX() >= enemy.getX()) {
-                movement = movement.rightLocation();
+            } else if (enemy.isMoved()) {
+                for(int i=0;i<enemy.getMovementRange();i++){
+                    movement = enemy.getLocation();
+                    if (nearestHero.getX() <= enemy.getX()) {
+                        if(!collide(movement.leftLocation())){
+                            movement = movement.leftLocation();
+                        }
+                    } else if (nearestHero.getX() >= enemy.getX()) {
+                        if(!collide(movement.rightLocation())){
+                            movement = movement.rightLocation();
+                        }
+                    }
+                    if (nearestHero.getY() <= enemy.getY()) {
+                        if(!collide(movement.aboveLocation())){
+                            movement = movement.aboveLocation();
+                        }
+                    } else if (nearestHero.getY() >= enemy.getY()) {
+                        if(!collide(movement.belowLocation())){
+                            movement = movement.belowLocation();
+                        }
+                    }
+                    final Location finalMovement = movement;
+                    enemy.setAnimation(Animate.WALK);
+                    timer.schedule(new TimerTask() {
+                        public void run() {
+                            movePiece(enemy.getLocation(), finalMovement);
+                            //enemy.setMoved(false);
+                            enemy.setAnimation(Animate.STAY);
+                        }}, 1000);
+                }
             }
-            if (nearestHero.getY() <= enemy.getY()) {
-                movement = movement.aboveLocation();
-            } else if (nearestHero.getY() >= enemy.getY()) {
-                movement = movement.belowLocation();
-            }
-            final Location finalMovement = movement;
-            enemy.setAnimation(Animate.WALK);
-            timer.schedule(new TimerTask() {
-                public void run() {
-                    movePiece(enemy.getLocation(), finalMovement);
-                    enemy.setMoved(false);
-                    enemy.setAnimation(Animate.STAY);
-                }}, 1000);
         }
+
     }
     public boolean enemiesDead() {
         int size= enemies.size();

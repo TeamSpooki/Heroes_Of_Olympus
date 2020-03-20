@@ -18,8 +18,8 @@ import com.mygdx.level.*;
 import com.mygdx.world.TiledGameMap;
 
 public class MainGameScreen implements Screen {
-	public static final int WIDTH = 1280;
-	public static final int HEIGHT = 1024;
+	public static final float WIDTH = 1280;
+	public static final float HEIGHT = 1024;
 	public OrthographicCamera camera;
 	private Vector3 touch;
 	private Skin skin;

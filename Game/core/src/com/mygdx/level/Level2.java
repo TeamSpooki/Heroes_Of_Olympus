@@ -9,12 +9,11 @@ import com.mygdx.game.Location;
 import com.mygdx.screen.MainGameScreen;
 
 public class Level2 extends AbstractLevel{
-    Hero achille,helen,hercules,hypolyta,thesius;
-    Enemy titan,enemy1,enemy2,enemy3,enemy4,enemy5,enemy6;
+    private Hero achille,helen,hercules,hypolyta,thesius;
+    private Enemy titan,enemy1,enemy2,enemy3;
 
-    public Level2()
-    {
-//64,128,192,256,320,384,448,512,576,640,704,768,832,896,960,1024,1088,1152,1216,1280
+    public Level2() {
+        //64,128,192,256,320,384,448,512,576,640,704,768,832,896,960,1024,1088,1152,1216,1280
         achille = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/AchillesHealthBar.png")),64,64),"Achille",1,1,15);
         achille.setPosition(320, 192);
         mapCollisions.add(new Location(320, 192));
@@ -59,21 +58,6 @@ public class Level2 extends AbstractLevel{
         enemy3.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2+128);
         mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2+128));
         enemies.add(enemy3);
-/*
-        enemy4 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfDaggerHealthBar.png")), 64, 64),"Enemy4",1,15,100);
-        enemy4.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-192);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-192));
-        enemies.add(enemy4);
 
-        enemy5 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfDaggerHealthBar.png")), 64, 64),"Enemy5",1,15,100);
-        enemy5.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-64);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2-64));
-        enemies.add(enemy5);
-
-        enemy6 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/ElfDaggerHealthBar.png")), 64, 64),"Enemy6",1,15,100);
-        enemy6.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2+64);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2+64));
-        enemies.add(enemy6);
-*/
     }
 }
