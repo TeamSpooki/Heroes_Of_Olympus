@@ -124,6 +124,12 @@ public interface Level {
     boolean enemiesDead();
 
     /**
+     * Returns True if all heroes are dead, False otherwise
+     * @return boolean
+     */
+    boolean heroesDead();
+
+    /**
      * Clear all list variables
      */
     void removeAll();

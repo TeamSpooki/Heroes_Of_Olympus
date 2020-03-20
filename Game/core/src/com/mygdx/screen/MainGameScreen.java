@@ -20,6 +20,7 @@ import com.mygdx.world.TiledGameMap;
 public class MainGameScreen implements Screen {
 	public static final float WIDTH = 1280;
 	public static final float HEIGHT = 1024;
+	public static float elapsedTime= 0f;
 	public OrthographicCamera camera;
 	private Vector3 touch;
 	private Skin skin;
@@ -30,7 +31,6 @@ public class MainGameScreen implements Screen {
 	private Timer timer;
 	private TiledGameMap gameMap;
 	private TiledMapTileLayer layer;
-	public static float elapsedTime= 0f;
 	private boolean move = false;
 	private boolean attack = false;
 	private int movements;
@@ -45,8 +45,6 @@ public class MainGameScreen implements Screen {
 		if(level instanceof Level1){
 			gameMap = new TiledGameMap("Level1/level1.tmx");
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("waterCollide");
-			level.addLayer(layer);
-			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("bushCollide");
 			level.addLayer(layer);
 		}else if(level instanceof Level2){
 			gameMap = new TiledGameMap("Level2/level2.tmx");
@@ -68,6 +66,12 @@ public class MainGameScreen implements Screen {
 		}
 		else if(level instanceof Level4){
 			gameMap = new TiledGameMap("Level4/level4.tmx");
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("throneCollide");
+			level.addLayer(layer);
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("pillarCollide");
+			level.addLayer(layer);
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("wallCollide");
+			level.addLayer(layer);
 		}
 		else if(level instanceof Level5){
 			gameMap = new TiledGameMap("Level5/level5.tmx");
@@ -174,6 +178,10 @@ public class MainGameScreen implements Screen {
 				e.printStackTrace();
 			}
 		}
+		if(game.level.heroesDead()){
+			game.level.removeAll();
+			//Gdx.app.exit();
+		}
 	}
 
 	public void dispose () {
@@ -204,9 +212,9 @@ public class MainGameScreen implements Screen {
 		protected void result (Object object) {
 			if(object.equals(1)) {
 				//attack
-				for(GameUnit e : game.level.enemies ) {
-						if(game.level.getPieceHero(currentHero.getLocation()).isInBounds(e.getX(),e.getY(),game.level.getPieceHero(currentHero.getLocation()).getAttackRange())){
-							game.level.validAttacks.add(e.getLocation());
+				for(GameUnit enemy : game.level.enemies ) {
+						if(game.level.getPieceHero(currentHero.getLocation()).isInBounds(enemy.getX(),enemy.getY(),game.level.getPieceHero(currentHero.getLocation()).getAttackRange())){
+							game.level.validAttacks.add(enemy.getLocation());
 						}
 				}
 				if(!game.level.validAttacks.isEmpty()) {
@@ -215,7 +223,6 @@ public class MainGameScreen implements Screen {
 			}
 			else if (object.equals(2)){
 				//movement
-
 				Location up =currentHero.getLocation().aboveLocation();
 				Location down =currentHero.getLocation().belowLocation();
 				Location left =currentHero.getLocation().leftLocation();
@@ -224,7 +231,6 @@ public class MainGameScreen implements Screen {
 				game.level.validMoves.add(down);
 				game.level.validMoves.add(left);
 				game.level.validMoves.add(right);
-
 				for(int i = 1; i < game.level.getPieceHero(currentHero.getLocation()).getMovementRange(); i++) {
 						int j= game.level.validMoves.size()-1;
 						while(j>=0) {

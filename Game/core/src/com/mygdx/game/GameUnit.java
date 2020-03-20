@@ -151,10 +151,10 @@ public abstract class GameUnit {
 	 * @param health
 	 */
 	public void setHealth(int health){
-		if(health>=0&&health<=100){
+		if(health<=100){
 			this.health= health;
 		}else{
-			System.out.println(name+ " is out of bounds");
+			System.out.println(name+ " health is too high");
 		}
 	}
 

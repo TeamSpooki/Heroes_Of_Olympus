@@ -169,19 +169,31 @@ abstract class AbstractLevel implements Level{
                     timer.schedule(new TimerTask() {
                         public void run() {
                             movePiece(enemy.getLocation(), finalMovement);
-                            //enemy.setMoved(false);
                             enemy.setAnimation(Animate.STAY);
                         }}, 1000);
                 }
             }
         }
-
     }
     public boolean enemiesDead() {
         int size= enemies.size();
         int counter = 0;
         for (GameUnit enemy : enemies){
             if(enemy.isDead()){
+                counter++;
+            }
+        }
+        if(counter ==size){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean heroesDead(){
+        int size= enemies.size();
+        int counter = 0;
+        for (GameUnit hero : heroes){
+            if(hero.isDead()){
                 counter++;
             }
         }
