@@ -9,170 +9,191 @@ import com.mygdx.game.Location;
 import java.util.Random;
 import java.util.TimerTask;
 
+/**
+ * Abstract class that implements level
+ */
 abstract class AbstractLevel implements Level{
 
-    public void Draw( SpriteBatch batch){
-
-        for(GameUnit u:heroes)
+    public void draw(SpriteBatch batch){
+        for(GameUnit hero:heroes)
         {
-            u.draw(batch);
+            hero.draw(batch);
         }
-        for(GameUnit e:enemies)
+        for(GameUnit enemy:enemies)
         {
-            e.draw(batch);
+            enemy.draw(batch);
         }
         if(!validMoves.isEmpty()) {
-            for(Location l:validMoves)
+            for(Location loc:validMoves)
             {
-                batch.draw(position, l.getX(), l.getY());
+                batch.draw(position, loc.getX(), loc.getY());
             }
-
         }
         if(!validAttacks.isEmpty()) {
-            for(Location l:validAttacks)
+            for(Location loc:validAttacks)
             {
-                batch.draw(attack, l.getX(), l.getY());
+                batch.draw(attack, loc.getX(), loc.getY());
             }
-
         }
     }
-    public GameUnit getPieceHero(Location location){
-        for(GameUnit u:heroes)
+    public GameUnit getPieceHero(Location location) throws NullPointerException{
+        for(GameUnit hero:heroes)
         {
-            if(u.getLocation().equals(location)) {
-                return u;
+            if(hero.getLocation().equals(location)) {
+                return hero;
             }
         }
         return null;
     }
-    public GameUnit getPieceEnemy(Location location){
-        for(GameUnit e:enemies)
+    public GameUnit getPieceEnemy(Location location) throws NullPointerException{
+        for(GameUnit enemy:enemies)
         {
-            if(e.getLocation().equals(location)) {
-                return e;
+            if(enemy.getLocation().equals(location)) {
+                return enemy;
             }
         }
         return null;
     }
-    public GameUnit findNearestHeroTouch(float x, float y){
-        for(GameUnit u:heroes)
+    public GameUnit findNearestHeroTouch(float x, float y) throws NullPointerException{
+        for(GameUnit hero:heroes)
         {
-            if(x>=u.getX()&&x<=u.getX()+64&&y>=u.getY()&&y<=u.getY()+64) {
-                return u;
+            if(x>=hero.getX()&&x<=hero.getX()+64&&y>=hero.getY()&&y<=hero.getY()+64) {
+                return hero;
             }
         }
         return null;
     }
-    public GameUnit findNearestHero(float x, float y){
-        GameUnit hero=null;
+    public GameUnit findNearestHero(float x, float y) throws NullPointerException{
+        GameUnit nearestHero=null;
         double distance= 0;
-        double checkDistance=0;
-        for(GameUnit u:heroes)
+        double checkDistance;
+        for(GameUnit hero:heroes)
         {
-            if(!u.isDead()){
-                if(hero==null){
-                    hero=u;
-                    distance = Math.sqrt((hero.getX()-x)*(hero.getX()-x)+(hero.getY()-y)*(hero.getY()-y));
+            if(!hero.isDead()){
+                if(nearestHero==null){
+                    nearestHero=hero;
+                    distance = Math.sqrt((nearestHero.getX()-x)*(nearestHero.getX()-x)+(nearestHero.getY()-y)*(nearestHero.getY()-y));
                 }else{
-                    checkDistance = Math.sqrt((u.getX()-x)*(u.getX()-x)+(u.getY()-y)*(u.getY()-y));
+                    checkDistance = Math.sqrt((hero.getX()-x)*(hero.getX()-x)+(hero.getY()-y)*(hero.getY()-y));
                     if(checkDistance<distance){
                         distance=checkDistance;
-                        hero=u;
+                        nearestHero=hero;
                     }
                 }
             }
         }
-        return hero;
+        return nearestHero;
     }
-    public GameUnit findNearestEnemyTouch(float x, float y){
-        for(GameUnit e:enemies)
+    public GameUnit findNearestEnemyTouch(float x, float y) throws NullPointerException{
+        for(GameUnit enemy:enemies)
         {
-            if(x>=e.getX()&&x<=e.getX()+64&&y>=e.getY()&&y<=e.getY()+64) {
-                return e;
+            if(x>=enemy.getX()&&x<=enemy.getX()+64&&y>=enemy.getY()&&y<=enemy.getY()+64) {
+                return enemy;
             }
         }
         return null;
     }
-    public Location findNearestLocation(float x, float y){
-        for(Location l:validMoves)
+    public Location findNearestLocation(float x, float y) throws NullPointerException{
+        for(Location loc:validMoves)
         {
-            if(x>=l.getX()&&x<=l.getX()+64&&y>=l.getY()&&y<=l.getY()+64) {
-                return l;
+            if(x>=loc.getX()&&x<=loc.getX()+64&&y>=loc.getY()&&y<=loc.getY()+64) {
+                return loc;
             }
         }
         return null;
     }
     public void movePiece(Location from,Location to){
-        for(GameUnit u:heroes)
+        for(GameUnit hero:heroes)
         {
-            if(u.getLocation().equals(from)&&!collide(new Location(to.getX(),to.getY()))) {
-                mapCollisions.remove(u.getLocation());
-                u.setPosition(to.getX(), to.getY());
-                mapCollisions.add(u.getLocation());
+            if(hero.getLocation().equals(from)&&!collide(new Location(to.getX(),to.getY()))) {
+                mapCollisions.remove(hero.getLocation());
+                hero.setPosition(to.getX(), to.getY());
+                mapCollisions.add(hero.getLocation());
             }
         }
-        for(GameUnit e:enemies)
+        for(GameUnit enemy:enemies)
         {
-            if(e.getLocation().equals(from) &&!collide(new Location(to.getX(), to.getY()))) {
-                mapCollisions.remove(e.getLocation());
-                e.setPosition(to.getX(), to.getY());
-                mapCollisions.add(e.getLocation());
+            if(enemy.getLocation().equals(from) &&!collide(new Location(to.getX(), to.getY()))) {
+                mapCollisions.remove(enemy.getLocation());
+                enemy.setPosition(to.getX(), to.getY());
+                mapCollisions.add(enemy.getLocation());
             }
         }
     }
     public void resetMovement(){
-        for(GameUnit u:heroes)
+        for(GameUnit hero:heroes)
         {
-            u.setMoved(false);
+            hero.setMoved(false);
         }
-        for(GameUnit e:enemies)
+        for(GameUnit enemy:enemies)
         {
-            e.setMoved(true);
+            enemy.setMoved(true);
         }
     }
     public void act(){
         Location movement;
         Random rand = new Random();
-        final GameUnit e= enemies.get(rand.nextInt(enemies.size()));
-        final GameUnit nearestHero = findNearestHero(e.getX(),e.getY());
-        if(e.isInBounds(nearestHero.getX(),nearestHero.getY(),e.getAttackRange())){
-            e.setAnimation(Animate.ATTACK);
-            timer.schedule(new TimerTask() {
-                  public void run() {
-                      getPieceHero(nearestHero.getLocation()).setHealth(getPieceHero(nearestHero.getLocation()).getHealth()-e.getDamage());
-                      e.setAnimation(Animate.STAY);
+        final GameUnit enemy= enemies.get(rand.nextInt(enemies.size()));
+        final GameUnit nearestHero = findNearestHero(enemy.getX(),enemy.getY());
+        if(!enemy.isDead()){
+            if(enemy.isInBounds(nearestHero.getX(),nearestHero.getY(),enemy.getAttackRange())){
+                enemy.setAnimation(Animate.ATTACK);
+                timer.schedule(new TimerTask() {
+                    public void run() {
+                        getPieceHero(nearestHero.getLocation()).setHealth(getPieceHero(nearestHero.getLocation()).getHealth()-enemy.getDamage());
+                        enemy.setAnimation(Animate.STAY);
                     }}, 1000);
-        }
-        if (e.isMoved()) {
-            movement = e.getLocation();
-            if (nearestHero.getX() <= e.getX()) {
-                movement = movement.leftLocation();
-            } else if (nearestHero.getX() >= e.getX()) {
-                movement = movement.rightLocation();
+            } else if (enemy.isMoved()) {
+                for(int i=0;i<enemy.getMovementRange();i++){
+                    movement = enemy.getLocation();
+                    if (nearestHero.getX() <= enemy.getX()) {
+                        if(!collide(movement.leftLocation())){
+                            movement = movement.leftLocation();
+                        }
+                    } else if (nearestHero.getX() >= enemy.getX()) {
+                        if(!collide(movement.rightLocation())){
+                            movement = movement.rightLocation();
+                        }
+                    }
+                    if (nearestHero.getY() <= enemy.getY()) {
+                        if(!collide(movement.aboveLocation())){
+                            movement = movement.aboveLocation();
+                        }
+                    } else if (nearestHero.getY() >= enemy.getY()) {
+                        if(!collide(movement.belowLocation())){
+                            movement = movement.belowLocation();
+                        }
+                    }
+                    final Location finalMovement = movement;
+                    enemy.setAnimation(Animate.WALK);
+                    timer.schedule(new TimerTask() {
+                        public void run() {
+                            movePiece(enemy.getLocation(), finalMovement);
+                            enemy.setAnimation(Animate.STAY);
+                        }}, 1000);
+                }
             }
-            if (nearestHero.getY() <= e.getY()) {
-                movement = movement.aboveLocation();
-            } else if (nearestHero.getY() >= e.getY()) {
-                movement = movement.belowLocation();
-            }
-            final Location finalMovement = movement;
-            e.setAnimation(Animate.WALK);
-            timer.schedule(new TimerTask() {
-                public void run() {
-                    movePiece(e.getLocation(), finalMovement);
-                    e.setMoved(false);
-                    e.setAnimation(Animate.STAY);
-                }}, 1000);
-
-
         }
-
     }
     public boolean enemiesDead() {
         int size= enemies.size();
         int counter = 0;
-        for (GameUnit e : enemies){
-            if(e.isDead()){
+        for (GameUnit enemy : enemies){
+            if(enemy.isDead()){
+                counter++;
+            }
+        }
+        if(counter ==size){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean heroesDead(){
+        int size= enemies.size();
+        int counter = 0;
+        for (GameUnit hero : heroes){
+            if(hero.isDead()){
                 counter++;
             }
         }
@@ -188,8 +209,8 @@ abstract class AbstractLevel implements Level{
         validMoves.removeAll(validMoves);
         validAttacks.removeAll(validAttacks);
     }
-    public boolean collide(Location l){
-        if(mapCollisions.contains(l)){
+    public boolean collide(Location location){
+        if(mapCollisions.contains(location)){
             return true;
         }
         return false;
@@ -199,8 +220,8 @@ abstract class AbstractLevel implements Level{
             for (int y = 0; y < layer.getHeight(); y++) {
                 TiledMapTileLayer.Cell cell = layer.getCell(x, y);
                 if (cell != null) {
-                    Location l = new Location(((x * 64)), ((y * 64)));
-                    mapCollisions.add(l);
+                    Location loc = new Location(((x * 64)), ((y * 64)));
+                    mapCollisions.add(loc);
                 }
             }
         }

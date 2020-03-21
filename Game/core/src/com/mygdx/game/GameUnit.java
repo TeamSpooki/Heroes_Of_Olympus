@@ -9,38 +9,96 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.screen.MainGameScreen;
 
+/**
+ * GameUnit class representing a unit of the game
+ */
 public abstract class GameUnit {
+	/**
+	 * Health of a GameUnit
+	 */
 	protected int health;
+	/**
+	 * Damage of GameUnit
+	 */
 	protected int damage;
+	/**
+	 * Range of movement of GameUnit
+	 */
 	protected int movementRange;
+	/**
+	 * Range of attack of GameUnit
+	 */
 	protected int attackRange;
+	/**
+	 * Check if GameUnit is dead
+	 */
 	protected boolean dead;
+	/**
+	 * Sprite variable
+	 */
 	protected Sprite sprite;
+	/**
+	 * Location variable
+	 */
 	protected Location location;
+	/**
+	 * Name of GameUnit
+	 */
 	protected String name;
-	protected boolean isDrawn;
+	/**
+	 * Check if GameUnit has moved
+	 */
 	protected boolean moved;
+	/**
+	 * Collection of animations textures
+	 */
 	protected TextureRegion[] stayAnimation,walkAnimation,attackAnimation,dieAnimation,healthAnimation;
+	/**
+	 * Animation variable for execution of animation
+	 */
 	protected Animation<TextureRegion> animation;
+	/**
+	 * Position of animation
+	 */
 	protected Animate animate;
+	/**
+	 * Sprite collection of GameUnits with healthbar
+	 */
 	protected Map<Integer,TextureRegion> healthSprites;
+	
 	public GameUnit(TextureRegion[][] t,String name,int movementRange, int attackRange, int damage) {
 		this.animate = Animate.STAY;
 		this.health=100;
 		this.dead=false;
-		this.movementRange=movementRange;
-		this.attackRange=attackRange;
-		this.damage= damage;
-		setAnimation(t);
-		healthSprites = new HashMap<>();
-		setHealthBar();
-		this.sprite = new Sprite();
 		this.name=name;
 		this.location = new Location(0,0);
+		this.sprite = new Sprite();
+		
+		if(movementRange<5&&movementRange>0){
+			this.movementRange=movementRange;
+		}else{
+			System.out.println("Error: Wrong movement range value for " + name);
+		}
+		if(attackRange<20&&attackRange>0){
+			this.attackRange=attackRange;
+		}else{
+			System.out.println("Error: Wrong attack range value for "+ name);
+		}
+		if(damage<=100&&damage>=0){
+			this.damage=damage;
+		}else{
+			System.out.println("Error: Wrong damage value for "+ name);
+		}
+		setAnimation(t);
+		setHealthBar();
 		setPosition(0, 0);
-		this.isDrawn=false;
 	}
+
+	/**
+	 * Creates the healthbars
+	 */
 	private void setHealthBar(){
+		healthSprites = new HashMap<>();
 		healthSprites.put(100, healthAnimation[0]);
 		healthSprites.put(80, healthAnimation[1]);
 		healthSprites.put(60, healthAnimation[2]);
@@ -48,6 +106,11 @@ public abstract class GameUnit {
 		healthSprites.put(20, healthAnimation[4]);
 		healthSprites.put(0, healthAnimation[5]);
 	}
+
+	/**
+	 * Creates animations
+	 * @param t
+	 */
 	private void setAnimation(TextureRegion[][] t){
 		stayAnimation = t[0];
 		walkAnimation = t[1];
@@ -62,31 +125,86 @@ public abstract class GameUnit {
 			healthAnimation[i].flip(false, true);
 		}
 	}
+
+	/**
+	 * Set new animation
+	 * @param animation
+	 */
 	public void setAnimation(Animate animation){
 		animate = animation;
 	}
+
+	/**
+	 * Set GameUnit position
+	 * @param x
+	 * @param y
+	 */
 	public void setPosition(float x, float y) {
-		sprite.setPosition(x, y);
-		location.setLocation(x, y);
+		if(x<=0&&x>=MainGameScreen.WIDTH&&y<=0&&y>=MainGameScreen.HEIGHT){
+			System.out.println(name + " is out of bounds");
+		}else{
+			sprite.setPosition(x, y);
+			location.setLocation(x, y);
+		}
 	}
+
+	/**
+	 * Set health
+	 * @param health
+	 */
 	public void setHealth(int health){
-		this.health= health;
+		if(health<=100){
+			this.health= health;
+		}else{
+			System.out.println(name+ " health is too high");
+		}
 	}
+
+	/**
+	 * True if unit has moved false otherwise
+	 * @return moved
+	 */
 	public boolean isMoved() {
 		return moved;
 	}
+
+	/**
+	 * Set movement value
+	 * @param move
+	 */
 	public void setMoved(boolean move) {
 		moved=move;
 	}
+
+	/**
+	 * Get GameUnit location
+	 * @return location
+	 */
 	public Location getLocation() {
 		return location;
 	}
+
+	/**
+	 * Get GameUnit x coordinate
+	 *
+	 * @return x
+	 */
 	public float getX(){
 		return sprite.getX();
 	}
+
+	/**
+	 * Get GameUnit y coordinate
+	 * @return y
+	 */
 	public float getY(){
 		return sprite.getY();
 	}
+
+	/**
+	 * Draw method to draw all sprites used in game render method
+	 * @param batch
+	 */
 	public void draw(SpriteBatch batch) {
 		if(animate.equals(animate.STAY)) {
 			TextureRegion currentFrame;
@@ -121,21 +239,54 @@ public abstract class GameUnit {
 			batch.draw(currentFrame, getX(), getY());
 		}
 	}
+
+	/**
+	 * Return GameUnit damage
+	 * @return damage
+	 */
 	public int getDamage() {
 		return damage;
 	}
+
+	/**
+	 * Return GameUnit health
+	 * @return health
+	 */
 	public int getHealth() {
 		return health;
 	}
+
+	/**
+	 * Return GameUnit movement range
+	 * @return movementRange
+	 */
 	public int getMovementRange() {
 		return movementRange;
 	}
+
+	/**
+	 * Return GameUnit attack range
+	 * @return attackRange
+	 */
 	public int getAttackRange() {
 		return attackRange;
 	}
+
+	/**
+	 * Check if GameUnit is dead
+	 * @return dead
+	 */
 	public boolean isDead() {
 		return dead;
 	}
+
+	/**
+	 * Check if a given location is in bounds of a given range
+	 * @param x
+	 * @param y
+	 * @param range
+	 * @return
+	 */
 	public boolean isInBounds(float x, float y, int range){
 		float leftBound = this.getX()-range*64;
 		float rightBound= this.getX()+range*64;
