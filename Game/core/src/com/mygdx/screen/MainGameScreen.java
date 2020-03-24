@@ -21,7 +21,7 @@ public class MainGameScreen implements Screen {
 	public static final float WIDTH = 1280;
 	public static final float HEIGHT = 1024;
 	public static float elapsedTime= 0f;
-	public OrthographicCamera camera;
+	private OrthographicCamera camera;
 	private Vector3 touch;
 	private Skin skin;
 	private OptionDialog options;
@@ -117,21 +117,7 @@ public class MainGameScreen implements Screen {
 					options.show(stage);
 				}
 			}
-			if(attack) {
-				if(game.level.findNearestEnemyTouch(touch.x,touch.y) instanceof Enemy) {
-					enemy= game.level.findNearestEnemyTouch(touch.x,touch.y);
-					game.level.getPieceHero(current.getLocation()).setAnimation(Animate.ATTACK);
-					timer.schedule(new TimerTask() {
-						public void run() {
-							game.level.getPieceEnemy(enemy.getLocation()).setHealth(game.level.getPieceEnemy(enemy.getLocation()).getHealth()-game.level.getPieceHero(current.getLocation()).getDamage());
-							game.level.validAttacks.clear();
-							game.level.act();
-							game.level.getPieceHero(current.getLocation()).setAnimation(Animate.STAY);
-						}
-					}, 1000);
-					attack=false;
-				}
-			}
+			
 			if(move){
 				if(movements==5) {
 					movements=0;
@@ -159,6 +145,22 @@ public class MainGameScreen implements Screen {
 						}
 					}, 1000);
 					move=false;
+				}
+			}
+			if(attack) {
+				if(!game.level.validAttacks.isEmpty()) {
+					if(game.level.findNearestEnemyTouch(touch.x,touch.y) instanceof Enemy) {
+						enemy= game.level.findNearestEnemyTouch(touch.x,touch.y);
+						game.level.getPieceHero(current.getLocation()).setAnimation(Animate.ATTACK);
+						timer.schedule(new TimerTask() {
+							public void run() {
+								game.level.getPieceEnemy(enemy.getLocation()).setHealth(game.level.getPieceEnemy(enemy.getLocation()).getHealth()-game.level.getPieceHero(current.getLocation()).getDamage());
+								game.level.validAttacks.clear();
+								game.level.act();
+								game.level.getPieceHero(current.getLocation()).setAnimation(Animate.STAY);
+							}
+						}, 1000);
+					}
 				}
 			}
 		}
@@ -223,9 +225,7 @@ public class MainGameScreen implements Screen {
 							game.level.validAttacks.add(enemy.getLocation());
 						}
 				}
-				if(!game.level.validAttacks.isEmpty()) {
-					attack=true;
-				}
+				attack=true;
 			}
 			else if (object.equals(2)){
 				//movement
