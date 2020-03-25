@@ -146,4 +146,10 @@ public interface Level {
      * @param layer
      */
     void addLayer(TiledMapTileLayer layer);
+
+    /**
+     * Return information of all units
+     * @return String
+     */
+    String toString();
 }

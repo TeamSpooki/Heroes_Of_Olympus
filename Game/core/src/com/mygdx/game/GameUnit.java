@@ -297,5 +297,12 @@ public abstract class GameUnit {
 		}
 		return false;
 	}
+
+	public String toString(){
+		return name+"\n"+" Movement Range: "+movementRange+
+				"\t"+ " Damege: "+damage+
+				"\t"+ " Attack Range: "+attackRange+
+				"\t"+" Health: "+health;
+	}
 }
 

@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,24 +18,76 @@ import com.mygdx.game.*;
 import com.mygdx.level.*;
 import com.mygdx.world.TiledGameMap;
 
+/**
+ * Main game screen that handles all the different instances of the game
+ */
 public class MainGameScreen implements Screen {
+	/**
+	 * Width of the screen
+	 */
 	public static final float WIDTH = 1280;
+	/**
+	 * Height of the screen
+	 */
 	public static final float HEIGHT = 1024;
+	/**
+	 * Time variable used for the animation
+	 */
 	public static float elapsedTime= 0f;
+	/**
+	 * A camera with orthographic projection.
+	 */
 	private OrthographicCamera camera;
+	/**
+	 * 3D vector for the representation of the mouse touch
+	 */
 	private Vector3 touch;
+	/**
+	 * UI widgets
+	 */
 	private Skin skin;
+	/**
+	 * Modal window containing a content table with a button table underneath it.
+	 * Used for showing different GameUnit options.
+	 */
 	private OptionDialog options;
+	/**
+	 * 2D scene graph
+	 */
 	private Stage stage;
+	/**
+	 * Unit of the game used in one session
+	 */
 	private GameUnit current,oldCurrent,enemy;
+	/**
+	 * Game variable
+	 */
 	private HeroesOfOlympus game;
+	/**
+	 * Variable that executes tasks in a give time frame
+	 */
 	private Timer timer;
+	/**
+	 * Represents a tiled map
+	 */
 	private TiledGameMap gameMap;
+	/**
+	 * Layer for a TiledMap
+	 */
 	private TiledMapTileLayer layer;
+	/**
+	 * Check if user has chosen to move
+	 */
 	private boolean move = false;
+	/**
+	 * Check if user has chosen to attack
+	 */
 	private boolean attack = false;
+	/**
+	 * Counts the number of movements
+	 */
 	private int movements;
-	
+
 	public MainGameScreen (HeroesOfOlympus game, Level level) {
 		this.game = game;
 		stage = new Stage();
@@ -60,21 +113,27 @@ public class MainGameScreen implements Screen {
 		}
 		else if(level instanceof Level3){
 			gameMap = new TiledGameMap("Level3/level3.tmx");
+			/*
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("coffinCollide");
 			level.addLayer(layer);
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("pillarCollide");
 			level.addLayer(layer);
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("fountainCollide");
 			level.addLayer(layer);
+
+			 */
 		}
 		else if(level instanceof Level4){
 			gameMap = new TiledGameMap("Level4/level4.tmx");
+			/*
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("throneCollide");
 			level.addLayer(layer);
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("pillarCollide");
 			level.addLayer(layer);
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("wallCollide");
 			level.addLayer(layer);
+
+			 */
 		}
 		else if(level instanceof Level5){
 			gameMap = new TiledGameMap("Level5/level5.tmx");
@@ -117,7 +176,6 @@ public class MainGameScreen implements Screen {
 					options.show(stage);
 				}
 			}
-			
 			if(move){
 				if(movements==5) {
 					movements=0;
@@ -149,20 +207,38 @@ public class MainGameScreen implements Screen {
 			}
 			if(attack) {
 				if(!game.level.validAttacks.isEmpty()) {
+
 					if(game.level.findNearestEnemyTouch(touch.x,touch.y) instanceof Enemy) {
 						enemy= game.level.findNearestEnemyTouch(touch.x,touch.y);
-						game.level.getPieceHero(current.getLocation()).setAnimation(Animate.ATTACK);
-						timer.schedule(new TimerTask() {
-							public void run() {
-								game.level.getPieceEnemy(enemy.getLocation()).setHealth(game.level.getPieceEnemy(enemy.getLocation()).getHealth()-game.level.getPieceHero(current.getLocation()).getDamage());
-								game.level.validAttacks.clear();
-								game.level.act();
-								game.level.getPieceHero(current.getLocation()).setAnimation(Animate.STAY);
-							}
-						}, 1000);
+						if(!enemy.isDead()){
+							game.level.getPieceHero(current.getLocation()).setAnimation(Animate.ATTACK);
+							timer.schedule(new TimerTask() {
+								public void run() {
+									game.level.getPieceEnemy(enemy.getLocation()).setHealth(game.level.getPieceEnemy(enemy.getLocation()).getHealth()-game.level.getPieceHero(current.getLocation()).getDamage());
+									game.level.validAttacks.clear();
+									game.level.act();
+									game.level.getPieceHero(current.getLocation()).setAnimation(Animate.STAY);
+								}
+							}, 1000);
+						}else{
+							game.level.validAttacks.clear();
+							game.level.act();
+							game.level.getPieceHero(current.getLocation()).setAnimation(Animate.STAY);
+							current=null;
+						}
 					}
 				}
 			}
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.I)){
+			Dialog dialog = new Dialog("Information", skin) {
+				public void result(Object obj) {
+					System.out.println("result "+obj);
+				}
+			};
+			dialog.text(""+game.level.toString());
+			dialog.button("OK", true); //sends "true" as the result
+			dialog.show(stage);
 		}
 		if(game.level.enemiesDead()) {
 			game.level.removeAll();
@@ -251,6 +327,7 @@ public class MainGameScreen implements Screen {
 			}
 			else {
 				game.level.getPieceHero(current.getLocation()).setAnimation(Animate.STAY);
+				game.level.act();
 			}
 		}
 	}

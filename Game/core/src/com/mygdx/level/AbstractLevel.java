@@ -208,6 +208,7 @@ abstract class AbstractLevel implements Level{
         enemies.removeAll(enemies);
         validMoves.removeAll(validMoves);
         validAttacks.removeAll(validAttacks);
+        mapCollisions.removeAll(mapCollisions);
     }
     public boolean collide(Location location){
         if(mapCollisions.contains(location)){
@@ -226,5 +227,18 @@ abstract class AbstractLevel implements Level{
             }
         }
 
+    }
+
+    @Override
+    public String toString() {
+        String str="";
+        for (GameUnit hero : heroes){
+            str += hero.toString()+"\n";
+        }
+        for (GameUnit enemy : enemies){
+            str += enemy.toString()+"\n";
+        }
+        System.out.println(str);
+        return str;
     }
 }
