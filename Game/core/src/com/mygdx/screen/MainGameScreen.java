@@ -34,6 +34,7 @@ public class MainGameScreen implements Screen {
 	 * Time variable used for the animation
 	 */
 	public static float elapsedTime= 0f;
+
 	/**
 	 * A camera with orthographic projection.
 	 */
@@ -176,6 +177,7 @@ public class MainGameScreen implements Screen {
 					options.show(stage);
 				}
 			}
+
 			if(move){
 				if(movements==5) {
 					movements=0;
@@ -301,7 +303,11 @@ public class MainGameScreen implements Screen {
 							game.level.validAttacks.add(enemy.getLocation());
 						}
 				}
-				attack=true;
+				if(!game.level.validAttacks.isEmpty()) {
+					attack=true;
+				}else {
+					game.level.act();
+				}
 			}
 			else if (object.equals(2)){
 				//movement

@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.GL20;
 public class MainMenuScreen implements Screen {
 	private static final int WIDTH = HeroesOfOlympus.WIDTH;
 	private static final int HEIGHT = HeroesOfOlympus.HEIGHT;
+	public static final float SPEED = 120;
 
 	private static final int GAME_LOGO_HEIGHT = HeroesOfOlympus.HEIGHT / 4;
 
