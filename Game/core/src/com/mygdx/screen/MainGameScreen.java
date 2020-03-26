@@ -114,7 +114,7 @@ public class MainGameScreen implements Screen {
 		}
 		else if(level instanceof Level3){
 			gameMap = new TiledGameMap("Level3/level3.tmx");
-			/*
+
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("coffinCollide");
 			level.addLayer(layer);
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("pillarCollide");
@@ -122,11 +122,11 @@ public class MainGameScreen implements Screen {
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("fountainCollide");
 			level.addLayer(layer);
 
-			 */
+
 		}
 		else if(level instanceof Level4){
 			gameMap = new TiledGameMap("Level4/level4.tmx");
-			/*
+
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("throneCollide");
 			level.addLayer(layer);
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("pillarCollide");
@@ -134,7 +134,7 @@ public class MainGameScreen implements Screen {
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("wallCollide");
 			level.addLayer(layer);
 
-			 */
+
 		}
 		else if(level instanceof Level5){
 			gameMap = new TiledGameMap("Level5/level5.tmx");
@@ -166,7 +166,7 @@ public class MainGameScreen implements Screen {
 		stage.act();
 		stage.draw();
 		
-		if(Gdx.input.isTouched()) {
+		if(Gdx.input.isTouched() ) {
 			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touch);
 			if(game.level.findNearestHeroTouch(touch.x,touch.y) instanceof Hero) {
@@ -196,6 +196,7 @@ public class MainGameScreen implements Screen {
 								game.level.getPieceHero(current.getLocation()).setMoved(false);
 								game.level.getPieceHero(current.getLocation()).setAnimation(Animate.STAY);
 								movements++;
+
 							}else {
 								game.level.validMoves.clear();
 								game.level.getPieceHero(current.getLocation()).setMoved(false);
@@ -203,13 +204,12 @@ public class MainGameScreen implements Screen {
 								current=null;
 							}
 						}
-					}, 1000);
+					}, 500);
 					move=false;
 				}
 			}
 			if(attack) {
 				if(!game.level.validAttacks.isEmpty()) {
-
 					if(game.level.findNearestEnemyTouch(touch.x,touch.y) instanceof Enemy) {
 						enemy= game.level.findNearestEnemyTouch(touch.x,touch.y);
 						if(!enemy.isDead()){
@@ -266,7 +266,7 @@ public class MainGameScreen implements Screen {
 		}
 		if(game.level.heroesDead()){
 			game.level.removeAll();
-			//Gdx.app.exit();
+			game.setScreen(new GameOverScreen(game));
 		}
 	}
 
