@@ -181,15 +181,18 @@ public class MainGameScreen implements Screen {
 				if(oldCurrent!=current) {
 					options.setHero(current);
 					options.show(stage);
+				}else if(game.level.getHeroesSize()==1){
+					options.setHero(current);
+					options.show(stage);
 				}
 			}
 
 			if(move){
-				if(movements==5) {
+				if(movements>=game.level.getHeroesSize()) {
 					movements=0;
 					game.level.resetMovement();
 				}
-				if(!game.level.getPieceHero(current.getLocation()).isMoved()&&movements<5) {
+				if(!game.level.getPieceHero(current.getLocation()).isMoved()&&movements<=game.level.getHeroesSize()) {
 					game.level.getPieceHero(current.getLocation()).setMoved(true);
 					game.level.getPieceHero(current.getLocation()).setAnimation(Animate.WALK);
 					timer.schedule(new TimerTask() {

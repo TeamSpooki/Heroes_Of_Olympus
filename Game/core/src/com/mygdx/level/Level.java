@@ -152,4 +152,7 @@ public interface Level {
      * @return String
      */
     String toString();
+
+    int getHeroesSize();
+    int getEnemiesSize();
 }

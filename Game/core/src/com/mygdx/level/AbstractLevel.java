@@ -240,4 +240,23 @@ abstract class AbstractLevel implements Level{
         System.out.println(str);
         return str;
     }
+
+    public int getHeroesSize(){
+        int counter=0;
+        for (GameUnit hero : heroes){
+            if(!hero.isDead()){
+                counter++;
+            }
+        }
+        return counter;
+    }
+    public int getEnemiesSize(){
+        int counter=0;
+        for (GameUnit enemy : enemies){
+            if(!enemy.isDead()){
+                counter++;
+            }
+        }
+        return counter;
+    }
 }
