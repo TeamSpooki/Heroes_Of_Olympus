@@ -7,6 +7,7 @@ import java.util.TimerTask;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -25,20 +26,16 @@ public class MainGameScreen implements Screen {
 	/**
 	 * Width of the screen
 	 */
-	public static final float WIDTH = 1280;
+	public static final float WIDTH = HeroesOfOlympus.WIDTH;
 	/**
 	 * Height of the screen
 	 */
-	public static final float HEIGHT = 1024;
+	public static final float HEIGHT = HeroesOfOlympus.HEIGHT;
 	/**
 	 * Time variable used for the animation
 	 */
 	public static float elapsedTime= 0f;
 
-	/**
-	 * A camera with orthographic projection.
-	 */
-	private OrthographicCamera camera;
 	/**
 	 * 3D vector for the representation of the mouse touch
 	 */
@@ -89,21 +86,25 @@ public class MainGameScreen implements Screen {
 	 */
 	private int movements;
 
+	private Music music;
+
 	public MainGameScreen (HeroesOfOlympus game, Level level) {
 		this.game = game;
 		stage = new Stage();
 		skin = new Skin(Gdx.files.internal("uiskin.json"));
-		camera = new OrthographicCamera();
-		camera.setToOrtho(true,WIDTH ,HEIGHT );
-		camera.update();
+		game.camera.setToOrtho(true);
 		game.level = level;
-		
 		if(level instanceof Level1){
+
+			music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Level1.wav"));
 			gameMap = new TiledGameMap("Level1/level1.tmx");
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("waterCollide");
 			level.addLayer(layer);
 		}
 		else if(level instanceof Level2){
+
+
+			music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Level2.wav"));
 			gameMap = new TiledGameMap("Level2/level2.tmx");
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("wallCollide");
 			level.addLayer(layer);
@@ -113,20 +114,22 @@ public class MainGameScreen implements Screen {
 			level.addLayer(layer);
 		}
 		else if(level instanceof Level3){
-			gameMap = new TiledGameMap("Level3/level3.tmx");
 
+
+			music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Level3.mp3"));
+			gameMap = new TiledGameMap("Level3/level3.tmx");
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("coffinCollide");
 			level.addLayer(layer);
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("pillarCollide");
 			level.addLayer(layer);
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("fountainCollide");
 			level.addLayer(layer);
-
-
 		}
 		else if(level instanceof Level4){
-			gameMap = new TiledGameMap("Level4/level4.tmx");
 
+
+			music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Level4.ogg"));
+			gameMap = new TiledGameMap("Level4/level4.tmx");
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("throneCollide");
 			level.addLayer(layer);
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("pillarCollide");
@@ -137,9 +140,14 @@ public class MainGameScreen implements Screen {
 
 		}
 		else if(level instanceof Level5){
+
+
+			music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Level5.WAV"));
 			gameMap = new TiledGameMap("Level5/level5.tmx");
 		}
-		
+		music.setLooping(true);
+		music.setVolume(0.1f);
+		music.play();
 		touch=new Vector3();
 		movements=0;
 		options = new OptionDialog("Options",skin);
@@ -156,10 +164,8 @@ public class MainGameScreen implements Screen {
 		elapsedTime+=Gdx.graphics.getDeltaTime();
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		gameMap.render(camera);
-		camera.update();
-		game.batch.setProjectionMatrix(camera.combined);
+		gameMap.render(game.camera);
+		game.batch.setProjectionMatrix(game.camera.combined);
 		game.batch.begin();
 		game.level.draw(game.batch);
 		game.batch.end();
@@ -168,7 +174,7 @@ public class MainGameScreen implements Screen {
 		
 		if(Gdx.input.isTouched() ) {
 			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			camera.unproject(touch);
+			game.camera.unproject(touch);
 			if(game.level.findNearestHeroTouch(touch.x,touch.y) instanceof Hero) {
 				oldCurrent=current;
 				current= game.level.findNearestHero(touch.x,touch.y);
@@ -244,6 +250,7 @@ public class MainGameScreen implements Screen {
 		}
 		if(game.level.enemiesDead()) {
 			game.level.removeAll();
+			this.dispose();
 			try {
 				if(game.level instanceof Level1){
 					game.setScreen(new Story(game,"scene2.ogv"));
@@ -264,15 +271,17 @@ public class MainGameScreen implements Screen {
 				e.printStackTrace();
 			}
 		}
-		if(game.level.heroesDead()){
+		else if(game.level.heroesDead()){
 			game.level.removeAll();
+			this.dispose();
 			game.setScreen(new GameOverScreen(game));
 		}
 	}
 
 	public void dispose () {
-		game.dispose();
-		stage.dispose();
+		game.camera.setToOrtho(false);
+		game.batch.setProjectionMatrix(game.camera.combined);
+		music.dispose();
 	}
 
 	public void hide() {}
@@ -289,7 +298,6 @@ public class MainGameScreen implements Screen {
 		public OptionDialog(String title, Skin skin) {
 			super(title, skin);
 			currentHero =null;
-
 		}
 		protected void setHero(GameUnit current) {
 			this.currentHero=current;

@@ -2,6 +2,7 @@ package com.mygdx.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,7 +12,7 @@ public class GameOverScreen implements Screen{
 	
 	HeroesOfOlympus game;
 	MainMenuScreen mms;
-	
+
 	Texture goImage;
 	TextureRegion mainBackground;
 	SpriteBatch batch;
@@ -20,10 +21,10 @@ public class GameOverScreen implements Screen{
 	public GameOverScreen(HeroesOfOlympus game) {
 		this.game = game;
 		goImage = new Texture("Game Over.png");
-		mainBackground = new TextureRegion(goImage, 0, 0, 1280, 1080);
+		mainBackground = new TextureRegion(goImage, 0, 0, 1080, 850);
 		batch = new SpriteBatch();
 		mms = new MainMenuScreen(game);
-		
+
 	}
 	@Override
 	public void show() {

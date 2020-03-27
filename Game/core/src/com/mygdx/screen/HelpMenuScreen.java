@@ -12,7 +12,6 @@ import com.mygdx.game.HeroesOfOlympus;
 public class HelpMenuScreen implements Screen{
 	
 	HeroesOfOlympus game;
-	Stage stage;
 	
 	Texture bgImage;
 	TextureRegion mainBackground;
@@ -23,9 +22,8 @@ public class HelpMenuScreen implements Screen{
 	public HelpMenuScreen(HeroesOfOlympus game) {
 		// TODO Auto-generated constructor stub
 		this.game = game;
-		stage = new Stage();
 		bgImage = new Texture("HELP SCREEN.png"); 
-		mainBackground = new TextureRegion(bgImage, 0, 0, 1280, 1080);
+		mainBackground = new TextureRegion(bgImage, 0, 0, 1080, 850);
 		batch = new SpriteBatch();
 		mms = new MainMenuScreen(game);
 	}

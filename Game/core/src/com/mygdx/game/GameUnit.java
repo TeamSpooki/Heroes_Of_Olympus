@@ -3,6 +3,7 @@ package com.mygdx.game;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -65,6 +66,7 @@ public abstract class GameUnit {
 	 * Sprite collection of GameUnits with healthbar
 	 */
 	protected Map<Integer,TextureRegion> healthSprites;
+	private Sound attack;
 	
 	public GameUnit(TextureRegion[][] t,String name,int movementRange, int attackRange, int damage) {
 		this.animate = Animate.STAY;

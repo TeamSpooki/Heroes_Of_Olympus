@@ -190,14 +190,13 @@ abstract class AbstractLevel implements Level{
         }
     }
     public boolean heroesDead(){
-        int size= enemies.size();
         int counter = 0;
         for (GameUnit hero : heroes){
             if(hero.isDead()){
                 counter++;
             }
         }
-        if(counter ==size){
+        if(counter == 5){
             return true;
         }else{
             return false;

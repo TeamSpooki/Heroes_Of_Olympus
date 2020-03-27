@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.HeroesOfOlympus;
@@ -12,7 +14,6 @@ import com.badlogic.gdx.graphics.GL20;
 public class MainMenuScreen implements Screen {
 	private static final int WIDTH = HeroesOfOlympus.WIDTH;
 	private static final int HEIGHT = HeroesOfOlympus.HEIGHT;
-	public static final float SPEED = 120;
 
 	private static final int GAME_LOGO_HEIGHT = HeroesOfOlympus.HEIGHT / 4;
 
@@ -32,6 +33,7 @@ public class MainMenuScreen implements Screen {
 	private static final int HELP_BUTTON_Y = 230;
 	private static final int EXIT_BUTTON_Y = 10;
 
+	private Music music;
 	Texture playButtonActive;
 	Texture playButtonInactive;
 
@@ -54,6 +56,7 @@ public class MainMenuScreen implements Screen {
 
 	public MainMenuScreen(HeroesOfOlympus game) {
 		this.game = game;
+
 		playButtonActive = new Texture("PlayHighlighted.png");
 		playButtonInactive = new Texture("Play.png");
 		exitButtonActive = new Texture("ExitHighlighted.png");
@@ -62,7 +65,10 @@ public class MainMenuScreen implements Screen {
 		helpButtonInactive = new Texture("Help.png");
 		gameLogo = new Texture("gameLogo.png");
 		teamLogo = new Texture("logo.png");
-
+		music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Menu.wav"));
+		music.setLooping(true);
+		music.setVolume(0.1f);
+		music.play();
 		bgImage = new Texture("MainMenuBG.png");
 		mainBackground = new TextureRegion(bgImage, 0, 0, 1280, 1080);
 	}
@@ -76,6 +82,7 @@ public class MainMenuScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(192/255f,192/255f,192/255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 		game.batch.begin();
 		game.batch.draw(mainBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -103,8 +110,8 @@ public class MainMenuScreen implements Screen {
 				&& HEIGHT - Gdx.input.getY() > HELP_BUTTON_Y) {
 			game.batch.draw(helpButtonActive, x, HELP_BUTTON_Y, HELP_BUTTON_WIDTH, HELP_BUTTON_HEIGHT);
 			if (Gdx.input.isTouched()) {
+				this.dispose();
 				game.setScreen(new HelpMenuScreen(game));
-				//Gdx.app.exit();
 			}
 		} else {
 			game.batch.draw(helpButtonInactive, x, HELP_BUTTON_Y, HELP_BUTTON_WIDTH, HELP_BUTTON_HEIGHT);
@@ -150,6 +157,6 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-
+		music.dispose();
 	}
 }
