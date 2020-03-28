@@ -3,6 +3,7 @@ package com.mygdx.game;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,6 +15,7 @@ import com.mygdx.screen.MainGameScreen;
  * GameUnit class representing a unit of the game
  */
 public abstract class GameUnit {
+
 	/**
 	 * Health of a GameUnit
 	 */
@@ -66,7 +68,7 @@ public abstract class GameUnit {
 	 * Sprite collection of GameUnits with healthbar
 	 */
 	protected Map<Integer,TextureRegion> healthSprites;
-	private Sound attack;
+	private Sound attack,death;
 	
 	public GameUnit(TextureRegion[][] t,String name,int movementRange, int attackRange, int damage) {
 		this.animate = Animate.STAY;
@@ -75,6 +77,7 @@ public abstract class GameUnit {
 		this.name=name;
 		this.location = new Location(0,0);
 		this.sprite = new Sprite();
+		this.death= Gdx.audio.newSound(Gdx.files.internal("Sounds/Death.mp3"));
 		
 		if(movementRange<5&&movementRange>0){
 			this.movementRange=movementRange;
@@ -177,6 +180,12 @@ public abstract class GameUnit {
 	public void setMoved(boolean move) {
 		moved=move;
 	}
+	public void setSound(Sound sound) {
+		this.attack=sound;
+	}
+	public void playSound() {
+		this.attack.play(1.0f);
+	}
 
 	/**
 	 * Get GameUnit location
@@ -222,6 +231,7 @@ public abstract class GameUnit {
 				currentFrame=healthSprites.get(20);
 			}else {
 				currentFrame=healthSprites.get(0);
+				death.play(1.0f);
 				setAnimation(animate.DIE);
 				setMoved(false);
 				dead=true;

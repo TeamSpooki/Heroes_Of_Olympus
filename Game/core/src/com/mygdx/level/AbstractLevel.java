@@ -1,9 +1,14 @@
 package com.mygdx.level;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.Animate;
 import com.mygdx.game.GameUnit;
+import com.mygdx.game.Hero;
 import com.mygdx.game.Location;
 
 import java.util.Random;
@@ -13,7 +18,30 @@ import java.util.TimerTask;
  * Abstract class that implements level
  */
 abstract class AbstractLevel implements Level{
+    protected Hero achille,helen,hercules,hypolyta,thesius;
+    private Sound action;
+    public AbstractLevel(){
 
+        achille = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/AchillesHealthBar.png")),64,64),"ACHILLE",1,1,15);
+        action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Spear.mp3"));
+        achille.setSound(action);
+
+        helen = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HelenHealthBar.png")),64,64),"HELEN",3,4,10);
+        action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Magic.mp3"));
+        helen.setSound(action);
+
+        hercules = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HerculesHealthBar.png")),64,64),"HERCULES",2,3,20);
+        action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Spear.mp3"));
+        hercules.setSound(action);
+
+        hypolyta = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HippolytaHealthBar.png")),64,64),"HYPOLYTA",3,2,10);
+        action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Sword.mp3"));
+        hypolyta.setSound(action);
+
+        thesius = new Hero(TextureRegion.split( new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")),64,64),"THESIUS",1,15,100);
+        action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Bow.ogg"));
+        thesius.setSound(action);
+    }
     public void draw(SpriteBatch batch){
         for(GameUnit hero:heroes)
         {

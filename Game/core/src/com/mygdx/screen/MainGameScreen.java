@@ -211,6 +211,7 @@ public class MainGameScreen implements Screen {
 							game.level.getPieceHero(current.getLocation()).setAnimation(Animate.ATTACK);
 							timer.schedule(new TimerTask() {
 								public void run() {
+									game.level.getPieceHero(current.getLocation()).playSound();
 									game.level.getPieceEnemy(enemy.getLocation()).setHealth(game.level.getPieceEnemy(enemy.getLocation()).getHealth()-game.level.getPieceHero(current.getLocation()).getDamage());
 									game.level.validAttacks.clear();
 									game.level.act();

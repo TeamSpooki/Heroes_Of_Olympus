@@ -4,12 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.HeroesOfOlympus;
-
-import java.io.FileNotFoundException;
 
 public class HelpMenuScreen implements Screen{
 	private static final int WIDTH = HeroesOfOlympus.WIDTH;
