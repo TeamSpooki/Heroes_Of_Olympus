@@ -9,7 +9,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -95,15 +94,12 @@ public class MainGameScreen implements Screen {
 		game.camera.setToOrtho(true);
 		game.level = level;
 		if(level instanceof Level1){
-
 			music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Level1.wav"));
 			gameMap = new TiledGameMap("Level1/level1.tmx");
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("waterCollide");
 			level.addLayer(layer);
 		}
 		else if(level instanceof Level2){
-
-
 			music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Level2.wav"));
 			gameMap = new TiledGameMap("Level2/level2.tmx");
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("wallCollide");
@@ -114,8 +110,6 @@ public class MainGameScreen implements Screen {
 			level.addLayer(layer);
 		}
 		else if(level instanceof Level3){
-
-
 			music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Level3.mp3"));
 			gameMap = new TiledGameMap("Level3/level3.tmx");
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("coffinCollide");
@@ -126,8 +120,6 @@ public class MainGameScreen implements Screen {
 			level.addLayer(layer);
 		}
 		else if(level instanceof Level4){
-
-
 			music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Level4.ogg"));
 			gameMap = new TiledGameMap("Level4/level4.tmx");
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("throneCollide");
@@ -136,12 +128,8 @@ public class MainGameScreen implements Screen {
 			level.addLayer(layer);
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("wallCollide");
 			level.addLayer(layer);
-
-
 		}
 		else if(level instanceof Level5){
-
-
 			music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Level5.WAV"));
 			gameMap = new TiledGameMap("Level5/level5.tmx");
 		}
@@ -171,7 +159,6 @@ public class MainGameScreen implements Screen {
 		game.batch.end();
 		stage.act();
 		stage.draw();
-		
 		if(Gdx.input.isTouched() ) {
 			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			game.camera.unproject(touch);
@@ -186,7 +173,6 @@ public class MainGameScreen implements Screen {
 					options.show(stage);
 				}
 			}
-
 			if(move){
 				if(movements>=game.level.getHeroesSize()) {
 					movements=0;
@@ -269,7 +255,6 @@ public class MainGameScreen implements Screen {
 				else{
 					game.setScreen(new Story(game,"scene6.ogv"));
 				}
-
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}

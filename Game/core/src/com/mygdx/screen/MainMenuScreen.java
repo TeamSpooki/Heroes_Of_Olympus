@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.HeroesOfOlympus;
@@ -15,7 +14,7 @@ public class MainMenuScreen implements Screen {
 	private static final int WIDTH = HeroesOfOlympus.WIDTH;
 	private static final int HEIGHT = HeroesOfOlympus.HEIGHT;
 
-	private static final int GAME_LOGO_HEIGHT = HeroesOfOlympus.HEIGHT / 4;
+	private static final int GAME_LOGO_HEIGHT = HEIGHT / 4;
 
 	private static final int PLAY_BUTTON_WIDTH = 400;
 	private static final int PLAY_BUTTON_HEIGHT = 200;
@@ -26,33 +25,33 @@ public class MainMenuScreen implements Screen {
 	private static final int HELP_BUTTON_WIDTH = 400;
 	private static final int HELP_BUTTON_HEIGHT = 200;
 
-	private static final int TEAM_LOGO_WIDTH = HeroesOfOlympus.WIDTH / 5;
-	private static final int TEAM_LOGO_HEIGHT = HeroesOfOlympus.HEIGHT / 5;
+	private static final int TEAM_LOGO_WIDTH = WIDTH / 5;
+	private static final int TEAM_LOGO_HEIGHT = HEIGHT / 5;
 
-	private static final int PLAY_BUTTON_Y = 450;
-	private static final int HELP_BUTTON_Y = 230;
-	private static final int EXIT_BUTTON_Y = 10;
+	private static final int PLAY_BUTTON_Y = HEIGHT - GAME_LOGO_HEIGHT-PLAY_BUTTON_HEIGHT;
+	private static final int HELP_BUTTON_Y = PLAY_BUTTON_Y-HELP_BUTTON_HEIGHT;
+	private static final int EXIT_BUTTON_Y = HELP_BUTTON_Y-EXIT_BUTTON_HEIGHT;
 
 	private Music music;
-	Texture playButtonActive;
-	Texture playButtonInactive;
 
-	Texture helpButtonActive;
-	Texture helpButtonInactive;
+	private Texture playButtonActive;
+	private Texture playButtonInactive;
 
-	Texture exitButtonActive;
-	Texture exitButtonInactive;
+	private Texture helpButtonActive;
+	private Texture helpButtonInactive;
 
-	Texture gameLogo;
-	Texture teamLogo;
+	private Texture exitButtonActive;
+	private Texture exitButtonInactive;
 
-	Texture bgImage;
-	TextureRegion mainBackground;
+	private Texture gameLogo;
+	private Texture teamLogo;
 
-	HeroesOfOlympus game;
+	private Texture bgImage;
+	private TextureRegion mainBackground;
+
+	private HeroesOfOlympus game;
 
 	float x;
-	float y;
 
 	public MainMenuScreen(HeroesOfOlympus game) {
 		this.game = game;
@@ -70,7 +69,7 @@ public class MainMenuScreen implements Screen {
 		music.setVolume(0.1f);
 		music.play();
 		bgImage = new Texture("MainMenuBG.png");
-		mainBackground = new TextureRegion(bgImage, 0, 0, 1280, 1080);
+		mainBackground = new TextureRegion(bgImage, 0, 0, WIDTH, HEIGHT);
 	}
 
 	@Override
