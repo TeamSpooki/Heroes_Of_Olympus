@@ -207,7 +207,7 @@ public class MainGameScreen implements Screen {
 				if(!game.level.validAttacks.isEmpty()) {
 					if(game.level.findNearestEnemyTouch(touch.x,touch.y) instanceof Enemy) {
 						enemy= game.level.findNearestEnemyTouch(touch.x,touch.y);
-						if(!enemy.isDead()){
+						if(!enemy.isDead() && game.level.validAttacks.contains(enemy.getLocation())){
 							game.level.getPieceHero(current.getLocation()).setAnimation(Animate.ATTACK);
 							timer.schedule(new TimerTask() {
 								public void run() {

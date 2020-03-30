@@ -30,7 +30,7 @@ public class GameOverScreen implements Screen{
 		backButtonInactive = new Texture("BackButton.png");
 		mainBackground = new TextureRegion(goImage, 0, 0, WIDTH, HEIGHT);
 		mms = new MainMenuScreen(game);
-
+		game.level = null;
 	}
 	@Override
 	public void show() {

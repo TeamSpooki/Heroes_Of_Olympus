@@ -178,7 +178,7 @@ abstract class AbstractLevel implements Level{
                         if(!collide(movement.leftLocation())){
                             movement = movement.leftLocation();
                         }
-                    } else if (nearestHero.getX() >= enemy.getX()) {
+                    } if (nearestHero.getX() >= enemy.getX()) {
                         if(!collide(movement.rightLocation())){
                             movement = movement.rightLocation();
                         }
@@ -187,7 +187,7 @@ abstract class AbstractLevel implements Level{
                         if(!collide(movement.aboveLocation())){
                             movement = movement.aboveLocation();
                         }
-                    } else if (nearestHero.getY() >= enemy.getY()) {
+                    } if (nearestHero.getY() >= enemy.getY()) {
                         if(!collide(movement.belowLocation())){
                             movement = movement.belowLocation();
                         }
