@@ -67,7 +67,6 @@ public class MainMenuScreen implements Screen {
 		music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Menu.wav"));
 		music.setLooping(true);
 		music.setVolume(0.1f);
-		music.play();
 		bgImage = new Texture("MainMenuBG.png");
 		mainBackground = new TextureRegion(bgImage, 0, 0, WIDTH, HEIGHT);
 	}
@@ -81,7 +80,7 @@ public class MainMenuScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(192/255f,192/255f,192/255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+		music.play();
 		game.batch.begin();
 		game.batch.draw(mainBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 

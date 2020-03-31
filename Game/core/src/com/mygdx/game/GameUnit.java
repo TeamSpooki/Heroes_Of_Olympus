@@ -69,9 +69,9 @@ public abstract class GameUnit {
 	 */
 	protected Map<Integer,TextureRegion> healthSprites;
 	/**
-	 * Sounds for attack and death
+	 * Sounds for attack,death,moving
 	 */
-	private Sound attack,death;
+	private Sound attack,death,moving;
 	
 	public GameUnit(TextureRegion[][] t,String name,int movementRange, int attackRange, int damage) {
 		this.animate = Animate.STAY;
@@ -81,7 +81,7 @@ public abstract class GameUnit {
 		this.location = new Location(0,0);
 		this.sprite = new Sprite();
 		this.death= Gdx.audio.newSound(Gdx.files.internal("Sounds/Death.mp3"));
-		
+		this.moving=Gdx.audio.newSound(Gdx.files.internal("Sounds/Move.wav"));
 		if(movementRange<5&&movementRange>0){
 			this.movementRange=movementRange;
 		}else{
@@ -232,6 +232,12 @@ public abstract class GameUnit {
 	 */
 	public void playSound() {
 		this.attack.play(1.0f);
+	}
+	/**
+	 * Play the mvoe sound
+	 */
+	public void playMove() {
+		this.moving.play(1.0f);
 	}
 
 	/**

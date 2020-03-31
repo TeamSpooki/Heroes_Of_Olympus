@@ -34,7 +34,7 @@ public class Level2 extends AbstractLevel{
         mapCollisions.add(new Location(192,704));
         heroes.add(thesius);
 
-        titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/goblinsword.png")), 64, 64),"GOBLIN",2,2,30);
+        titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/goblinsword.png")), 64, 64),"GOBLIN",1,2,30);
         titan.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2);
         mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2));
         enemies.add(titan);

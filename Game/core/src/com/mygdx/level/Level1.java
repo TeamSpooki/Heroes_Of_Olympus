@@ -18,7 +18,7 @@ public class Level1 extends AbstractLevel{
 		achille.setPosition(320, 256);
 		mapCollisions.add(new Location(320, 256));
 		heroes.add(achille);
-		
+
 		helen.setPosition(64, 192);
 		mapCollisions.add(new Location(64, 192));
 		heroes.add(helen);

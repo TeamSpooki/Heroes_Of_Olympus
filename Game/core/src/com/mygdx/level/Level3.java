@@ -35,7 +35,7 @@ public class Level3 extends AbstractLevel {
         mapCollisions.add(new Location(192, 640));
         heroes.add(thesius);
 
-        titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level3/MinotaurHealthBar.png")), 64, 64), "MINOTAUR", 3, 2, 40);
+        titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level3/MinotaurHealthBar.png")), 64, 64), "MINOTAUR", 2, 2, 40);
         titan.setPosition(MainGameScreen.WIDTH - 128, MainGameScreen.HEIGHT / 2+64);
         mapCollisions.add(new Location(MainGameScreen.WIDTH - 128, MainGameScreen.HEIGHT / 2+64));
         enemies.add(titan);

@@ -85,14 +85,13 @@ public class MainGameScreen implements Screen {
 	 * Counts the number of movements
 	 */
 	private int movements;
-
+	/**
+	 * Backgroung music
+	 */
 	private Music music;
-
-	private Sound moving;
 
 	public MainGameScreen (HeroesOfOlympus game, Level level) {
 		this.game = game;
-		this.moving= Gdx.audio.newSound(Gdx.files.internal("Sounds/Move.wav"));
 		stage = new Stage();
 		skin = new Skin(Gdx.files.internal("uiskin.json"));
 		game.camera.setToOrtho(true);
@@ -173,13 +172,10 @@ public class MainGameScreen implements Screen {
 					oldCurrent=current;
 					current= game.level.findNearestHero(touch.x,touch.y);
 					if(oldCurrent!=current) {
-
-
 						options.setHero(current);
 						options.show(stage);
 						options.setVisible(true);
 					}else if(game.level.getHeroesSize()==1){
-
 						options.setHero(current);
 						options.show(stage);
 						options.setVisible(true);
@@ -195,10 +191,9 @@ public class MainGameScreen implements Screen {
 					game.level.getPieceHero(current.getLocation()).setMoved(true);
 					game.level.getPieceHero(current.getLocation()).setAnimation(Animate.WALK);
 					timer.schedule(new TimerTask() {
-
 						public void run() {
 							if(game.level.findNearestLocation(touch.x,touch.y)!=null) {
-								moving.play(1.0f);
+								game.level.getPieceHero(current.getLocation()).playMove();
 								game.level.movePiece(current.getLocation(), game.level.findNearestLocation(touch.x,touch.y));
 								game.level.act();
 								game.level.validMoves.clear();

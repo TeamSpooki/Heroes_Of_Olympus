@@ -37,7 +37,7 @@ public class GameOverScreen implements Screen{
 		music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/GameOver.wav"));
 		music.setLooping(true);
 		music.setVolume(0.1f);
-		music.play();
+
 		game.level = null;
 	}
 	@Override
@@ -48,6 +48,7 @@ public class GameOverScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
+		music.play();
 		game.batch.begin();
 	    game.batch.draw(mainBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		x = 0;

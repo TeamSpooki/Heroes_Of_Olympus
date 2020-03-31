@@ -34,7 +34,7 @@ public class Level4 extends AbstractLevel {
         mapCollisions.add(new Location(192, 576));
         heroes.add(thesius);
 
-        titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level4/KnightCaptain.png")), 64, 64), "KNIGHT CAPTAIN", 4, 1, 40);
+        titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level4/KnightCaptain.png")), 64, 64), "KNIGHT CAPTAIN", 2, 1, 40);
         titan.setPosition(MainGameScreen.WIDTH - 128, MainGameScreen.HEIGHT / 2);
         mapCollisions.add(new Location(MainGameScreen.WIDTH - 128, MainGameScreen.HEIGHT / 2));
         enemies.add(titan);

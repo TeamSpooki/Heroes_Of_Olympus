@@ -19,7 +19,7 @@ import java.util.TimerTask;
  */
 abstract class AbstractLevel implements Level{
     protected Hero achille,helen,hercules,hypolyta,thesius;
-    private Sound action;
+    private Sound action,attacking,moving;
     public AbstractLevel(){
 
         achille = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/AchillesHealthBar.png")),64,64),"ACHILLE",1,1,15);
@@ -41,6 +41,9 @@ abstract class AbstractLevel implements Level{
         thesius = new Hero(TextureRegion.split( new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")),64,64),"THESIUS",1,6,15);
         action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Bow.ogg"));
         thesius.setSound(action);
+
+        moving= Gdx.audio.newSound(Gdx.files.internal("Sounds/Move.wav"));
+        attacking= Gdx.audio.newSound(Gdx.files.internal("Sounds/Enemy.wav"));
     }
     public void draw(SpriteBatch batch){
         for(GameUnit hero:heroes)
@@ -171,10 +174,10 @@ abstract class AbstractLevel implements Level{
         if(enemy.isInBounds(nearestHero.getX(),nearestHero.getY(),enemy.getAttackRange())){
             enemy.setAnimation(Animate.ATTACK);
             timer.schedule(new TimerTask() {
-                    public void run() { getPieceHero(nearestHero.getLocation()).setHealth(getPieceHero(nearestHero.getLocation()).getHealth()-enemy.getDamage());enemy.setAnimation(Animate.STAY); }}, 500);
+                    public void run() { attacking.play(1.0f);getPieceHero(nearestHero.getLocation()).setHealth(getPieceHero(nearestHero.getLocation()).getHealth()-enemy.getDamage());enemy.setAnimation(Animate.STAY); }}, 500);
         } else if (enemy.isMoved()) {
+            movement = enemy.getLocation();
             for(int i=0;i<enemy.getMovementRange();i++){
-                movement = enemy.getLocation();
                 if (nearestHero.getX() <= enemy.getX()) {
                     if(!collide(movement.leftLocation())){
                         movement = movement.leftLocation();
@@ -195,11 +198,11 @@ abstract class AbstractLevel implements Level{
                         movement = movement.belowLocation();
                     }
                 }
-                final Location finalMovement = movement;
-                enemy.setAnimation(Animate.WALK);
-                timer.schedule(new TimerTask() {
-                        public void run() { movePiece(enemy.getLocation(), finalMovement);enemy.setAnimation(Animate.STAY); }}, 500);
             }
+            final Location finalMovement = movement;
+            enemy.setAnimation(Animate.WALK);
+            timer.schedule(new TimerTask() {
+                public void run() { moving.play(1.0f);movePiece(enemy.getLocation(), finalMovement);enemy.setAnimation(Animate.STAY); }}, 500);
         }
     }
     public boolean enemiesDead() {

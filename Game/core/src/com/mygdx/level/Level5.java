@@ -34,7 +34,7 @@ public class Level5 extends AbstractLevel {
         mapCollisions.add(new Location(192, 576));
         heroes.add(thesius);
 
-        titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level5/Demon.png")), 64, 64), "DEMON", 5, 2, 50);
+        titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level5/Demon.png")), 64, 64), "DEMON", 3, 2, 50);
         titan.setPosition(MainGameScreen.WIDTH - 64, MainGameScreen.HEIGHT / 2);
         mapCollisions.add(new Location(MainGameScreen.WIDTH - 64, MainGameScreen.HEIGHT / 2));
         enemies.add(titan);
