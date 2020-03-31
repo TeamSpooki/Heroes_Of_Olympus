@@ -2,6 +2,7 @@ package com.mygdx.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.HeroesOfOlympus;
@@ -22,6 +23,8 @@ public class GameOverScreen implements Screen{
 	private Texture goImage;
 	private TextureRegion mainBackground;
 
+	private Music music;
+
 	float x;
 	public GameOverScreen(HeroesOfOlympus game) {
 		this.game = game;
@@ -30,7 +33,11 @@ public class GameOverScreen implements Screen{
 		backButtonInactive = new Texture("BackButton.png");
 		mainBackground = new TextureRegion(goImage, 0, 0, WIDTH, HEIGHT);
 		mms = new MainMenuScreen(game);
-
+		game.level=null;
+		music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/GameOver.wav"));
+		music.setLooping(true);
+		music.setVolume(0.1f);
+		music.play();
 	}
 	@Override
 	public void show() {
@@ -80,7 +87,7 @@ public class GameOverScreen implements Screen{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+		music.dispose();
 	}
 	
 	

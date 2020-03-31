@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Enemy;
+import com.mygdx.game.GameUnit;
 import com.mygdx.game.Location;
 import com.mygdx.screen.MainGameScreen;
 
@@ -35,8 +36,8 @@ public class Level3 extends AbstractLevel {
         heroes.add(thesius);
 
         titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level3/MinotaurHealthBar.png")), 64, 64), "MINOTAUR", 3, 2, 40);
-        titan.setPosition(MainGameScreen.WIDTH - 128, MainGameScreen.HEIGHT / 2);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH - 128, MainGameScreen.HEIGHT / 2));
+        titan.setPosition(MainGameScreen.WIDTH - 128, MainGameScreen.HEIGHT / 2+64);
+        mapCollisions.add(new Location(MainGameScreen.WIDTH - 128, MainGameScreen.HEIGHT / 2+64));
         enemies.add(titan);
 
         enemy1 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level3/ElfBowHealthBar.png")), 64, 64), "ELF BOW", 1, 3, 5);
@@ -58,5 +59,9 @@ public class Level3 extends AbstractLevel {
         enemy4.setPosition(MainGameScreen.WIDTH - 384, MainGameScreen.HEIGHT / 2 + 64);
         mapCollisions.add(new Location(MainGameScreen.WIDTH - 384, MainGameScreen.HEIGHT / 2 + 64));
         enemies.add(enemy4);
+
+        for(GameUnit hero:heroes){
+            hero.setDamage(hero.getDamage()+10);
+        }
     }
 }

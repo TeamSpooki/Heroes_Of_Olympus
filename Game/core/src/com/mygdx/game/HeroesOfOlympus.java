@@ -26,7 +26,9 @@ public class HeroesOfOlympus extends Game {
 	 * Single instance of level that is overwritten
 	 */
     public Level level;
-
+	/**
+	 * A camera with orthographic projection.
+	 */
 	public OrthographicCamera camera;
 	@Override
 	public void create () {

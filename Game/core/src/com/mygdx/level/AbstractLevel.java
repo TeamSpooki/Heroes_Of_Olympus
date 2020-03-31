@@ -30,7 +30,7 @@ abstract class AbstractLevel implements Level{
         action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Magic.mp3"));
         helen.setSound(action);
 
-        hercules = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HerculesHealthBar.png")),64,64),"HERCULES",2,3,20);
+        hercules = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HerculesHealthBar.png")),64,64),"HERCULES",2,2,20);
         action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Spear.mp3"));
         hercules.setSound(action);
 
@@ -38,7 +38,7 @@ abstract class AbstractLevel implements Level{
         action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Sword.mp3"));
         hypolyta.setSound(action);
 
-        thesius = new Hero(TextureRegion.split( new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")),64,64),"THESIUS",1,15,100);
+        thesius = new Hero(TextureRegion.split( new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")),64,64),"THESIUS",1,6,15);
         action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Bow.ogg"));
         thesius.setSound(action);
     }
@@ -161,45 +161,44 @@ abstract class AbstractLevel implements Level{
     public void act(){
         Location movement;
         Random rand = new Random();
-        final GameUnit enemy= enemies.get(rand.nextInt(enemies.size()));
+        GameUnit tempEnemy;
+        do{
+            tempEnemy= enemies.get(rand.nextInt(enemies.size()));
+        }while(tempEnemy.isDead());
+        final GameUnit enemy=tempEnemy;
         final GameUnit nearestHero = findNearestHero(enemy.getX(),enemy.getY());
-        if(!enemy.isDead()){
-            if(enemy.isInBounds(nearestHero.getX(),nearestHero.getY(),enemy.getAttackRange())){
-                enemy.setAnimation(Animate.ATTACK);
-                timer.schedule(new TimerTask() {
-                    public void run() {
-                        getPieceHero(nearestHero.getLocation()).setHealth(getPieceHero(nearestHero.getLocation()).getHealth()-enemy.getDamage());
-                        enemy.setAnimation(Animate.STAY);
-                    }}, 1000);
-            } else if (enemy.isMoved()) {
-                for(int i=0;i<enemy.getMovementRange();i++){
-                    movement = enemy.getLocation();
-                    if (nearestHero.getX() <= enemy.getX()) {
-                        if(!collide(movement.leftLocation())){
-                            movement = movement.leftLocation();
-                        }
-                    } else if (nearestHero.getX() >= enemy.getX()) {
-                        if(!collide(movement.rightLocation())){
-                            movement = movement.rightLocation();
-                        }
+
+        if(enemy.isInBounds(nearestHero.getX(),nearestHero.getY(),enemy.getAttackRange())){
+            enemy.setAnimation(Animate.ATTACK);
+            timer.schedule(new TimerTask() {
+                    public void run() { getPieceHero(nearestHero.getLocation()).setHealth(getPieceHero(nearestHero.getLocation()).getHealth()-enemy.getDamage());enemy.setAnimation(Animate.STAY); }}, 500);
+        } else if (enemy.isMoved()) {
+            for(int i=0;i<enemy.getMovementRange();i++){
+                movement = enemy.getLocation();
+                if (nearestHero.getX() <= enemy.getX()) {
+                    if(!collide(movement.leftLocation())){
+                        movement = movement.leftLocation();
                     }
-                    if (nearestHero.getY() <= enemy.getY()) {
-                        if(!collide(movement.aboveLocation())){
-                            movement = movement.aboveLocation();
-                        }
-                    } else if (nearestHero.getY() >= enemy.getY()) {
-                        if(!collide(movement.belowLocation())){
-                            movement = movement.belowLocation();
-                        }
-                    }
-                    final Location finalMovement = movement;
-                    enemy.setAnimation(Animate.WALK);
-                    timer.schedule(new TimerTask() {
-                        public void run() {
-                            movePiece(enemy.getLocation(), finalMovement);
-                            enemy.setAnimation(Animate.STAY);
-                        }}, 1000);
                 }
+                if (nearestHero.getX() >= enemy.getX()) {
+                    if(!collide(movement.rightLocation())){
+                        movement = movement.rightLocation();
+                    }
+                }
+                if (nearestHero.getY() <= enemy.getY()) {
+                    if(!collide(movement.aboveLocation())){
+                        movement = movement.aboveLocation();
+                    }
+                }
+                if (nearestHero.getY() >= enemy.getY()) {
+                    if(!collide(movement.belowLocation())){
+                        movement = movement.belowLocation();
+                    }
+                }
+                final Location finalMovement = movement;
+                enemy.setAnimation(Animate.WALK);
+                timer.schedule(new TimerTask() {
+                        public void run() { movePiece(enemy.getLocation(), finalMovement);enemy.setAnimation(Animate.STAY); }}, 500);
             }
         }
     }
@@ -286,5 +285,13 @@ abstract class AbstractLevel implements Level{
             }
         }
         return counter;
+    }
+
+    @Override
+    public void devMode() {
+        for (GameUnit hero : heroes){
+            hero.setDamage(100);
+            hero.setAttackRange(15);
+        }
     }
 }

@@ -155,4 +155,5 @@ public interface Level {
 
     int getHeroesSize();
     int getEnemiesSize();
+    void devMode();
 }

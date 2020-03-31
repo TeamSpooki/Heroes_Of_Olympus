@@ -68,6 +68,9 @@ public abstract class GameUnit {
 	 * Sprite collection of GameUnits with healthbar
 	 */
 	protected Map<Integer,TextureRegion> healthSprites;
+	/**
+	 * Sounds for attack and death
+	 */
 	private Sound attack,death;
 	
 	public GameUnit(TextureRegion[][] t,String name,int movementRange, int attackRange, int damage) {
@@ -164,7 +167,58 @@ public abstract class GameUnit {
 			System.out.println(name+ " health is too high");
 		}
 	}
+	/**
+	 * Set movement value
+	 * @param move
+	 */
+	public void setMoved(boolean move) {
+		moved=move;
+	}
 
+	/**
+	 * Set attack sound
+	 * @param sound
+	 */
+	public void setSound(Sound sound) {
+		this.attack=sound;
+	}
+
+	/**
+	 * Set damage
+	 * @param damage
+	 */
+	public void setDamage(int damage){
+		if(damage<=100&&damage>=0){
+			this.damage=damage;
+		}else{
+			System.out.println("Error: Wrong damage value for "+ name);
+		}
+	}
+
+	/**
+	 * Set new movement range
+	 * @param range
+	 */
+	public void setMovementRange(int range){
+		if(range<5&&range>0){
+			this.movementRange=range;
+		}else{
+			System.out.println("Error: Wrong movement range value for " + name);
+		}
+
+	}
+
+	/**
+	 * Set ne attack range
+	 * @param attack
+	 */
+	public void setAttackRange(int attack){
+		if(attack<20&&attack>0){
+			this.attackRange=attack;
+		}else{
+			System.out.println("Error: Wrong attack range value for "+ name);
+		}
+	}
 	/**
 	 * True if unit has moved false otherwise
 	 * @return moved
@@ -174,15 +228,8 @@ public abstract class GameUnit {
 	}
 
 	/**
-	 * Set movement value
-	 * @param move
+	 * Play the attack sound
 	 */
-	public void setMoved(boolean move) {
-		moved=move;
-	}
-	public void setSound(Sound sound) {
-		this.attack=sound;
-	}
 	public void playSound() {
 		this.attack.play(1.0f);
 	}
@@ -284,6 +331,10 @@ public abstract class GameUnit {
 		return attackRange;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	/**
 	 * Check if GameUnit is dead
 	 * @return dead
@@ -310,6 +361,10 @@ public abstract class GameUnit {
 		return false;
 	}
 
+	/**
+	 * toString method for different Gameunit values
+	 * @return
+	 */
 	public String toString(){
 		return name+"\n"+" Movement Range: "+movementRange+
 				"\t"+ " Damege: "+damage+

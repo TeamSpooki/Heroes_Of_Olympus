@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Enemy;
+import com.mygdx.game.GameUnit;
 import com.mygdx.game.Location;
 import com.mygdx.screen.MainGameScreen;
 
@@ -34,8 +35,8 @@ public class Level2 extends AbstractLevel{
         heroes.add(thesius);
 
         titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/goblinsword.png")), 64, 64),"GOBLIN",2,2,30);
-        titan.setPosition(MainGameScreen.WIDTH-128, MainGameScreen.HEIGHT/2);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH-128, MainGameScreen.HEIGHT/2));
+        titan.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2);
+        mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2));
         enemies.add(titan);
 
         enemy1 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/OrcMace.png")), 64, 64),"ORC MACE",1,2,10);
@@ -44,14 +45,18 @@ public class Level2 extends AbstractLevel{
         enemies.add(enemy1);
 
         enemy2 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/OrcWizard.png")), 64, 64),"ORC WIZARD",1,4,5);
-        enemy2.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2));
+        enemy2.setPosition(MainGameScreen.WIDTH-448, MainGameScreen.HEIGHT/2);
+        mapCollisions.add(new Location(MainGameScreen.WIDTH-448, MainGameScreen.HEIGHT/2));
         enemies.add(enemy2);
 
         enemy3 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level2/OrcMace.png")), 64, 64),"ORC MACE",1,2,10);
         enemy3.setPosition(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2+128);
         mapCollisions.add(new Location(MainGameScreen.WIDTH-320, MainGameScreen.HEIGHT/2+128));
         enemies.add(enemy3);
+
+        for(GameUnit hero:heroes){
+            hero.setDamage(hero.getDamage()+5);
+        }
 
     }
 }
