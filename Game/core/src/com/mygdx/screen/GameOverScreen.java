@@ -33,11 +33,12 @@ public class GameOverScreen implements Screen{
 		backButtonInactive = new Texture("BackButton.png");
 		mainBackground = new TextureRegion(goImage, 0, 0, WIDTH, HEIGHT);
 		mms = new MainMenuScreen(game);
-		game.level=null;
+
 		music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/GameOver.wav"));
 		music.setLooping(true);
 		music.setVolume(0.1f);
 		music.play();
+		game.level = null;
 	}
 	@Override
 	public void show() {
