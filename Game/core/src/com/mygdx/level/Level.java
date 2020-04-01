@@ -44,6 +44,10 @@ public interface Level {
      */
     List<Location> hazard = new LinkedList<Location>();
     /**
+     * List of locations for flowers
+     */
+    List<Location> flowers = new LinkedList<Location>();
+    /**
      * Texture for valid moves
      */
     Texture position = new Texture(Gdx.files.internal("yellowSelect.png"));
@@ -51,6 +55,10 @@ public interface Level {
      * Texture for valid attacks
      */
     Texture attack = new Texture(Gdx.files.internal("redSelect.png"));
+    /**
+     * Texture for valid flower
+     */
+    Texture flower = new Texture(Gdx.files.internal("lotusflower.png"));
 
     /**
      * draw method used in render for drawing different textures

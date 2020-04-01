@@ -40,8 +40,8 @@ public class Level4 extends AbstractLevel {
         enemies.add(titan);
 
         enemy1 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level4/KnightArcher.png")), 64, 64), "KNIGHT ARCHER", 1, 5, 15);
-        enemy1.setPosition(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2 - 64);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2 ));
+        enemy1.setPosition(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2-128);
+        mapCollisions.add(new Location(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2-128 ));
         enemies.add(enemy1);
 
         enemy2 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level4/KnightArcher.png")), 64, 64), "KNIGHT ARCHER", 1, 5, 15);

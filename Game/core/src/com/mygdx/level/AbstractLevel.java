@@ -45,6 +45,10 @@ abstract class AbstractLevel implements Level{
 
         moving= Gdx.audio.newSound(Gdx.files.internal("Sounds/Move.wav"));
         attacking= Gdx.audio.newSound(Gdx.files.internal("Sounds/Enemy.wav"));
+        Random rand = new Random();
+        for(int i=0;i<5;i++){
+            flowers.add(new Location(64*rand.nextInt(21),64*rand.nextInt(10)));
+        }
     }
     public void draw(SpriteBatch batch){
         for(GameUnit hero:heroes)
@@ -65,6 +69,12 @@ abstract class AbstractLevel implements Level{
             for(Location loc:validAttacks)
             {
                 batch.draw(attack, loc.getX(), loc.getY());
+            }
+        }
+        for(Location loc:flowers)
+        {
+            if(!collide(loc)){
+                batch.draw(flower,loc.getX(),loc.getY());
             }
         }
     }
@@ -143,6 +153,11 @@ abstract class AbstractLevel implements Level{
                 mapCollisions.add(hero.getLocation());
                 if(hazard.contains(hero.getLocation())){
                     hero.setHealth(hero.getHealth()-10);
+                }
+                if(flowers.contains(hero.getLocation())){
+                    System.out.println("works");
+                    flowers.remove(hero.getLocation());
+                    hero.setHealth(100);
                 }
             }
         }
