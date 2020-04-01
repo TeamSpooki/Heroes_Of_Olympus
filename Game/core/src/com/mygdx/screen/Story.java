@@ -30,13 +30,12 @@ public class Story implements Screen {
                 videoLoaded = true;
             }
         });
+        
         //Create file handle to locate internal file
         videoFile = Gdx.files.internal(path);
-        //Check if file exists
-        System.out.println("Exists?: " + videoFile.exists());
-        
+    
         //play the specified file
-        //video.play(videoFile);
+        video.play(videoFile);
 
         // it is important to do a resize after starting the video
         video.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -46,7 +45,6 @@ public class Story implements Screen {
             @Override
             public void onCompletionListener(FileHandle file) {
                 finished = true;
-                System.out.println("onCompletionListener");
             }
         });
     }
@@ -71,7 +69,7 @@ public class Story implements Screen {
             } else if(game.level instanceof Level4){
                 game.setScreen(new MainGameScreen(game, new Level5()));
             } else if(game.level instanceof Level5){
-                Gdx.app.exit();
+            	game.setScreen(new EndScreen(game));
             }else {
                 game.setScreen(new MainGameScreen(game, new Level1()));
             }
@@ -92,7 +90,7 @@ public class Story implements Screen {
                 } else if(game.level instanceof Level4){
                     game.setScreen(new MainGameScreen(game, new Level5()));
                 } else if(game.level instanceof Level5){
-                    Gdx.app.exit();
+                    game.setScreen(new EndScreen(game));
                 } else {
                     game.setScreen(new MainGameScreen(game, new Level1()));
                 }

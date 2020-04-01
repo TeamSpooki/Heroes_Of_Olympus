@@ -381,7 +381,7 @@ public abstract class GameUnit {
 	 */
 	public String toString(){
 		return name+"\n"+" Movement Range: "+movementRange+
-				"\t"+ " Damege: "+damage+
+				"\t"+ " Damage: "+damage+
 				"\t"+ " Attack Range: "+attackRange+
 				"\t"+" Health: "+health;
 	}

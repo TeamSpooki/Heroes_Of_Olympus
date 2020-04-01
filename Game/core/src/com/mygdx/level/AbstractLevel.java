@@ -23,23 +23,23 @@ abstract class AbstractLevel implements Level{
     private Sound action,attacking,moving;
     public AbstractLevel(){
 
-        achille = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/AchillesHealthBar.png")),64,64),"ACHILLE",1,1,15);
+        achille = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/AchillesHealthBar.png")),64,64),"ACHILLE",1,1,20);
         action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Spear.mp3"));
         achille.setSound(action);
 
-        helen = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HelenHealthBar.png")),64,64),"HELEN",3,4,10);
+        helen = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HelenHealthBar.png")),64,64),"HELEN",3,4,15);
         action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Magic.mp3"));
         helen.setSound(action);
 
-        hercules = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HerculesHealthBar.png")),64,64),"HERCULES",2,2,20);
+        hercules = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HerculesHealthBar.png")),64,64),"HERCULES",2,2,25);
         action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Spear.mp3"));
         hercules.setSound(action);
 
-        hypolyta = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HippolytaHealthBar.png")),64,64),"HYPOLYTA",3,2,10);
+        hypolyta = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HippolytaHealthBar.png")),64,64),"HYPOLYTA",3,2,15);
         action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Sword.mp3"));
         hypolyta.setSound(action);
 
-        thesius = new Hero(TextureRegion.split( new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")),64,64),"THESIUS",1,6,15);
+        thesius = new Hero(TextureRegion.split( new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")),64,64),"THESIUS",1,6,20);
         action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Bow.ogg"));
         thesius.setSound(action);
 
@@ -193,7 +193,7 @@ abstract class AbstractLevel implements Level{
         if(enemy.isInBounds(nearestHero.getX(),nearestHero.getY(),enemy.getAttackRange())){
             enemy.setAnimation(Animate.ATTACK);
             timer.schedule(new TimerTask() {
-                    public void run() { attacking.play(1.0f);getPieceHero(nearestHero.getLocation()).setHealth(getPieceHero(nearestHero.getLocation()).getHealth()-enemy.getDamage());enemy.setAnimation(Animate.STAY); }}, 500);
+                    public void run() { attacking.play(1.0f);getPieceHero(nearestHero.getLocation()).setHealth(getPieceHero(nearestHero.getLocation()).getHealth()-enemy.getDamage());enemy.setAnimation(Animate.STAY); }}, 1000);
         } else if (enemy.isMoved()) {
             movement = enemy.getLocation();
             for(int i=0;i<enemy.getMovementRange();i++){
@@ -267,6 +267,7 @@ abstract class AbstractLevel implements Level{
         validAttacks.removeAll(validAttacks);
         mapCollisions.removeAll(mapCollisions);
         hazard.removeAll(hazard);
+        flowers.removeAll(flowers);
     }
     public boolean collide(Location location){
         if(mapCollisions.contains(location)){
