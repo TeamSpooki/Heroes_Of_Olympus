@@ -40,6 +40,10 @@ public interface Level {
      */
     List<Location> mapCollisions = new LinkedList<Location>();
     /**
+     * List of locations to identify hazards
+     */
+    List<Location> hazard = new LinkedList<Location>();
+    /**
      * Texture for valid moves
      */
     Texture position = new Texture(Gdx.files.internal("yellowSelect.png"));
@@ -153,6 +157,7 @@ public interface Level {
      */
     String toString();
 
+    void addHazard(TiledMapTileLayer layer);
     int getHeroesSize();
     int getEnemiesSize();
     void devMode();

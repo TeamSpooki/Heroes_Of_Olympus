@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector3;
@@ -131,10 +130,16 @@ public class MainGameScreen implements Screen {
 			level.addLayer(layer);
 			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("wallCollide");
 			level.addLayer(layer);
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("lavaCollide");
+			level.addHazard(layer);
 		}
 		else if(level instanceof Level5){
 			music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Level5.wav"));
 			gameMap = new TiledGameMap("Level5/level5.tmx");
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("lavaCollide");
+			level.addHazard(layer);
+			layer = (TiledMapTileLayer) gameMap.getTiledMap().getLayers().get("lavaCollide2");
+			level.addHazard(layer);
 		}
 		music.setLooping(true);
 		music.setVolume(0.1f);
@@ -166,7 +171,6 @@ public class MainGameScreen implements Screen {
 		if(Gdx.input.isTouched()) {
 			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			game.camera.unproject(touch);
-			System.out.println(options.isVisible());
 			if(!options.isVisible()){
 				if(game.level.findNearestHeroTouch(touch.x,touch.y) instanceof Hero) {
 					oldCurrent=current;
@@ -221,10 +225,13 @@ public class MainGameScreen implements Screen {
 							timer.schedule(new TimerTask() {
 								public void run() {
 									game.level.getPieceHero(current.getLocation()).playSound();
-									game.level.getPieceEnemy(enemy.getLocation()).setHealth(game.level.getPieceEnemy(enemy.getLocation()).getHealth()-game.level.getPieceHero(current.getLocation()).getDamage());
+									if(!game.level.validAttacks.isEmpty()){
+										game.level.getPieceEnemy(enemy.getLocation()).setHealth(game.level.getPieceEnemy(enemy.getLocation()).getHealth()-game.level.getPieceHero(current.getLocation()).getDamage());
+									}
 									game.level.validAttacks.clear();
 									game.level.act();
 									game.level.getPieceHero(current.getLocation()).setAnimation(Animate.STAY);
+									attack=false;
 								}
 							}, 500);
 						}else{

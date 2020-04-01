@@ -14,11 +14,11 @@ public class Level5 extends AbstractLevel {
     public Level5() {
         super();
         //64,128,192,256,320,384,448,512,576,640,704,768,832,896,960,1024,1088,1152,1216,1280
-        achille.setPosition(64, 832);
+        achille.setPosition(64, 704);
         mapCollisions.add(new Location(64, 832));
         heroes.add(achille);
 
-        helen.setPosition(128, 256);
+        helen.setPosition(192, 256);
         mapCollisions.add(new Location(128, 256));
         heroes.add(helen);
 
@@ -68,9 +68,11 @@ public class Level5 extends AbstractLevel {
         enemy6.setPosition(MainGameScreen.WIDTH - 320, MainGameScreen.HEIGHT / 2 + 64);
         mapCollisions.add(new Location(MainGameScreen.WIDTH - 320, MainGameScreen.HEIGHT / 2 + 64));
         enemies.add(enemy6);
-
+        /*
         for(GameUnit hero:heroes){
             hero.setDamage(hero.getDamage()+20);
         }
+
+         */
     }
 }

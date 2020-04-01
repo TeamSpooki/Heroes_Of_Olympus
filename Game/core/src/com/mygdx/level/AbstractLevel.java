@@ -248,6 +248,7 @@ abstract class AbstractLevel implements Level{
         validMoves.removeAll(validMoves);
         validAttacks.removeAll(validAttacks);
         mapCollisions.removeAll(mapCollisions);
+        hazard.removeAll(hazard);
     }
     public boolean collide(Location location){
         if(mapCollisions.contains(location)){
@@ -268,6 +269,18 @@ abstract class AbstractLevel implements Level{
 
     }
 
+    public void addHazard(TiledMapTileLayer layer){
+        for (int x = 0; x < layer.getWidth(); x++){
+            for (int y = 0; y < layer.getHeight(); y++) {
+                TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+                if (cell != null) {
+                    Location loc = new Location(((x * 64)), ((y * 64)));
+                    hazard.add(loc);
+                }
+            }
+        }
+
+    }
     @Override
     public String toString() {
         String str="";

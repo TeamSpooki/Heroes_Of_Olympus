@@ -41,7 +41,7 @@ public class Level4 extends AbstractLevel {
 
         enemy1 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level4/KnightArcher.png")), 64, 64), "KNIGHT ARCHER", 1, 5, 15);
         enemy1.setPosition(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2 - 64);
-        mapCollisions.add(new Location(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2 - 64));
+        mapCollisions.add(new Location(MainGameScreen.WIDTH - 192, MainGameScreen.HEIGHT / 2 ));
         enemies.add(enemy1);
 
         enemy2 = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level4/KnightArcher.png")), 64, 64), "KNIGHT ARCHER", 1, 5, 15);
@@ -63,9 +63,11 @@ public class Level4 extends AbstractLevel {
         enemy5.setPosition(MainGameScreen.WIDTH - 448, MainGameScreen.HEIGHT / 2 + 64);
         mapCollisions.add(new Location(MainGameScreen.WIDTH - 448, MainGameScreen.HEIGHT / 2 + 64));
         enemies.add(enemy5);
-
+/*
         for(GameUnit hero:heroes){
             hero.setDamage(hero.getDamage()+15);
         }
+
+ */
     }
 }

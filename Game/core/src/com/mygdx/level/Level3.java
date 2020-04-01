@@ -59,9 +59,11 @@ public class Level3 extends AbstractLevel {
         enemy4.setPosition(MainGameScreen.WIDTH - 384, MainGameScreen.HEIGHT / 2 + 64);
         mapCollisions.add(new Location(MainGameScreen.WIDTH - 384, MainGameScreen.HEIGHT / 2 + 64));
         enemies.add(enemy4);
-
+/*
         for(GameUnit hero:heroes){
             hero.setDamage(hero.getDamage()+10);
         }
+
+ */
     }
 }
