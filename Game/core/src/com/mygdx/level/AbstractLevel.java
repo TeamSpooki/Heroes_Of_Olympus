@@ -137,15 +137,18 @@ abstract class AbstractLevel implements Level{
     public void movePiece(Location from,Location to){
         for(GameUnit hero:heroes)
         {
-            if(hero.getLocation().equals(from)&&!collide(new Location(to.getX(),to.getY()))) {
+            if(hero.getLocation().equals(from)&&!collide(to)) {
                 mapCollisions.remove(hero.getLocation());
                 hero.setPosition(to.getX(), to.getY());
                 mapCollisions.add(hero.getLocation());
+                if(hazard.contains(hero.getLocation())){
+                    hero.setHealth(hero.getHealth()-10);
+                }
             }
         }
         for(GameUnit enemy:enemies)
         {
-            if(enemy.getLocation().equals(from) &&!collide(new Location(to.getX(), to.getY()))) {
+            if(enemy.getLocation().equals(from) &&!collide(to)&&!hazard.contains(to)) {
                 mapCollisions.remove(enemy.getLocation());
                 enemy.setPosition(to.getX(), to.getY());
                 mapCollisions.add(enemy.getLocation());
