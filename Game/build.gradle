@@ -106,8 +106,21 @@ project(":core") {
         api "de.tomgrill.gdxdialogs:gdx-dialogs-core:1.2.5"
         api "de.tomgrill.gdxfacebook:gdx-facebook-core:1.4.1"
         api "com.github.czyzby:gdx-kiwi:1.9.1.9.6"
-
         compile "es.e-ucm.com.badlogicgames.gdx:gdx-video:0.0.1-SNAPSHOT"
-        
+
+        testImplementation('junit:junit:4.13')
+        testCompile "junit:junit:4.13"
+        implementation 'org.mockito:mockito-core:3.3.3'
+
+//        compile "junit:junit:4.13"
+//        compile "org.mockito:mockito-all:3.3.3"
+        compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+//        testCompile 'junit:junit:4.+'
+//        testCompile "org.mockito:mockito-all:1.9.+"
     }
+
 }

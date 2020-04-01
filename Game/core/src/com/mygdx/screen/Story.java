@@ -36,7 +36,7 @@ public class Story implements Screen {
         System.out.println("Exists?: " + videoFile.exists());
         
         //play the specified file
-        //video.play(videoFile);
+        video.play(videoFile);
 
         // it is important to do a resize after starting the video
         video.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

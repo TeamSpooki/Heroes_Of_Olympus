@@ -11,6 +11,7 @@ import com.mygdx.game.GameUnit;
 import com.mygdx.game.Hero;
 import com.mygdx.game.Location;
 
+import java.util.List;
 import java.util.Random;
 import java.util.TimerTask;
 
@@ -226,12 +227,21 @@ abstract class AbstractLevel implements Level{
                 counter++;
             }
         }
-        if(counter == 5){
+        if(counter == heroes.size()){
             return true;
         }else{
             return false;
         }
     }
+    
+    public List<GameUnit> getHeroes(){
+    	return heroes;
+    }
+    
+    public List<GameUnit> getEnemies(){
+    	return enemies;
+    }
+    
     public void removeAll(){
         heroes.removeAll(heroes);
         enemies.removeAll(enemies);

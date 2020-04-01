@@ -348,6 +348,14 @@ public abstract class GameUnit {
 	public boolean isDead() {
 		return dead;
 	}
+	
+	/**
+	 * Check if GameUnit is dead or not
+	 * @return dead
+	 */
+	public boolean toggleDead() {
+		return dead = !dead;
+	}
 
 	/**
 	 * Check if a given location is in bounds of a given range
