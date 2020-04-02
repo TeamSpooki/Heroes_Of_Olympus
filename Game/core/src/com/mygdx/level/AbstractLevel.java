@@ -155,7 +155,6 @@ abstract class AbstractLevel implements Level{
                     hero.setHealth(hero.getHealth()-10);
                 }
                 if(flowers.contains(hero.getLocation())){
-                    System.out.println("works");
                     flowers.remove(hero.getLocation());
                     hero.setHealth(100);
                 }
@@ -317,15 +316,6 @@ abstract class AbstractLevel implements Level{
         int counter=0;
         for (GameUnit hero : heroes){
             if(!hero.isDead()){
-                counter++;
-            }
-        }
-        return counter;
-    }
-    public int getEnemiesSize(){
-        int counter=0;
-        for (GameUnit enemy : enemies){
-            if(!enemy.isDead()){
                 counter++;
             }
         }

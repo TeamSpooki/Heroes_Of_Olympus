@@ -2,6 +2,7 @@ package com.mygdx.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,26 +16,41 @@ public class HelpMenuScreen implements Screen{
 	private static final int BACK_BUTTON_HEIGHT = 100;
 	private static final int BACK_BUTTON_Y = HEIGHT-BACK_BUTTON_HEIGHT;
 
-	HeroesOfOlympus game;
-	
-	Texture bgImage;
-	TextureRegion mainBackground;
+	private static final int NEXT_BUTTON_WIDTH = 200;
+	private static final int NEXT_BUTTON_HEIGHT = 100;
+	private static final int NEXT_BUTTON_Y = HEIGHT-NEXT_BUTTON_HEIGHT;
 
-	Texture backButtonActive;
-	Texture backButtonInactive;
+	private HeroesOfOlympus game;
 	
-	MainMenuScreen mms;
+	private Texture bgImage;
+	private TextureRegion mainBackground;
 
-	float x;
+	private Texture backButtonActive;
+	private Texture backButtonInactive;
+
+	private Texture nextButtonActive;
+	private Texture nextButtonInactive;
+
+	private MainMenuScreen mms;
+
+	private Music music;
+
+	private float x;
 	
 	public HelpMenuScreen(HeroesOfOlympus game) {
 		// TODO Auto-generated constructor stub
 		this.game = game;
 		backButtonActive = new Texture("BackButtonHighlighted.png");
 		backButtonInactive = new Texture("BackButton.png");
+		nextButtonActive = new Texture("NextButtonHighlighted.png");
+		nextButtonInactive = new Texture("NextButton.png");
 		bgImage = new Texture("HELP SCREEN.png"); 
 		mainBackground = new TextureRegion(bgImage, 0, 0, WIDTH, HEIGHT);
 		mms = new MainMenuScreen(game);
+
+		music= Gdx.audio.newMusic(Gdx.files.internal("Sounds/Help Menu.wav"));
+		music.setLooping(true);
+		music.setVolume(0.1f);
 	}
 
 	@Override
@@ -49,7 +65,7 @@ public class HelpMenuScreen implements Screen{
 		Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
-
+		music.play();
 		game.batch.draw(mainBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		x = 0;
 
@@ -62,6 +78,19 @@ public class HelpMenuScreen implements Screen{
 			}
 		} else {
 			game.batch.draw(backButtonInactive, x, BACK_BUTTON_Y, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
+		}
+
+		x = WIDTH-NEXT_BUTTON_WIDTH;
+
+		if (Gdx.input.getX() < x + NEXT_BUTTON_WIDTH && Gdx.input.getX() > x && HEIGHT - Gdx.input.getY() < NEXT_BUTTON_Y + NEXT_BUTTON_HEIGHT
+				&& HEIGHT - Gdx.input.getY() > NEXT_BUTTON_Y) {
+			game.batch.draw(nextButtonActive, WIDTH-NEXT_BUTTON_WIDTH, NEXT_BUTTON_Y, NEXT_BUTTON_WIDTH, NEXT_BUTTON_HEIGHT);
+			if (Gdx.input.isTouched()) {
+				this.dispose();
+				game.setScreen(new HelpMenuScreen2(game));
+			}
+		} else {
+			game.batch.draw(nextButtonInactive, WIDTH-NEXT_BUTTON_WIDTH, NEXT_BUTTON_Y, NEXT_BUTTON_WIDTH, NEXT_BUTTON_HEIGHT);
 		}
 
 		game.batch.end();
@@ -94,7 +123,7 @@ public class HelpMenuScreen implements Screen{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+		music.dispose();
 	}
 
 }

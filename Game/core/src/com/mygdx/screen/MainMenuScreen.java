@@ -51,7 +51,7 @@ public class MainMenuScreen implements Screen {
 
 	private HeroesOfOlympus game;
 
-	float x;
+	private float x;
 
 	public MainMenuScreen(HeroesOfOlympus game) {
 		this.game = game;

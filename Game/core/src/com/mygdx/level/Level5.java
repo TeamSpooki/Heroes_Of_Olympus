@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Enemy;
-import com.mygdx.game.GameUnit;
 import com.mygdx.game.Location;
 import com.mygdx.screen.MainGameScreen;
 
@@ -68,11 +67,6 @@ public class Level5 extends AbstractLevel {
         enemy6.setPosition(MainGameScreen.WIDTH - 320, MainGameScreen.HEIGHT / 2 + 64);
         mapCollisions.add(new Location(MainGameScreen.WIDTH - 320, MainGameScreen.HEIGHT / 2 + 64));
         enemies.add(enemy6);
-        /*
-        for(GameUnit hero:heroes){
-            hero.setDamage(hero.getDamage()+20);
-        }
 
-         */
     }
 }

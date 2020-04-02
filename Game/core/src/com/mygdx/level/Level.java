@@ -165,8 +165,20 @@ public interface Level {
      */
     String toString();
 
+    /**
+     * Add layers of hazard
+     * @param layer
+     */
     void addHazard(TiledMapTileLayer layer);
+
+    /**
+     * Get heroes list size
+     * @return
+     */
     int getHeroesSize();
-    int getEnemiesSize();
+
+    /**
+     * Developer mode
+     */
     void devMode();
 }

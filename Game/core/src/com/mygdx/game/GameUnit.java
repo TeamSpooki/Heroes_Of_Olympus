@@ -337,6 +337,10 @@ public abstract class GameUnit {
 		return attackRange;
 	}
 
+	/**
+	 * Return GameUnit name
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}

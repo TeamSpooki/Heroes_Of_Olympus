@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Enemy;
-import com.mygdx.game.GameUnit;
 import com.mygdx.game.Location;
 import com.mygdx.screen.MainGameScreen;
 
 public class Level4 extends AbstractLevel {
+
     private Enemy titan,enemy1,enemy2,enemy3,enemy4,enemy5;
 
     public Level4() {
@@ -63,11 +63,6 @@ public class Level4 extends AbstractLevel {
         enemy5.setPosition(MainGameScreen.WIDTH - 448, MainGameScreen.HEIGHT / 2 + 64);
         mapCollisions.add(new Location(MainGameScreen.WIDTH - 448, MainGameScreen.HEIGHT / 2 + 64));
         enemies.add(enemy5);
-/*
-        for(GameUnit hero:heroes){
-            hero.setDamage(hero.getDamage()+15);
-        }
 
- */
     }
 }

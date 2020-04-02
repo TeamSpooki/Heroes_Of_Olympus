@@ -9,7 +9,6 @@ import com.mygdx.screen.MainGameScreen;
 
 public class Level1 extends AbstractLevel{
 
-
 	private Enemy titan,enemy1,enemy2,enemy3;
 	
 	public Level1()

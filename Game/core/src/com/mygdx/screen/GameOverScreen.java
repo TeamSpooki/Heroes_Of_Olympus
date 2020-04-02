@@ -3,6 +3,7 @@ package com.mygdx.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.HeroesOfOlympus;
@@ -25,7 +26,7 @@ public class GameOverScreen implements Screen{
 
 	private Music music;
 
-	float x;
+	private float x;
 	public GameOverScreen(HeroesOfOlympus game) {
 		this.game = game;
 		goImage = new Texture("Game Over.png");
@@ -48,6 +49,8 @@ public class GameOverScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		music.play();
 		game.batch.begin();
 	    game.batch.draw(mainBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -91,7 +94,5 @@ public class GameOverScreen implements Screen{
 		// TODO Auto-generated method stub
 		music.dispose();
 	}
-	
-	
 
 }
