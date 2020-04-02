@@ -1,7 +1,6 @@
 package com.mygdx.level;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,31 +19,23 @@ import java.util.TimerTask;
  */
 abstract class AbstractLevel implements Level{
     protected Hero achille,helen,hercules,hypolyta,thesius;
-    private Sound action,attacking,moving;
     public AbstractLevel(){
 
         achille = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/AchillesHealthBar.png")),64,64),"ACHILLE",1,1,20);
-        action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Spear.mp3"));
-        achille.setSound(action);
+        achille.setSound(Gdx.audio.newSound(Gdx.files.internal("Sounds/Spear.mp3")));
 
         helen = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HelenHealthBar.png")),64,64),"HELEN",3,4,15);
-        action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Magic.mp3"));
-        helen.setSound(action);
+        helen.setSound(Gdx.audio.newSound(Gdx.files.internal("Sounds/Magic.mp3")));
 
         hercules = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HerculesHealthBar.png")),64,64),"HERCULES",2,2,25);
-        action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Spear.mp3"));
-        hercules.setSound(action);
+        hercules.setSound(Gdx.audio.newSound(Gdx.files.internal("Sounds/Spear.mp3")));
 
-        hypolyta = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HippolytaHealthBar.png")),64,64),"HYPOLYTA",3,2,15);
-        action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Sword.mp3"));
-        hypolyta.setSound(action);
+        hypolyta = new Hero(TextureRegion.split(new Texture(Gdx.files.internal("Heroes/HippolytaHealthBar.png")),64,64),"HYPPOLYTA",3,2,15);
+        hypolyta.setSound(Gdx.audio.newSound(Gdx.files.internal("Sounds/Sword.mp3")));
 
-        thesius = new Hero(TextureRegion.split( new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")),64,64),"THESIUS",1,6,20);
-        action = Gdx.audio.newSound(Gdx.files.internal("Sounds/Bow.ogg"));
-        thesius.setSound(action);
+        thesius = new Hero(TextureRegion.split( new Texture(Gdx.files.internal("Heroes/ThesiusHealthBar.png")),64,64),"THESEUS",1,6,20);
+        thesius.setSound(Gdx.audio.newSound(Gdx.files.internal("Sounds/Bow.ogg")));
 
-        moving= Gdx.audio.newSound(Gdx.files.internal("Sounds/Move.wav"));
-        attacking= Gdx.audio.newSound(Gdx.files.internal("Sounds/Enemy.wav"));
         Random rand = new Random();
         for(int i=0;i<5;i++){
             flowers.add(new Location(64*rand.nextInt(21),64*rand.nextInt(10)));
@@ -192,7 +183,7 @@ abstract class AbstractLevel implements Level{
         if(enemy.isInBounds(nearestHero.getX(),nearestHero.getY(),enemy.getAttackRange())){
             enemy.setAnimation(Animate.ATTACK);
             timer.schedule(new TimerTask() {
-                    public void run() { attacking.play(1.0f);getPieceHero(nearestHero.getLocation()).setHealth(getPieceHero(nearestHero.getLocation()).getHealth()-enemy.getDamage());enemy.setAnimation(Animate.STAY); }}, 1000);
+                    public void run() { enemy.playAttack();getPieceHero(nearestHero.getLocation()).setHealth(getPieceHero(nearestHero.getLocation()).getHealth()-enemy.getDamage());enemy.setAnimation(Animate.STAY); }}, 1000);
         } else if (enemy.isMoved()) {
             movement = enemy.getLocation();
             for(int i=0;i<enemy.getMovementRange();i++){
@@ -220,7 +211,7 @@ abstract class AbstractLevel implements Level{
             final Location finalMovement = movement;
             enemy.setAnimation(Animate.WALK);
             timer.schedule(new TimerTask() {
-                public void run() { moving.play(1.0f);movePiece(enemy.getLocation(), finalMovement);enemy.setAnimation(Animate.STAY); }}, 500);
+                public void run() { enemy.playMove();movePiece(enemy.getLocation(), finalMovement);enemy.setAnimation(Animate.STAY); }}, 500);
         }
     }
     public boolean enemiesDead() {

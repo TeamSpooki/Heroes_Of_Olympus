@@ -34,7 +34,7 @@ public class Level1 extends AbstractLevel{
 		mapCollisions.add(new Location(64, 512));
 		heroes.add(thesius);
 
-		titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level1/CyclopsHealthBar.png")), 64, 64),"CYCLOPS",1,3,15);
+		titan = new Enemy(TextureRegion.split(new Texture(Gdx.files.internal("Level1/CyclopsHealthBar.png")), 64, 64),"CYCLOPS",1,3,25);
 		titan.setPosition(MainGameScreen.WIDTH-64, MainGameScreen.HEIGHT/2);
 		mapCollisions.add(new Location(MainGameScreen.WIDTH-64, MainGameScreen.HEIGHT/2));
 		enemies.add(titan);	

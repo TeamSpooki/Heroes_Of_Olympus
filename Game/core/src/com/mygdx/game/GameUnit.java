@@ -82,6 +82,7 @@ public abstract class GameUnit {
 		this.sprite = new Sprite();
 		this.death= Gdx.audio.newSound(Gdx.files.internal("Sounds/Death.mp3"));
 		this.moving=Gdx.audio.newSound(Gdx.files.internal("Sounds/Move.wav"));
+		this.attack= Gdx.audio.newSound(Gdx.files.internal("Sounds/Enemy.wav"));
 		if(movementRange<5&&movementRange>0){
 			this.movementRange=movementRange;
 		}else{
@@ -172,7 +173,7 @@ public abstract class GameUnit {
 	 * @param move
 	 */
 	public void setMoved(boolean move) {
-		moved=move;
+		this.moved=move;
 	}
 
 	/**
@@ -193,19 +194,6 @@ public abstract class GameUnit {
 		}else{
 			System.out.println("Error: Wrong damage value for "+ name);
 		}
-	}
-
-	/**
-	 * Set new movement range
-	 * @param range
-	 */
-	public void setMovementRange(int range){
-		if(range<5&&range>0){
-			this.movementRange=range;
-		}else{
-			System.out.println("Error: Wrong movement range value for " + name);
-		}
-
 	}
 
 	/**
@@ -230,7 +218,7 @@ public abstract class GameUnit {
 	/**
 	 * Play the attack sound
 	 */
-	public void playSound() {
+	public void playAttack() {
 		this.attack.play(1.0f);
 	}
 	/**
@@ -245,7 +233,7 @@ public abstract class GameUnit {
 	 * @return location
 	 */
 	public Location getLocation() {
-		return location;
+		return this.location;
 	}
 
 	/**
@@ -352,7 +340,7 @@ public abstract class GameUnit {
 	public boolean isDead() {
 		return dead;
 	}
-	
+
 	/**
 	 * Check if GameUnit is dead or not
 	 * @return dead

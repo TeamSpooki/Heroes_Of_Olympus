@@ -224,7 +224,7 @@ public class MainGameScreen implements Screen {
 							game.level.getPieceHero(current.getLocation()).setAnimation(Animate.ATTACK);
 							timer.schedule(new TimerTask() {
 								public void run() {
-									game.level.getPieceHero(current.getLocation()).playSound();
+									game.level.getPieceHero(current.getLocation()).playAttack();
 									if(!game.level.validAttacks.isEmpty()){
 										game.level.getPieceEnemy(enemy.getLocation()).setHealth(game.level.getPieceEnemy(enemy.getLocation()).getHealth()-game.level.getPieceHero(current.getLocation()).getDamage());
 										game.level.act();
@@ -236,7 +236,6 @@ public class MainGameScreen implements Screen {
 							}, 500);
 						}else{
 							game.level.validAttacks.clear();
-							//game.level.act();
 							game.level.getPieceHero(current.getLocation()).setAnimation(Animate.STAY);
 							current=null;
 						}
