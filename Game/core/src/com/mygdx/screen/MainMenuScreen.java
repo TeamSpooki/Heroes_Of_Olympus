@@ -10,49 +10,92 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.HeroesOfOlympus;
 import com.badlogic.gdx.graphics.GL20;
 
+
 public class MainMenuScreen implements Screen {
+	/**
+	 * Sets the width and height of the main menu screen
+	 */
 	private static final int WIDTH = HeroesOfOlympus.WIDTH;
 	private static final int HEIGHT = HeroesOfOlympus.HEIGHT;
-
+	/**
+	 * Sets the height/position of the game logo
+	 */
 	private static final int GAME_LOGO_HEIGHT = HEIGHT / 4;
-
+	/**
+	 * Sets the width and height of the play button
+	 */
 	private static final int PLAY_BUTTON_WIDTH = 400;
 	private static final int PLAY_BUTTON_HEIGHT = 200;
-
+	/**
+	 * Sets the width and height of the exit button
+	 */
 	private static final int EXIT_BUTTON_WIDTH = 400;
 	private static final int EXIT_BUTTON_HEIGHT = 200;
-
+	/**
+	 * Sets the width and height of the help button
+	 */
 	private static final int HELP_BUTTON_WIDTH = 400;
 	private static final int HELP_BUTTON_HEIGHT = 200;
-
+	/**
+	 * Sets the width and height of the team logo
+	 */
 	private static final int TEAM_LOGO_WIDTH = WIDTH / 5;
 	private static final int TEAM_LOGO_HEIGHT = HEIGHT / 5;
-
+	/**
+	 * Sets the position of the buttons on the main menu screen
+	 */
 	private static final int PLAY_BUTTON_Y = HEIGHT - GAME_LOGO_HEIGHT-PLAY_BUTTON_HEIGHT;
 	private static final int HELP_BUTTON_Y = PLAY_BUTTON_Y-HELP_BUTTON_HEIGHT;
 	private static final int EXIT_BUTTON_Y = HELP_BUTTON_Y-EXIT_BUTTON_HEIGHT;
-
+	/**
+	 * Declare music variable 
+	 */
 	private Music music;
-
+	/**
+	 * Create texture playButtonActive variable to highlight button on hover
+	 * Create texture playButtonInactive variable to remove button highlight on hover
+	 */
 	private Texture playButtonActive;
 	private Texture playButtonInactive;
-
+	/**
+	 * Create texture helpButtonActive to highlight button on hover
+	 * Create helpButtonInactive to remove button highlight on hover
+	 */
 	private Texture helpButtonActive;
 	private Texture helpButtonInactive;
-
+	/**
+	 * Create texture exitButtonActive to highlight button on hover
+	 * Create exitButtonInactive to remove button highlight on hover
+	 */
 	private Texture exitButtonActive;
 	private Texture exitButtonInactive;
-
+	/**
+	 * Create texture gameLogo variable to display logo
+	 */
 	private Texture gameLogo;
+	/**
+	 * Create texture teamLogo variable to display team icon
+	 */
 	private Texture teamLogo;
-
+	/**
+	 * Create texture bgImage variable 
+	 */
 	private Texture bgImage;
+	/**
+	 * Create textureRegion mainBackground variable for main background image
+	 */
 	private TextureRegion mainBackground;
-
+	/**
+	 * Game variable
+	 */
 	private HeroesOfOlympus game;
-
+	/**
+	 * Declare variable x
+	 */
 	private float x;
-
+	/**
+	 * MainMenuScreen constructor
+	 */
 	public MainMenuScreen(HeroesOfOlympus game) {
 		this.game = game;
 
@@ -85,16 +128,18 @@ public class MainMenuScreen implements Screen {
 		game.batch.draw(mainBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		x = WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
-
+		// Sets the positioning of the play button on main menu
 		if (Gdx.input.getX() < x + PLAY_BUTTON_WIDTH && Gdx.input.getX() > x && HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT 
 				&& HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y) {
 			game.batch.draw(playButtonActive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+			// When the button is clicked on 
 			if (Gdx.input.isTouched()) {
+				// removes button
 				this.dispose();
+				// try/catch exception to load new story
 				try {
 					game.setScreen(new Story(game,"scene1.ogv"));
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -103,12 +148,15 @@ public class MainMenuScreen implements Screen {
 		}
 
 		x = WIDTH / 2 - HELP_BUTTON_WIDTH / 2;
-
+		// Sets the positioning of the help button on main menu
 		if (Gdx.input.getX() < x + HELP_BUTTON_WIDTH && Gdx.input.getX() > x && HEIGHT - Gdx.input.getY() < HELP_BUTTON_Y + HELP_BUTTON_HEIGHT 
 				&& HEIGHT - Gdx.input.getY() > HELP_BUTTON_Y) {
 			game.batch.draw(helpButtonActive, x, HELP_BUTTON_Y, HELP_BUTTON_WIDTH, HELP_BUTTON_HEIGHT);
+			// When the button is clicked on 
 			if (Gdx.input.isTouched()) {
+				// removes button
 				this.dispose();
+				// Sets the screen to Help
 				game.setScreen(new HelpMenuScreen(game));
 			}
 		} else {
@@ -116,11 +164,13 @@ public class MainMenuScreen implements Screen {
 		}
 
 		int x = WIDTH / 2 - EXIT_BUTTON_WIDTH / 2;
-
+		// Sets the positioning of the exit button on main menu
 		if (Gdx.input.getX() < x + EXIT_BUTTON_WIDTH && Gdx.input.getX() > x && HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT 
 				&& HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y) {
 			game.batch.draw(exitButtonActive, x, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+			// When the button is clicked on
 			if (Gdx.input.isTouched()) {
+				// exits the application
 				Gdx.app.exit();
 			}
 		} else {
@@ -134,27 +184,19 @@ public class MainMenuScreen implements Screen {
 	}
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-
 	}
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-
 	}
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-
 	}
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
 
 	}
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		music.dispose();
 	}
 }

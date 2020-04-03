@@ -9,26 +9,54 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.HeroesOfOlympus;
 
 public class EndScreen implements Screen{
-
+	/**
+	 * Sets the width and height of the EndScreen
+	 */
 	private static final int WIDTH = HeroesOfOlympus.WIDTH;
 	private static final int HEIGHT = HeroesOfOlympus.HEIGHT;
-
+	/**
+	 * Sets the width and height of the back button
+	 */
 	private static final int BACK_BUTTON_WIDTH = 200;
 	private static final int BACK_BUTTON_HEIGHT = 100;
+	/**
+	 * Sets the positioning of the button
+	 */
 	private static final int BACK_BUTTON_Y = HEIGHT-BACK_BUTTON_HEIGHT;
-
+	/**
+	 * game variable instance of HeroesOfOlympus
+	 */
 	private HeroesOfOlympus game;
+	/**
+	 * mms variable instance of MainMenuScreen
+	 */
 	private MainMenuScreen mms;
-
+	/**
+	 * Create texture backButtonActive variable to highlight button on hover
+	 * Create texture backButtonInactive variable to remove button highlight on hover
+	 */
 	private Texture backButtonActive;
 	private Texture backButtonInactive;
+	/**
+	 * Create texture goImage variable 
+	 */
 	private Texture goImage;
+	/**
+	 * Create TextureRegion mainBackground variable for main background image
+	 */
 	private TextureRegion mainBackground;
-
+	/**
+	 * Declare music variable to enable sound in GameOverScreen
+	 */
 	private Music music;
-
+	/**
+	 * Declare variable x
+	 */
 	private float x;
 
+	/**
+	 * EndScreen Constructor
+	 */	
 	public EndScreen(HeroesOfOlympus game) {
 		this.game = game;
 		goImage = new Texture("YOU WIN.png");
@@ -45,55 +73,51 @@ public class EndScreen implements Screen{
 	}
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		music.play();
 		game.batch.begin();
-	    game.batch.draw(mainBackground, 0, 0, WIDTH, HEIGHT);
+		game.batch.draw(mainBackground, 0, 0, WIDTH, HEIGHT);
 		x = 0;
-
+		// Sets the positioning of the back button
 		if (Gdx.input.getX() < x + BACK_BUTTON_WIDTH && Gdx.input.getX() > x && HEIGHT - Gdx.input.getY() < BACK_BUTTON_Y + BACK_BUTTON_HEIGHT
 				&& HEIGHT - Gdx.input.getY() > BACK_BUTTON_Y) {
 			game.batch.draw(backButtonActive, x, BACK_BUTTON_Y, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
+			// When button is clicked on
 			if (Gdx.input.isTouched()) {
+				// Removes back button
 				this.dispose();
+				// Sets the screen back to main menu
 				game.setScreen(mms);
 			}
 		} else {
 			game.batch.draw(backButtonInactive, x, BACK_BUTTON_Y, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
 		}
-	    game.batch.end();
-		
+		game.batch.end();
+
 	}
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		music.dispose();
 	}
 }

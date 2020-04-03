@@ -315,9 +315,9 @@ public class MainGameScreen implements Screen {
 			if(object.equals(1)) {
 				//attack
 				for(GameUnit enemy : game.level.enemies ) {
-						if(game.level.getPieceHero(currentHero.getLocation()).isInBounds(enemy.getX(),enemy.getY(),game.level.getPieceHero(currentHero.getLocation()).getAttackRange())){
-							game.level.validAttacks.add(enemy.getLocation());
-						}
+					if(game.level.getPieceHero(currentHero.getLocation()).isInBounds(enemy.getX(),enemy.getY(),game.level.getPieceHero(currentHero.getLocation()).getAttackRange())){
+						game.level.validAttacks.add(enemy.getLocation());
+					}
 				}
 				if(!game.level.validAttacks.isEmpty()) {
 					attack=true;
@@ -337,14 +337,14 @@ public class MainGameScreen implements Screen {
 				game.level.validMoves.add(left);
 				game.level.validMoves.add(right);
 				for(int i = 1; i < game.level.getPieceHero(currentHero.getLocation()).getMovementRange(); i++) {
-						int j= game.level.validMoves.size()-1;
-						while(j>=0) {
-							game.level.validMoves.add(game.level.validMoves.get(j).aboveLocation());
-							game.level.validMoves.add(game.level.validMoves.get(j).belowLocation());
-							game.level.validMoves.add(game.level.validMoves.get(j).leftLocation());
-							game.level.validMoves.add(game.level.validMoves.get(j).rightLocation());
-							j--;
-						}
+					int j= game.level.validMoves.size()-1;
+					while(j>=0) {
+						game.level.validMoves.add(game.level.validMoves.get(j).aboveLocation());
+						game.level.validMoves.add(game.level.validMoves.get(j).belowLocation());
+						game.level.validMoves.add(game.level.validMoves.get(j).leftLocation());
+						game.level.validMoves.add(game.level.validMoves.get(j).rightLocation());
+						j--;
+					}
 				}
 				move=true;
 				this.setVisible(false);

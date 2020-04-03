@@ -4,6 +4,7 @@
 /ExitHighlighted.png
 /Game Over.png
 /GrassTilesets.png
+/HELP SCREEN 2.png
 /HELP SCREEN.png
 /Help.png
 /HelpHighlighted.png
@@ -14,14 +15,16 @@
 /Level4/
 /Level5/
 /MainMenuBG.png
-/Next button.png
+/NextButton.png
+/NextButtonHighlighted.png
 /Play.png
 /PlayHighlighted.png
 /Sounds/
+/YOU WIN.png
 /gameLogo.png
 /logo.png
 /lotusflower.png
 /redSelect.png
 /scene1.ogv
 /scene2.ogv
-/YOU WIN.png
+/scene3.ogv
